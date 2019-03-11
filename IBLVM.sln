@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBLVM-UI", "IBLVM-UI\IBLVM-UI.csproj", "{C87168B1-8A04-4AD1-9853-DAB0BD2DF615}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C87168B1-8A04-4AD1-9853-DAB0BD2DF615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C87168B1-8A04-4AD1-9853-DAB0BD2DF615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C87168B1-8A04-4AD1-9853-DAB0BD2DF615}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C87168B1-8A04-4AD1-9853-DAB0BD2DF615}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {51EEEE5E-6BBB-42E6-A00E-2341F4FD578A}
+	EndGlobalSection
+EndGlobal
