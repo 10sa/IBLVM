@@ -19,7 +19,7 @@ namespace IBLVM_Libaray.BitLocker
 		Protected,
 
 		/// <summary>
-		/// 디스크의 잠금 여부를 알수 없는 경우를 나타냅니다. 볼륨이 잠겨 있는 경우, 이 상태를 나타낼 수 있습니다.
+		/// 디스크의 잠금 여부를 알수 없는 경우를 나타냅니다. 볼륨이 잠겨 있는 경우, 이 상태가 나타낼 수 있습니다.
 		/// </summary>
 		Unknown
 	}
