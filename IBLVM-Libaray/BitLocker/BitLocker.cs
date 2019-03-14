@@ -104,6 +104,15 @@ namespace IBLVM_Libaray.BitLocker
 		{
 			InvokeMethod("Lock", new KeyValuePair<string, object>("ForceDismount", forceLock));
 		}
+
+		/// <summary>
+		/// 주어진 비밀번호를 이용해 BitLocker 볼륨을 잠금 해제합니다.
+		/// </summary>
+		/// <param name="passphrase">잠금 해제에 사용될 비밀번호입니다.</param>
+		public void Unlock(string passphrase)
+		{
+			InvokeMethod("UnlockWithPassphrase", new KeyValuePair<string, object>("Passphrase", passphrase));
+		}
 		#endregion
 	}
 }
