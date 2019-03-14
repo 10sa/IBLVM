@@ -39,9 +39,9 @@ namespace IBLVM_Libaray.BitLocker
 
 		#region Public methods
 		/// <summary>
-		/// BitLocker가 적용된 볼륨을 반환합니다.
+		/// 모든 볼륨을 가져옵니다.
 		/// </summary>
-		/// <returns>BitLocker가 적용된 볼륨 목록.</returns>
+		/// <returns>볼륨들입니다.</returns>
 		public static BitLocker[] GetVolumes()
 		{
 			var path = new ManagementPath(@"Root\CIMV2\Security\MicrosoftVolumeEncryption") {
@@ -55,10 +55,20 @@ namespace IBLVM_Libaray.BitLocker
 			return collection.ToArray();
 		}
 
+		/// <summary>
+		/// 디바이스 ID 입니다.
+		/// </summary>
 		public string DeviceID => (string)bitlockerObject["DeviceID"];
 
+		/// <summary>
+		/// 시스템 상에서 표기되는 드라이브 문자입니다.
+		/// </summary>
 		public string DriveLetter => (string)bitlockerObject["DriveLetter"];
 		
+		/// <summary>
+		/// 볼륨의 보호 상태를 가져옵니다.
+		/// </summary>
+		/// <returns>볼륨의 보호 상태입니다.</returns>
 		public ProtectionStatus GetProtectionStatus()
 		{
 			ManagementBaseObject result = InvokeMethod("GetProtectionStatus");
