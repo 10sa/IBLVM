@@ -24,20 +24,17 @@ namespace IBLVM_Libaray.BitLocker
 		}
 
 		#region Private methods
-		private object InvokeMethod(string method, params object[] args)
-		{
-			object result = bitlockerObject.InvokeMethod(method, args);
-			if (result is uint)
-				ErrorValidation((uint)result);
-			else
-				ErrorValidation((ManagementBaseObject)result);
 
-			return result;
-		}
-
-		private ManagementBaseObject InvokeMethod(string method)
+		private ManagementBaseObject InvokeMethod(string method, params KeyValuePair<string, object>[] parameters)
 		{
-			ManagementBaseObject result = bitlockerObject.InvokeMethod(method, null, null);
+			ManagementBaseObject param = bitlockerObject.GetMethodParameters(method);
+			if (parameters != null)
+			{
+				foreach (var keyValue in parameters)
+					param.SetPropertyValue(keyValue.Key, keyValue.Value);
+			}
+
+			ManagementBaseObject result = bitlockerObject.InvokeMethod(method, param, null);
 			ErrorValidation(result);
 
 			return result;
@@ -47,15 +44,8 @@ namespace IBLVM_Libaray.BitLocker
 		{
 			uint code = (uint)result["returnValue"];
 			if (code != 0x0)
-				throw new Win32Exception(Convert.ToInt32(code));
+				throw new Win32Exception(unchecked((int)code));
 		}
-
-		private void ErrorValidation(uint result)
-		{
-			if (result != 0x0)
-				throw new Win32Exception(unchecked((int)result));
-		}
-
 		#endregion
 
 		#region Public methods
@@ -92,7 +82,7 @@ namespace IBLVM_Libaray.BitLocker
 		/// <returns>볼륨의 보호 상태입니다.</returns>
 		public ProtectionStatus GetProtectionStatus()
 		{
-			ManagementBaseObject result = InvokeMethod("GetProtectionStatus");
+			ManagementBaseObject result = InvokeMethod("GetProtectionStatus", null);
 
 			Console.WriteLine(result["ProtectionStatus"]);
 			return (ProtectionStatus)result["ProtectionStatus"];
@@ -112,7 +102,7 @@ namespace IBLVM_Libaray.BitLocker
 		/// <param name="forceLock">true인 경우 해당 디스크를 강제로 분리합니다.</param>
 		public void Lock(bool forceLock)
 		{
-			InvokeMethod("Lock", forceLock);
+			InvokeMethod("Lock", new KeyValuePair<string, object>("ForceDismount", forceLock));
 		}
 		#endregion
 	}
