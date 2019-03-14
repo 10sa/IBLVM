@@ -5,10 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Management;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+// Allow internal access to UnitTest project.
+[assembly: InternalsVisibleTo("IBLVM-Tests")]
 
 namespace IBLVM_Libaray.BitLocker
 {
-	class BitLocker
+	internal class BitLocker
 	{
 		private ManagementObject bitlockerObject;
 

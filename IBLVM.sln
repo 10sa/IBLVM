@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBLVM-UI", "IBLVM-UI\IBLVM-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBLVM-Libaray", "IBLVM-Libaray\IBLVM-Libaray.csproj", "{1F042069-73BC-4CAC-A331-181C190CED10}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBLVM-Tests", "IBLVM-Tests\IBLVM-Tests.csproj", "{E30BCD92-3F91-47C8-82F3-65E9866163AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1F042069-73BC-4CAC-A331-181C190CED10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F042069-73BC-4CAC-A331-181C190CED10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F042069-73BC-4CAC-A331-181C190CED10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E30BCD92-3F91-47C8-82F3-65E9866163AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E30BCD92-3F91-47C8-82F3-65E9866163AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E30BCD92-3F91-47C8-82F3-65E9866163AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E30BCD92-3F91-47C8-82F3-65E9866163AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
