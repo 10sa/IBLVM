@@ -10,7 +10,10 @@ namespace IBLVM_Tests
 		[TestMethod]
 		public void GetVolumes()
 		{
-			BitLocker.GetVolumes();
+			foreach(var volume in BitLocker.GetVolumes())
+			{
+				Console.WriteLine(string.Format("DeviceID : {0}\nDrive Letter {1}\nProtection Status : {2}", volume.DeviceID, volume.DriveLetter, volume.GetProtectionStatus()));
+			}
 		}
 	}
 }

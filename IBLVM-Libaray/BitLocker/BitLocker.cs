@@ -32,6 +32,14 @@ namespace IBLVM_Libaray.BitLocker
 			return result;
 		}
 
+		private ManagementBaseObject InvokeMethod(string method)
+		{
+			ManagementBaseObject result = bitlockerObject.InvokeMethod(method, null, null);
+			ErrorValidation(result);
+
+			return result;
+		}
+
 		private void ErrorValidation(ManagementBaseObject result)
 		{
 			uint code = (uint)result["returnValue"];
@@ -77,6 +85,7 @@ namespace IBLVM_Libaray.BitLocker
 		{
 			ManagementBaseObject result = InvokeMethod("GetProtectionStatus");
 
+			Console.WriteLine(result["ProtectionStatus"]);
 			return (ProtectionStatus)result["ProtectionStatus"];
 		}
 		#endregion
