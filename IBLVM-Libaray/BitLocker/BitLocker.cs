@@ -24,10 +24,13 @@ namespace IBLVM_Libaray.BitLocker
 		}
 
 		#region Private methods
-		private ManagementBaseObject InvokeMethod(string method, params object[] args)
+		private object InvokeMethod(string method, params object[] args)
 		{
-			ManagementBaseObject result = (ManagementBaseObject)bitlockerObject.InvokeMethod(method, args);
-			ErrorValidation(result);
+			object result = bitlockerObject.InvokeMethod(method, args);
+			if (result is uint)
+				ErrorValidation((uint)result);
+			else
+				ErrorValidation((ManagementBaseObject)result);
 
 			return result;
 		}
@@ -45,6 +48,12 @@ namespace IBLVM_Libaray.BitLocker
 			uint code = (uint)result["returnValue"];
 			if (code != 0x0)
 				throw new Win32Exception(Convert.ToInt32(code));
+		}
+
+		private void ErrorValidation(uint result)
+		{
+			if (result != 0x0)
+				throw new Win32Exception(unchecked((int)result));
 		}
 
 		#endregion
@@ -87,6 +96,23 @@ namespace IBLVM_Libaray.BitLocker
 
 			Console.WriteLine(result["ProtectionStatus"]);
 			return (ProtectionStatus)result["ProtectionStatus"];
+		}
+
+		/// <summary>
+		/// BitLocker 볼륨을 분리하고 시스템 메모리상에서 복호화 키를 제거합니다.
+		/// </summary>
+		public void Lock()
+		{
+			Lock(false);
+		}
+
+		/// <summary>
+		/// BitLocker 볼륨을 분리하고 시스템 메모리상에서 복호화 키를 제거합니다.
+		/// </summary>
+		/// <param name="forceLock">true인 경우 해당 디스크를 강제로 분리합니다.</param>
+		public void Lock(bool forceLock)
+		{
+			InvokeMethod("Lock", forceLock);
 		}
 		#endregion
 	}
