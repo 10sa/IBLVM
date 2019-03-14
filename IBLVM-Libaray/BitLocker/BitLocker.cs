@@ -14,7 +14,7 @@ namespace IBLVM_Libaray.BitLocker
 {
 	internal class BitLocker
 	{
-		private ManagementObject bitlockerObject;
+		private readonly ManagementObject bitlockerObject;
 
 		private BitLocker() { }
 	
