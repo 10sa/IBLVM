@@ -31,7 +31,7 @@ namespace IBLVM_Libaray.BitLocker
 		private void ErrorValidation(ManagementBaseObject result)
 		{
 			uint code = (uint)result["returnValue"];
-			if (code == 0x0)
+			if (code != 0x0)
 				throw new Win32Exception(Convert.ToInt32(code));
 		}
 
