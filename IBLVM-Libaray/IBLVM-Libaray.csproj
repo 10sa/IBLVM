@@ -46,6 +46,7 @@
     <Compile Include="BitLocker\ProtectionStatus.cs" />
     <Compile Include="Enums\PacketType.cs" />
     <Compile Include="Interfaces\IPacket.cs" />
+    <Compile Include="Models\BasePacket.cs" />
     <Compile Include="Models\HelloRequestPacket.cs" />
     <Compile Include="Models\HelloResponsePacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
