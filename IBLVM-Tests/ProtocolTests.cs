@@ -7,7 +7,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IBLVM_Tests
 {
+	[TestClass]
 	class ProtocolTests
 	{
+		[TestMethod]
+		public void HandshakeTest()
+		{
+
+		}
 	}
 }
