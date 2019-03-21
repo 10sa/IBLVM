@@ -50,7 +50,8 @@
     <Compile Include="Models\HelloRequestPacket.cs" />
     <Compile Include="Models\HelloResponsePacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sockets\ClientSocket.cs" />
+    <Compile Include="Sockets\IBLVMClient.cs" />
+    <Compile Include="Sockets\IBLVMListener.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
