@@ -44,7 +44,11 @@
   <ItemGroup>
     <Compile Include="BitLocker\BitLocker.cs" />
     <Compile Include="BitLocker\ProtectionStatus.cs" />
+    <Compile Include="Interfaces\IPacket.cs" />
+    <Compile Include="Models\HelloRequestPacket.cs" />
+    <Compile Include="Models\HelloResponsePacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sockets\ClientSocket.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
