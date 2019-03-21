@@ -12,7 +12,10 @@ using System.Runtime.CompilerServices;
 
 namespace IBLVM_Libaray.BitLocker
 {
-	internal class BitLocker
+	/// <summary>
+	/// BitLocker로 암호화된 드라이브를 나타내는 클래스입니다.
+	/// </summary>
+	internal sealed class BitLocker
 	{
 		private readonly ManagementObject bitlockerObject;
 
