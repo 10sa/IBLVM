@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IBLVM_Libaray.Enums
 {
-	enum PacketType : ushort
+	public enum PacketType : ushort
 	{
 		Hello = 0,
 		Ack = 1

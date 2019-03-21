@@ -10,9 +10,11 @@ using System.IO;
 
 namespace IBLVM_Libaray.Models
 {
-	abstract class BasePacket : IPacket
+	public abstract class BasePacket : IPacket
 	{
 		public PacketType Type { get; private set; }
+
+		public static readonly byte[] MagicBytes = new byte[] { 0xDA, 0xAB, 0xBC, 0xCD };
 
 		private BasePacket() { }
 
