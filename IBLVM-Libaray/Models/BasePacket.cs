@@ -39,6 +39,11 @@ namespace IBLVM_Libaray.Models
 			}
 		}
 
+		public virtual int GetPacketSize()
+		{
+			return MagicBytes.Length + sizeof(PacketType);
+		}
+
 		public abstract Stream GetPayloadStream();
 	}
 }
