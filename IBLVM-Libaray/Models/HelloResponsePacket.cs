@@ -10,7 +10,7 @@ namespace IBLVM_Libaray.Models
 {
 	sealed class HelloResponsePacket : BasePacket
 	{
-		private HelloResponsePacket() : base(Enums.PacketType.Ack) { }
+		public HelloResponsePacket() : base(Enums.PacketType.Ack) { }
 
 		public override Stream GetPayloadStream() => null;
 	}
