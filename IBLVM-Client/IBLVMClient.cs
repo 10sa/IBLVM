@@ -10,7 +10,7 @@ using System.IO;
 using IBLVM_Libaray.Models;
 using IBLVM_Libaray.Enums;
 
-namespace IBLVM_Libaray.Sockets
+namespace IBLVM_Client
 {
 	public class IBLVMClient
 	{
