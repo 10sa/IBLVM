@@ -7,13 +7,15 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 
-using IBLVM_Libaray.Models;
+using IBLVM_Libaray.Interfaces;
+using IBLVM_Libaray.Factories;
 using IBLVM_Libaray.Enums;
 
 namespace IBLVM_Client
 {
 	public class IBLVMClient
 	{
+		private IPacketFactory packetFactory = new PacketFactroy();
 		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
 		private readonly byte[] socketBuffer = new byte[256];
 
@@ -25,12 +27,12 @@ namespace IBLVM_Client
 
 		private void Handshake()
 		{
-			socket.Send(new HelloRequestPacket().GetPacketBytes());
-			socket.Receive(socketBuffer, 0, BasePacket.GetPacketSize(), SocketFlags.None);
+			socket.Send(packetFactory.GetHelloRequest().GetPacketBytes());
+			socket.Receive(socketBuffer, 0, packetFactory.PacketSize, SocketFlags.None);
 
-			if (socketBuffer.SequenceEqual(BasePacket.MagicBytes) &&
-					(PacketType)BitConverter.ToUInt16(socketBuffer, BasePacket.MagicBytes.Length) == PacketType.Ack)
-				socket.Send(new HelloResponsePacket().GetPacketBytes());
+			if (socketBuffer.SequenceEqual(packetFactory.MagicBytes) &&
+					(PacketType)BitConverter.ToUInt16(socketBuffer, packetFactory.MagicBytes.Length) == PacketType.Ack)
+				socket.Send(packetFactory.GetHelloResponse().GetPacketBytes());
 			else
 				throw new ProtocolViolationException("Received wrong header.");
 		}
