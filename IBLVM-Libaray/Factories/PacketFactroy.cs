@@ -10,6 +10,10 @@ namespace IBLVM_Libaray.Factories
 {
 	public class PacketFactroy : IPacketFactory
 	{
+		public byte[] MagicBytes => BasePacket.MagicBytes;
+
+		public int PacketSize => BasePacket.GetPacketSize();
+
 		public IPacket GetHelloRequest()
 		{
 			return new HelloRequestPacket();

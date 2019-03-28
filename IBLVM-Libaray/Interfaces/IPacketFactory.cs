@@ -11,5 +11,9 @@ namespace IBLVM_Libaray.Interfaces
 		IPacket GetHelloRequest();
 
 		IPacket GetHelloResponse();
+
+		byte[] MagicBytes { get; }
+
+		int PacketSize { get; }
 	}
 }
