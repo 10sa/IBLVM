@@ -10,7 +10,7 @@ namespace IBLVM_Libaray.Interfaces
 	/// <summary>
 	/// 패킷의 데이터 요구를 정의합니다.
 	/// </summary>
-	interface IPacket
+	public interface IPacket
 	{
 		/// <summary>
 		/// 패킷의 바이트화된 데이터를 반환합니다.
