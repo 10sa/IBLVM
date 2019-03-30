@@ -15,7 +15,7 @@ namespace IBLVM_Tests
 		[TestMethod]
 		public void HelloReqeustPacketTest()
 		{
-			HelloRequestPacket packet = new HelloRequestPacket();
+			ClientHello packet = new ClientHello();
 			byte[] bytes = packet.GetPacketBytes();
 
 			Assert.IsTrue(BitConverter.ToUInt16(bytes, 0) == (ushort)PacketType.Hello);
@@ -24,10 +24,10 @@ namespace IBLVM_Tests
 		[TestMethod]
 		public void HelloResponsePacketTest()
 		{
-			HelloResponsePacket packet = new HelloResponsePacket();
+			ServerKeyResponse packet = new ServerKeyResponse();
 			byte[] bytes = packet.GetPacketBytes();
 
-			Assert.IsTrue(BitConverter.ToUInt16(bytes, 0) == (ushort)PacketType.Ack);
+			Assert.IsTrue(BitConverter.ToUInt16(bytes, 0) == (ushort)PacketType.ServerKeySend);
 		}
 	}
 }

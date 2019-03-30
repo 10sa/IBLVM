@@ -31,7 +31,7 @@ namespace IBLVM_Client
 			socket.Receive(socketBuffer, 0, packetFactory.PacketSize, SocketFlags.None);
 
 			if (socketBuffer.SequenceEqual(packetFactory.MagicBytes) &&
-					(PacketType)BitConverter.ToUInt16(socketBuffer, packetFactory.MagicBytes.Length) == PacketType.Ack)
+					(PacketType)BitConverter.ToUInt16(socketBuffer, packetFactory.MagicBytes.Length) == PacketType.ServerKeySend)
 				socket.Send(packetFactory.GetHelloResponse().GetPacketBytes());
 			else
 				throw new ProtocolViolationException("Received wrong header.");
