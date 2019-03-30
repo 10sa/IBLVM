@@ -12,8 +12,6 @@ namespace IBLVM_Libaray.Models
 	{
 		private readonly byte[] cryptoKey;
 
-		private ServerKeyResponse() : base(Enums.PacketType.ServerKeySend) { }
-
 		public ServerKeyResponse(byte[] cryptoKey) : base(Enums.PacketType.ServerKeySend)
 		{
 			this.cryptoKey = cryptoKey;
