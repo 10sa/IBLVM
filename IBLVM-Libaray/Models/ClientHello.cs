@@ -8,9 +8,9 @@ using IBLVM_Libaray.Interfaces;
 
 namespace IBLVM_Libaray.Models
 {
-	sealed class HelloResponsePacket : BasePacket
+	sealed class ClientHello : BasePacket
 	{
-		public HelloResponsePacket() : base(Enums.PacketType.Ack) { }
+		public ClientHello() : base(Enums.PacketType.Hello) { }
 
 		public override Stream GetPayloadStream() => null;
 	}

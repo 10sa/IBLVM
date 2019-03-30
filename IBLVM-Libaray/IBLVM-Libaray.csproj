@@ -49,9 +49,12 @@
     <Compile Include="Interfaces\IPacket.cs" />
     <Compile Include="Interfaces\IPacketFactory.cs" />
     <Compile Include="Models\BasePacket.cs" />
-    <Compile Include="Models\HelloRequestPacket.cs" />
-    <Compile Include="Models\HelloResponsePacket.cs" />
+    <Compile Include="Models\ClientHello.cs" />
+    <Compile Include="Models\ServerKeyResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Security\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

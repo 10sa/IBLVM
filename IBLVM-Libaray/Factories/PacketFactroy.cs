@@ -16,12 +16,12 @@ namespace IBLVM_Libaray.Factories
 
 		public IPacket GetHelloRequest()
 		{
-			return new HelloRequestPacket();
+			return new ClientHello();
 		}
 
 		public IPacket GetHelloResponse()
 		{
-			return new HelloResponsePacket();
+			return new ServerKeyResponse();
 		}
 	}
 }
