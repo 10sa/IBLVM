@@ -19,6 +19,13 @@ namespace IBLVM_Libaray.Models
 			this.cryptoKey = cryptoKey;
 		}
 
+		protected override void CreateBytes(Stream buffer)
+		{
+			base.CreateBytes(buffer);
+			buffer.Write(BitConverter.GetBytes(buffer.Length), 0, sizeof(int));
+			buffer.Write(cryptoKey, 0, cryptoKey.Length);
+		}
+
 		public override Stream GetPayloadStream() => null;
 	}
 }
