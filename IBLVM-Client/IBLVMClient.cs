@@ -11,6 +11,8 @@ using IBLVM_Libaray.Interfaces;
 using IBLVM_Libaray.Factories;
 using IBLVM_Libaray.Enums;
 
+using CryptoMemoryStream.IO;
+
 namespace IBLVM_Client
 {
 	public class IBLVMClient
@@ -27,12 +29,12 @@ namespace IBLVM_Client
 
 		private void Handshake()
 		{
-			socket.Send(packetFactory.GetHelloRequest().GetPacketBytes());
+			socket.Send(packetFactory.CreateClientHello().GetPacketBytes());
 			socket.Receive(socketBuffer, 0, packetFactory.PacketSize, SocketFlags.None);
 
 			if (socketBuffer.SequenceEqual(packetFactory.MagicBytes) &&
 					(PacketType)BitConverter.ToUInt16(socketBuffer, packetFactory.MagicBytes.Length) == PacketType.ServerKeySend)
-				socket.Send(packetFactory.GetHelloResponse().GetPacketBytes());
+				socket.Send(packetFactory.CreateServerKeyResponse().GetPacketBytes());
 			else
 				throw new ProtocolViolationException("Received wrong header.");
 		}

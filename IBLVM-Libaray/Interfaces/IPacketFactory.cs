@@ -8,9 +8,9 @@ namespace IBLVM_Libaray.Interfaces
 {
 	public interface IPacketFactory
 	{
-		IPacket GetHelloRequest();
+		IPacket CreateClientHello();
 
-		IPacket GetHelloResponse();
+		IPacket CreateServerKeyResponse(byte[] cryptoKey);
 
 		byte[] MagicBytes { get; }
 

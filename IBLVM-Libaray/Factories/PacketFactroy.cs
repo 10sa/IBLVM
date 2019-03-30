@@ -14,14 +14,14 @@ namespace IBLVM_Libaray.Factories
 
 		public int PacketSize => BasePacket.GetPacketSize();
 
-		public IPacket GetHelloRequest()
+		public IPacket CreateClientHello()
 		{
 			return new ClientHello();
 		}
 
-		public IPacket GetHelloResponse()
+		public IPacket CreateServerKeyResponse(byte[] cryptoKey)
 		{
-			return new ServerKeyResponse();
+			return new ServerKeyResponse(cryptoKey);
 		}
 	}
 }

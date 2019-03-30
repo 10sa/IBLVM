@@ -6,27 +6,27 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IBLVM_Libaray.Models;
 using IBLVM_Libaray.Enums;
+using IBLVM_Libaray.Factories;
+using IBLVM_Libaray.Interfaces;
 
 namespace IBLVM_Tests
 {
 	[TestClass]
 	public class PacketTests
 	{
+		private PacketFactroy packetFactroy = new PacketFactroy();
+		
 		[TestMethod]
-		public void HelloReqeustPacketTest()
+		public void ClientHelloTest()
 		{
-			ClientHello packet = new ClientHello();
-			byte[] bytes = packet.GetPacketBytes();
-
+			byte[] bytes = packetFactroy.CreateClientHello().GetPacketBytes();
 			Assert.IsTrue(BitConverter.ToUInt16(bytes, 0) == (ushort)PacketType.Hello);
 		}
 
 		[TestMethod]
-		public void HelloResponsePacketTest()
+		public void ServerKeyResponseTest()
 		{
-			ServerKeyResponse packet = new ServerKeyResponse();
-			byte[] bytes = packet.GetPacketBytes();
-
+			byte[] bytes = packetFactroy.CreateServerKeyResponse(new byte[0]).GetPacketBytes();
 			Assert.IsTrue(BitConverter.ToUInt16(bytes, 0) == (ushort)PacketType.ServerKeySend);
 		}
 	}
