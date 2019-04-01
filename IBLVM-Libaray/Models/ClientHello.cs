@@ -12,6 +12,8 @@ namespace IBLVM_Libaray.Models
 	{
 		public ClientHello() : base(Enums.PacketType.Hello) { }
 
+		public ClientHello(byte[] data, ref int offset) : base(data, ref offset) { }
+
 		public override Stream GetPayloadStream() => null;
 	}
 }

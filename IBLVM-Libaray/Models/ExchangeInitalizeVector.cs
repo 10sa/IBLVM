@@ -16,6 +16,12 @@ namespace IBLVM_Libaray.Models
 			this.initializeVector = initializeVector;
 		}
 
+		public ExchangeInitalizeVector(byte[] data, ref int offset) : base(data, ref offset)
+		{
+			initializeVector = new byte[data.Length - offset];
+			Array.Copy(initializeVector, 0, data, offset, data.Length - offset);
+		}
+
 		protected override void CreateBytes(Stream buffer)
 		{
 			base.CreateBytes(buffer);

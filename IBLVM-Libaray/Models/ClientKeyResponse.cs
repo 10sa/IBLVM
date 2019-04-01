@@ -19,6 +19,12 @@ namespace IBLVM_Libaray.Models
 			this.cryptoKey = cryptoKey;
 		}
 
+		public ClientKeyResponse(byte[] data, ref int offset) : base(data, ref offset)
+		{
+			cryptoKey = new byte[data.Length - offset];
+			Array.Copy(cryptoKey, 0, data, offset, data.Length - offset);
+		}
+
 		protected override void CreateBytes(Stream buffer)
 		{
 			base.CreateBytes(buffer);

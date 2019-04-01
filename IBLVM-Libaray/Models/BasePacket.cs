@@ -18,6 +18,16 @@ namespace IBLVM_Libaray.Models
 
 		private BasePacket() { }
 
+		public BasePacket(byte[] data, ref int offset)
+		{
+			if (!data.SequenceEqual(MagicBytes))
+				throw new ArgumentException("Invalid MagicBytes!");
+
+			offset += MagicBytes.Length;
+			Type = (PacketType)BitConverter.ToUInt16(data, offset);
+			offset += sizeof(uint);
+		}
+
 		protected BasePacket(PacketType type) => Type = type;
 
 		protected virtual void CreateBytes(Stream buffer)
