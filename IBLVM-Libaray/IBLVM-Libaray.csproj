@@ -51,6 +51,7 @@
     <Compile Include="Models\BasePacket.cs" />
     <Compile Include="Models\ClientHello.cs" />
     <Compile Include="Models\ClientKeyResponse.cs" />
+    <Compile Include="Models\ExchangeInitalizeVector.cs" />
     <Compile Include="Models\ServerKeyResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

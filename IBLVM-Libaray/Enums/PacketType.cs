@@ -10,6 +10,7 @@ namespace IBLVM_Libaray.Enums
 	{
 		Hello = 0,
 		ServerKeySend = 1,
-		ClientKeySend = 2
+		ClientKeySend = 2,
+		ExchangeInitializeVector = 3
 	}
 }
