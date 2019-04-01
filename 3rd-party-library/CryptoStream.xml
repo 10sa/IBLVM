@@ -9,6 +9,11 @@
             백업 저장소가 메모리이면서 읽기 또는 쓰기 과정에서 복호화 또는 암호화가 가능한 스트림을 만듭니다.
             </summary>
         </member>
+        <member name="P:CryptoStream.CryptoMemoryStream.IVSize">
+            <summary>
+            내부 암호화 알고리즘에 사용되는 초기화 벡터(Initialization vector) 의 크기를 반환합니다.
+            </summary>
+        </member>
         <member name="M:CryptoStream.CryptoMemoryStream.#ctor(System.Byte[],System.Byte[],System.Byte[])">
             <summary>
             지정된 바이트 배열을 기반으로 하는 CryptoMemoryStream 클래스의 크기 조정이 불가능한 새 인스턴스를 초기화합니다.
@@ -50,11 +55,21 @@
         </member>
         <member name="M:CryptoStream.CryptoMemoryStream.Read(System.Byte[],System.Int32,System.Int32)">
             <summary>
+            현재 스트림에서 바이트 블록을 읽어서 버퍼에 쓰고 읽어들인 부분을 0으로 채웁니다.
+            </summary>
+            <param name="buffer">이 메서드는 지정된 바이트 배열의 값이 offset과 (offset + count - 1) 사이에서 현재 원본으로부터 읽어온 바이트로 교체된 상태로 반환됩니다.</param>
+            <param name="offset">현재 스트림으로 바이트를 복사하기 시작할 buffer의 바이트 오프셋(0부터 시작)입니다.</param>
+            <param name="count">쓸 최대 바이트 수입니다.</param>
+            <returns>버퍼로 쓴 총 바이트 수입니다. 해당 바이트 수를 현재 사용할 수 없는 경우 이 수는 요청된 바이트 수보다 작을 수 있으며 바이트를 읽기 전에 스트림의 끝에 도달한 경우에는 0이 될 수도 있습니다.</returns>
+        </member>
+        <member name="M:CryptoStream.CryptoMemoryStream.Read(System.Byte[],System.Int32,System.Int32,System.Boolean)">
+            <summary>
             현재 스트림에서 바이트 블록을 읽어서 버퍼에 씁니다.
             </summary>
             <param name="buffer">이 메서드는 지정된 바이트 배열의 값이 offset과 (offset + count - 1) 사이에서 현재 원본으로부터 읽어온 바이트로 교체된 상태로 반환됩니다.</param>
             <param name="offset">현재 스트림으로 바이트를 복사하기 시작할 buffer의 바이트 오프셋(0부터 시작)입니다.</param>
             <param name="count">쓸 최대 바이트 수입니다.</param>
+            <param name="erase">읽어들인 스트림 위치의 데이터를 0으로 채울지에 대한 여부입니다.</param>
             <returns>버퍼로 쓴 총 바이트 수입니다. 해당 바이트 수를 현재 사용할 수 없는 경우 이 수는 요청된 바이트 수보다 작을 수 있으며 바이트를 읽기 전에 스트림의 끝에 도달한 경우에는 0이 될 수도 있습니다.</returns>
         </member>
         <member name="M:CryptoStream.CryptoMemoryStream.Encrypt(System.Byte[],System.Int32,System.Int32)">
