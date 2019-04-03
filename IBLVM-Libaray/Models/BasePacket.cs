@@ -14,8 +14,6 @@ namespace IBLVM_Libaray.Models
 	{
 		public PacketType Type { get; private set; }
 
-		public int PayloadSize => MagicBytes.Length + sizeof(int) + sizeof(PacketType);
-
 		public static readonly byte[] MagicBytes = new byte[] { 0xDA, 0xAB, 0xBC, 0xCD };
 
 		private BasePacket() { }
@@ -35,7 +33,7 @@ namespace IBLVM_Libaray.Models
 		protected virtual void CreateBytes(Stream buffer)
 		{
 			WriteToStream(buffer, MagicBytes);
-			WriteToStream(buffer, BitConverter.GetBytes(PayloadSize));
+			WriteToStream(buffer, BitConverter.GetBytes(GetPayloadSize()));
 			WriteToStream(buffer, BitConverter.GetBytes((ushort)Type));
 		}
 
@@ -53,11 +51,10 @@ namespace IBLVM_Libaray.Models
 			}
 		}
 
-		public static int GetPacketSize()
-		{
-			return MagicBytes.Length + sizeof(PacketType);
-		}
+		public virtual int GetPayloadSize() => 0;
 
-		public abstract Stream GetPayloadStream();
+		public static int GetHeaderSize() => MagicBytes.Length + sizeof(int) + sizeof(PacketType);
+
+		public virtual void GetPayload(Stream buffer) { }
 	}
 }

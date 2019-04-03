@@ -30,6 +30,6 @@ namespace IBLVM_Libaray.Models
 		}
 
 
-		public override Stream GetPayloadStream() => null;
+		public override int GetPayloadSize() => base.GetPayloadSize() + initializeVector.Length;
 	}
 }

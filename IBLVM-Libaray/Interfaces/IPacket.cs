@@ -16,7 +16,7 @@ namespace IBLVM_Libaray.Interfaces
 		/// 패킷의 페이로드의 길이를 반환합니다.
 		/// </summary>
 		/// <returns>페이로드의 길이입니다.</returns>
-		int PayloadSize { get; }
+		int GetPayloadSize();
 
 		/// <summary>
 		/// 패킷의 바이트화된 데이터를 반환합니다.

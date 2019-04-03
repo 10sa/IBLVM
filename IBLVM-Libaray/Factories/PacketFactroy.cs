@@ -12,7 +12,7 @@ namespace IBLVM_Libaray.Factories
 	{
 		public byte[] MagicBytes => BasePacket.MagicBytes;
 
-		public int PacketSize => BasePacket.GetPacketSize();
+		public int PacketSize => BasePacket.GetHeaderSize();
 
 		public IPacket CreateClientHello()
 		{
