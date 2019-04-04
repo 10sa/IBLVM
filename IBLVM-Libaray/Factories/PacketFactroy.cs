@@ -14,14 +14,14 @@ namespace IBLVM_Libaray.Factories
 
 		public int PacketSize => BasePacket.GetHeaderSize();
 
-		public IPacket CreateClientHello()
-		{
-			return new ClientHello();
-		}
+		public IPacket CreateClientHello() => new ClientHello();
 
-		public IPacket CreateServerKeyResponse(byte[] cryptoKey)
+		public IPacket CreateServerKeyResponse(byte[] cryptoKey) => new ServerKeyResponse(cryptoKey);
+
+		public IPacket ParseHeader(byte[] data)
 		{
-			return new ServerKeyResponse(cryptoKey);
+			int offset = 0;
+			return new BasePacket(data, ref offset);
 		}
 	}
 }

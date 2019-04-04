@@ -12,6 +12,8 @@ using IBLVM_Libaray.Interfaces;
 using IBLVM_Libaray.Factories;
 using IBLVM_Libaray.Enums;
 
+using IBLVM_Util;
+
 using CryptoStream;
 
 namespace IBLVM_Client
@@ -41,7 +43,7 @@ namespace IBLVM_Client
 		{
 			socket.Send(packetFactory.CreateClientHello().GetPacketBytes());
 			ReceiveFull(socketBuffer, packetFactory.PacketSize);
-			IPacket header = packetFactory.Parse(socketBuffer);
+			IPacket header = packetFactory.ParseHeader(socketBuffer);
 
 			if (header.Type == PacketType.ServerKeySend)
 			{
@@ -50,24 +52,10 @@ namespace IBLVM_Client
 
 				cryptoStream = new CryptoMemoryStream(shareKey, shareKey);
 				IPacket responsePacket = packetFactory.CreateServerKeyResponse(keyExchanger.PublicKey.ToByteArray());
-				SendPacket(responsePacket);
+				SocketUtil.SendPacket(socket, responsePacket);
 			}
 			else
 				throw new ProtocolViolationException("Received wrong header.");
-		}
-
-		private void SendPacket(IPacket packet)
-		{
-			socket.Send(packet.GetPacketBytes());
-			if (packet.GetPayloadSize() > 0)
-			{
-				using (Stream stream = packet.GetPayloadStream())
-				{
-					int readedSize;
-					while ((readedSize = stream.Read(socketBuffer, 0, socketBuffer.Length)) > 0)
-						socket.Send(socketBuffer, readedSize, SocketFlags.None);
-				}
-			}
 		}
 
 		private byte[] ReceiveFull(int size)

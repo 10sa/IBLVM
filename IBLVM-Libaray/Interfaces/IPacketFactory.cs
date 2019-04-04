@@ -12,6 +12,8 @@ namespace IBLVM_Libaray.Interfaces
 
 		IPacket CreateServerKeyResponse(byte[] cryptoKey);
 
+		IPacket ParseHeader(byte[] data);
+
 		byte[] MagicBytes { get; }
 
 		int PacketSize { get; }
