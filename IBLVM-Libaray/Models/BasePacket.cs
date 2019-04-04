@@ -14,6 +14,8 @@ namespace IBLVM_Libaray.Models
 	{
 		public PacketType Type { get; private set; }
 
+		byte[] IPacket.MagicBytes => MagicBytes;
+
 		public static readonly byte[] MagicBytes = new byte[] { 0xDA, 0xAB, 0xBC, 0xCD };
 
 		private BasePacket() { }
@@ -56,5 +58,10 @@ namespace IBLVM_Libaray.Models
 		public static int GetHeaderSize() => MagicBytes.Length + sizeof(int) + sizeof(PacketType);
 
 		public virtual Stream GetPayloadStream() => new MemoryStream(256);
+
+		int IPacket.GetPayloadSize()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -30,10 +30,12 @@ namespace IBLVM_Libaray.Models
 			buffer.Write(cryptoKey, 0, cryptoKey.Length);
 		}
 
-		public override void GetPayload(Stream buffer)
+		public override Stream GetPayloadStream()
 		{
-			base.GetPayload(buffer);
+			Stream buffer = base.GetPayloadStream();
 			WriteToStream(buffer, cryptoKey);
+
+			return buffer;
 		}
 
 		public override int GetPayloadSize() => base.GetPayloadSize() + cryptoKey.Length;

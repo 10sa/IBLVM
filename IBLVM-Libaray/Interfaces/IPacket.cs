@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+using IBLVM_Libaray.Enums;
+
 namespace IBLVM_Libaray.Interfaces
 {
 	/// <summary>
@@ -29,5 +31,9 @@ namespace IBLVM_Libaray.Interfaces
 		/// </summary>
 		/// <returns>패킷의 페이로드가 담긴 스트림입니다. 페이로드가 없는 경우 null 입니다.</returns>
 		Stream GetPayloadStream();
+
+		PacketType Type { get; }
+
+		byte[] MagicBytes { get; }
 	}
 }
