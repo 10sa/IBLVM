@@ -25,13 +25,6 @@ namespace IBLVM_Libaray.Models
 			Array.Copy(cryptoKey, 0, data, offset, data.Length - offset);
 		}
 
-		protected override void CreateBytes(Stream buffer)
-		{
-			base.CreateBytes(buffer);
-			buffer.Write(BitConverter.GetBytes(buffer.Length), 0, sizeof(int));
-			buffer.Write(cryptoKey, 0, cryptoKey.Length);
-		}
-
 		public override void GetPayload(Stream buffer)
 		{
 			base.GetPayload(buffer);
