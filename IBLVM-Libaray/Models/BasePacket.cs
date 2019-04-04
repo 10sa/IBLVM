@@ -55,6 +55,6 @@ namespace IBLVM_Libaray.Models
 
 		public static int GetHeaderSize() => MagicBytes.Length + sizeof(int) + sizeof(PacketType);
 
-		public virtual Stream GetPayload() => new MemoryStream(256);
+		public virtual Stream GetPayloadStream() => new MemoryStream(256);
 	}
 }
