@@ -21,11 +21,12 @@ namespace IBLVM_Client
 		private readonly IPacketFactory packetFactory = new PacketFactroy();
 		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
 		private readonly ECDiffieHellmanCng keyExchanger = new ECDiffieHellmanCng();
-		private byte[] socketBuffer = new byte[256];
+		private byte[] socketBuffer;
 		private CryptoMemoryStream cryptoStream;
 
 		public IBLVMClient()
 		{
+			socketBuffer = new byte[packetFactory.PacketSize * 2];
 			keyExchanger.HashAlgorithm = CngAlgorithm.Sha256;
 			keyExchanger.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
 		}
@@ -40,21 +41,33 @@ namespace IBLVM_Client
 		{
 			socket.Send(packetFactory.CreateClientHello().GetPacketBytes());
 			ReceiveFull(socketBuffer, packetFactory.PacketSize);
+			IPacket header = packetFactory.Parse(socketBuffer);
 
-			if (socketBuffer.SequenceEqual(packetFactory.MagicBytes) && 
-				(PacketType)BitConverter.ToUInt16(socketBuffer, packetFactory.MagicBytes.Length) == PacketType.ServerKeySend)
+			if (header.Type == PacketType.ServerKeySend)
 			{
-				ReceiveFull(socketBuffer, sizeof(int));
-				int keySize = BitConverter.ToInt32(socketBuffer, 0);
-
-				byte[] publicKey = ReceiveFull(keySize);
+				byte[] publicKey = ReceiveFull(header.GetPayloadSize());
 				byte[] shareKey = keyExchanger.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
 
 				cryptoStream = new CryptoMemoryStream(shareKey, shareKey);
-				socket.Send(packetFactory.CreateServerKeyResponse(keyExchanger.PublicKey.ToByteArray()).GetPacketBytes());
+				IPacket responsePacket = packetFactory.CreateServerKeyResponse(keyExchanger.PublicKey.ToByteArray());
+				SendPacket(responsePacket);
 			}
 			else
 				throw new ProtocolViolationException("Received wrong header.");
+		}
+
+		private void SendPacket(IPacket packet)
+		{
+			socket.Send(packet.GetPacketBytes());
+			if (packet.GetPayloadSize() > 0)
+			{
+				using (Stream stream = packet.GetPayloadStream())
+				{
+					int readedSize;
+					while ((readedSize = stream.Read(socketBuffer, 0, socketBuffer.Length)) > 0)
+						socket.Send(socketBuffer, readedSize, SocketFlags.None);
+				}
+			}
 		}
 
 		private byte[] ReceiveFull(int size)
