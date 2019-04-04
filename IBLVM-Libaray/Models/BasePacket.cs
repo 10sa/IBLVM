@@ -10,7 +10,7 @@ using System.IO;
 
 namespace IBLVM_Libaray.Models
 {
-	public abstract class BasePacket : IPacket
+	public class BasePacket : IPacket
 	{
 		public PacketType Type { get; private set; }
 
