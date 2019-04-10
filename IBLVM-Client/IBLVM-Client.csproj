@@ -45,9 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\SocketStatus.cs" />
-    <Compile Include="Handlers\ServerKeyHandler.cs" />
+    <Compile Include="Handlers\IVExchangeHandler.cs" />
     <Compile Include="IBLVMClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SocketHandlerChain.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IBLVM-Libaray\IBLVM-Libaray.csproj">

@@ -40,6 +40,7 @@ namespace IBLVM_Client
 			networkStream = new NetworkStream(socket);
 		}
 
+		#region Public methods
 		public void Connect(IPEndPoint remoteEndPoint)
 		{
 			socket.Connect(remoteEndPoint);
@@ -49,45 +50,38 @@ namespace IBLVM_Client
 		private void Handshake()
 		{
 			socket.Send(packetFactory.CreateClientHello().GetPacketBytes());
-			ReceiveFull(socketBuffer, packetFactory.PacketSize);
+			SocketUtil.ReceiveFull(networkStream, socketBuffer, packetFactory.PacketSize);
 			IPacket header = packetFactory.ParseHeader(socketBuffer);
 
 			if (header.Type == PacketType.ServerKeySend)
 			{
-				byte[] publicKey = ReceiveFull(header.GetPayloadSize());
+				byte[] publicKey = SocketUtil.ReceiveFull(networkStream, header.GetPayloadSize());
 				byte[] shareKey = keyExchanger.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
 
 				cryptoStream = new CryptoMemoryStream(shareKey, shareKey);
 				IPacket responsePacket = packetFactory.CreateServerKeyResponse(keyExchanger.PublicKey.ToByteArray());
-				SocketUtil.SendPacket(socket, responsePacket);
+				SocketUtil.SendPacket(networkStream, responsePacket);
 			}
 			else
 				throw new ProtocolViolationException("Received wrong header.");
 		}
+		#endregion
 
-		private byte[] ReceiveFull(int size)
-		{
-			byte[] buffer = new byte[size];
-			ReceiveFull(buffer, size);
-
-			return buffer;
-		}
-
-		private void ReceiveFull(byte[] buffer, int size)
-		{
-			for (int i = 0; i < size;)
-				i += socket.Receive(buffer, i, size - i, SocketFlags.None);
-		}
-
+		#region IDispose implements
 		public void Dispose()
 		{
 			cryptoStream.Dispose();
 			keyExchanger.Dispose();
 			socket.Dispose();
 		}
+		#endregion
 
+		#region IIBLVMSocket implements
 		public void SetSocketStatus(int status) => Status = (SocketStatus)status;
 
-		public void GetSocketStream() => networkStream;
+		public NetworkStream GetSocketStream() => networkStream;
+
+		public CryptoMemoryStream GetCryptoStream() => cryptoStream;
+		#endregion
 	}
 }
