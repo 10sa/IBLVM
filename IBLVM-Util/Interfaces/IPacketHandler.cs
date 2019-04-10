@@ -11,6 +11,6 @@ namespace IBLVM_Util.Interfaces
 {
 	public interface IPacketHandler
 	{
-		bool Handle(IPacket header, IIBLVMSocket socket;
+		bool Handle(IPacket header, IIBLVMSocket socket);
 	}
 }
