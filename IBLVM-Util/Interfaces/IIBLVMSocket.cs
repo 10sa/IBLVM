@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using CryptoStream;
 using System.Net.Sockets;
 
 namespace IBLVM_Util.Interfaces
@@ -13,5 +14,7 @@ namespace IBLVM_Util.Interfaces
 		void SetSocketStatus(int status);
 
 		NetworkStream GetSocketStream();
+
+		CryptoMemoryStream GetCryptoStream();
 	}
 }
