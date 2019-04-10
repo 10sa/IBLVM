@@ -20,14 +20,18 @@ namespace IBLVM_Tests
 		public void ClientHelloTest()
 		{
 			byte[] bytes = packetFactroy.CreateClientHello().GetPacketBytes();
-			Assert.IsTrue(BitConverter.ToUInt16(bytes, 0) == (ushort)PacketType.Hello);
+			IPacket packet = packetFactroy.ParseHeader(bytes);
+
+			Assert.IsTrue(packet.Type == PacketType.Hello);
 		}
 
 		[TestMethod]
 		public void ServerKeyResponseTest()
 		{
 			byte[] bytes = packetFactroy.CreateServerKeyResponse(new byte[0]).GetPacketBytes();
-			Assert.IsTrue(BitConverter.ToUInt16(bytes, 0) == (ushort)PacketType.ServerKeySend);
+			IPacket packet = packetFactroy.ParseHeader(bytes);
+
+			Assert.IsTrue(packet.Type == PacketType.ServerKeySend);
 		}
 	}
 }
