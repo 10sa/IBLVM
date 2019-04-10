@@ -25,17 +25,19 @@ namespace IBLVM_Client
 	{
 		public SocketStatus Status { get; private set; }
 
-		private readonly IPacketFactory packetFactory = new PacketFactroy();
 		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
 		private readonly ECDiffieHellmanCng keyExchanger = new ECDiffieHellmanCng();
-		private readonly byte[] socketBuffer;
+		private readonly IPacketFactory packetFactory = new PacketFactroy();
+		private readonly NetworkStream networkStream;
 		private CryptoMemoryStream cryptoStream;
+		private readonly byte[] socketBuffer;
 
 		public IBLVMClient()
 		{
+			keyExchanger.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
 			socketBuffer = new byte[packetFactory.PacketSize * 2];
 			keyExchanger.HashAlgorithm = CngAlgorithm.Sha256;
-			keyExchanger.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
+			networkStream = new NetworkStream(socket);
 		}
 
 		public void Connect(IPEndPoint remoteEndPoint)
@@ -84,6 +86,8 @@ namespace IBLVM_Client
 			socket.Dispose();
 		}
 
-		public void SetSocketStatus(int status) => this.Status = (SocketStatus)status;
+		public void SetSocketStatus(int status) => Status = (SocketStatus)status;
+
+		public void GetSocketStream() => networkStream;
 	}
 }
