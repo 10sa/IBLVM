@@ -7,10 +7,9 @@ using System.Management;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-// Allow internal access to UnitTest project.
-[assembly: InternalsVisibleTo("IBLVM-Tests")]
+using IBLVM_Libaray.Enums;
 
-namespace IBLVM_Libaray.BitLocker
+namespace IBLVM_Libaray
 {
 	/// <summary>
 	/// BitLocker로 암호화된 드라이브를 나타내는 클래스입니다.
@@ -52,21 +51,40 @@ namespace IBLVM_Libaray.BitLocker
 		#endregion
 
 		#region Public methods
+
+		private static readonly ManagementPath path = new ManagementPath(@"Root\CIMV2\Security\MicrosoftVolumeEncryption") {
+			ClassName = "Win32_EncryptableVolume"
+		};
+
 		/// <summary>
 		/// 모든 볼륨을 가져옵니다.
 		/// </summary>
 		/// <returns>볼륨들입니다.</returns>
 		public static BitLocker[] GetVolumes()
 		{
-			var path = new ManagementPath(@"Root\CIMV2\Security\MicrosoftVolumeEncryption") {
-				ClassName = "Win32_EncryptableVolume"
-			};
-
 			List<BitLocker> collection = new List<BitLocker>();
 			foreach (ManagementObject volume in new ManagementClass(new ManagementScope(path), path, new ObjectGetOptions()).GetInstances())
 				collection.Add(new BitLocker(volume));
 
 			return collection.ToArray();
+		}
+
+		/// <summary>
+		/// 주어진 드라이브 문자와 디바이스 ID를 이용하여 BitLocker 볼륨을 반환합니다.
+		/// </summary>
+		/// <param name="deviceLetter">볼륨의 드라이브 문자입니다.</param>
+		/// <param name="deviceID">볼륨의 디바이스 ID 입니다.</param>
+		/// <returns>주어진 값으로 BitLocker를 찾은 경우 볼륨 인스턴스, 아닌 경우 null 입니다.</returns>
+		public static BitLocker GetVolume(string deviceLetter, string deviceID)
+		{
+			foreach (ManagementObject volume in new ManagementClass(new ManagementScope(path), path, new ObjectGetOptions()).GetInstances())
+			{
+				BitLocker bitlocker = new BitLocker(volume);
+				if (bitlocker.DriveLetter == deviceLetter && bitlocker.DeviceID == deviceID)
+					return bitlocker;
+			}
+
+			return null;
 		}
 
 		/// <summary>

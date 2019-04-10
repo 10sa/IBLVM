@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBLVM_Libaray.BitLocker
+namespace IBLVM_Libaray.Enums
 {
 	public enum ProtectionStatus : uint
 	{

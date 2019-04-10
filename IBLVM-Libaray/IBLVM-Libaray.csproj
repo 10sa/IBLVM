@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitLocker\BitLocker.cs" />
-    <Compile Include="BitLocker\ProtectionStatus.cs" />
+    <Compile Include="BitLocker.cs" />
+    <Compile Include="Enums\ProtectionStatus.cs" />
     <Compile Include="Enums\PacketType.cs" />
     <Compile Include="Factories\PacketFactroy.cs" />
     <Compile Include="Interfaces\IPacket.cs" />
