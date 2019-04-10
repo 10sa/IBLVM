@@ -17,7 +17,7 @@ namespace IBLVM_Libaray.Models
 		public BitLockerList(BitLockerVolume[] bitLockers) : base(PacketType.BitLockerList)
 		{
 			bitLockerVolumes = bitLockers;
-			serializedData = SerializeVolumes();
+			serializedData = Serialize();
 		}
 
 		public override void ParsePayload(int payloadSize, Stream stream)
@@ -29,6 +29,16 @@ namespace IBLVM_Libaray.Models
 			for (; payloadSize > readedSize;)
 				readedSize += stream.Read(serializedData, readedSize, payloadSize - readedSize);
 
+			bitLockerVolumes = Deserialize();
+		}
+
+		public override int GetPayloadSize()
+		{
+			return base.GetPayloadSize() + serializedData.Length;
+		}
+
+		private BitLockerVolume[] Deserialize()
+		{
 			string serializedString = Encoding.UTF8.GetString(serializedData);
 			List<BitLockerVolume> volumes = new List<BitLockerVolume>();
 
@@ -38,15 +48,10 @@ namespace IBLVM_Libaray.Models
 				volumes.Add(new BitLockerVolume(data[0], data[1]));
 			}
 
-			bitLockerVolumes = volumes.ToArray();
+			return volumes.ToArray();
 		}
 
-		public override int GetPayloadSize()
-		{
-			return base.GetPayloadSize() + serializedData.Length;
-		}
-
-		private byte[] SerializeVolumes()
+		private byte[] Serialize()
 		{
 			StringBuilder builder = new StringBuilder();
 			foreach(var bitlocker in bitLockerVolumes)
