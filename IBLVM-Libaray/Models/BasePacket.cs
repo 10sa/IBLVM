@@ -59,7 +59,7 @@ namespace IBLVM_Libaray.Models
 
 		public virtual Stream GetPayloadStream() => new MemoryStream(256);
 
-		public virtual void ParsePayload(Stream stream) { }
+		public virtual void ParsePayload(int payloadSize, Stream stream) { }
 
 		int IPacket.GetPayloadSize() => GetPayloadSize();
 	}
