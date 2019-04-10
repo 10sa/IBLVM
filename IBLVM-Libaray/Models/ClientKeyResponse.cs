@@ -19,16 +19,12 @@ namespace IBLVM_Libaray.Models
 			this.cryptoKey = cryptoKey;
 		}
 
-		public ClientKeyResponse(byte[] data, ref int offset) : base(data, ref offset)
+		public override Stream GetPayloadStream()
 		{
-			cryptoKey = new byte[data.Length - offset];
-			Array.Copy(cryptoKey, 0, data, offset, data.Length - offset);
-		}
+			Stream stream = base.GetPayloadStream();
+			WriteToStream(stream, cryptoKey);
 
-		public override void GetPayload(Stream buffer)
-		{
-			base.GetPayload(buffer);
-			WriteToStream(buffer, cryptoKey);
+			return stream;
 		}
 
 		public override int GetPayloadSize() => base.GetPayloadSize() + cryptoKey.Length;

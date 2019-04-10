@@ -9,8 +9,9 @@ namespace IBLVM_Libaray.Enums
 	public enum PacketType : ushort
 	{
 		Hello = 0,
-		ServerKeySend = 1,
-		ClientKeySend = 2,
-		ExchangeInitializeVector = 3
+		ServerKeySend,
+		ClientKeySend,
+		ExchangeInitializeVector,
+		BitLockerList
 	}
 }

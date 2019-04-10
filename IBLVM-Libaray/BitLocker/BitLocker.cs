@@ -15,7 +15,7 @@ namespace IBLVM_Libaray.BitLocker
 	/// <summary>
 	/// BitLocker로 암호화된 드라이브를 나타내는 클래스입니다.
 	/// </summary>
-	sealed class BitLocker
+	public sealed class BitLocker
 	{
 		private readonly ManagementObject bitlockerObject;
 

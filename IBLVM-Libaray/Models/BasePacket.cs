@@ -32,7 +32,7 @@ namespace IBLVM_Libaray.Models
 
 		protected BasePacket(PacketType type) => Type = type;
 
-		protected virtual void CreateBytes(Stream buffer)
+		protected void CreateBytes(Stream buffer)
 		{
 			WriteToStream(buffer, MagicBytes);
 			WriteToStream(buffer, BitConverter.GetBytes(GetPayloadSize()));
@@ -59,9 +59,8 @@ namespace IBLVM_Libaray.Models
 
 		public virtual Stream GetPayloadStream() => new MemoryStream(256);
 
-		int IPacket.GetPayloadSize()
-		{
-			throw new NotImplementedException();
-		}
+		public virtual void ParsePayload(Stream stream) { }
+
+		int IPacket.GetPayloadSize() => GetPayloadSize();
 	}
 }

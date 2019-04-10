@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IBLVM_Libaray.BitLocker
 {
-	enum ProtectionStatus : uint
+	public enum ProtectionStatus : uint
 	{
 		/// <summary>
 		/// 디스크가 BitLocker에 의하여 보호되지 않음을 나타냅니다.
