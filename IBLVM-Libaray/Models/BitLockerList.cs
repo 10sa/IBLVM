@@ -34,7 +34,7 @@ namespace IBLVM_Libaray.Models
 
 			foreach (string volumeInfo in serializedString.Split(';'))
 			{
-				string[] data = volumeInfo.Split(':');
+				string[] data = volumeInfo.Split('/');
 				volumes.Add(new BitLockerVolume(data[0], data[1]));
 			}
 
@@ -51,10 +51,10 @@ namespace IBLVM_Libaray.Models
 			StringBuilder builder = new StringBuilder();
 			foreach(var bitlocker in bitLockerVolumes)
 			{
-				builder.Append("\"");
 				builder.Append(bitlocker.DriveLetter);
+				builder.Append("/");
 				builder.Append(bitlocker.DeviceID);
-				builder.Append("\";");
+				builder.Append(";");
 			}
 
 			return Encoding.UTF8.GetBytes(builder.ToString());
