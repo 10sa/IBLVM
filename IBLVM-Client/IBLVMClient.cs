@@ -13,17 +13,22 @@ using IBLVM_Libaray.Factories;
 using IBLVM_Libaray.Enums;
 
 using IBLVM_Util;
+using IBLVM_Util.Interfaces;
+
+using IBLVM_Client.Enums;
 
 using CryptoStream;
 
 namespace IBLVM_Client
 {
-	public class IBLVMClient
+	public class IBLVMClient : IDisposable, IIBLVMSocket
 	{
+		public SocketStatus Status { get; private set; }
+
 		private readonly IPacketFactory packetFactory = new PacketFactroy();
 		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
 		private readonly ECDiffieHellmanCng keyExchanger = new ECDiffieHellmanCng();
-		private byte[] socketBuffer;
+		private readonly byte[] socketBuffer;
 		private CryptoMemoryStream cryptoStream;
 
 		public IBLVMClient()
@@ -71,5 +76,14 @@ namespace IBLVM_Client
 			for (int i = 0; i < size;)
 				i += socket.Receive(buffer, i, size - i, SocketFlags.None);
 		}
+
+		public void Dispose()
+		{
+			cryptoStream.Dispose();
+			keyExchanger.Dispose();
+			socket.Dispose();
+		}
+
+		public void SetSocketStatus(int status) => this.Status = (SocketStatus)status;
 	}
 }
