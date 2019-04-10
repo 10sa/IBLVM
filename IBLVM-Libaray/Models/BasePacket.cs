@@ -18,8 +18,7 @@ namespace IBLVM_Libaray.Models
 
 		public static readonly byte[] MagicBytes = new byte[] { 0xDA, 0xAB, 0xBC, 0xCD };
 
-		// This variable is parsed instance's payload size //
-		private readonly int payloadSize = 0;
+		private int payloadSize = 0;
 
 		private BasePacket() { }
 
@@ -71,7 +70,7 @@ namespace IBLVM_Libaray.Models
 		public virtual void ParsePayload(int payloadSize, Stream stream)
 		{
 			// Re-define temp size //
-			payloadSize = 0;
+			this.payloadSize = 0;
 		}
 
 		int IPacket.GetPayloadSize() => GetPayloadSize();
