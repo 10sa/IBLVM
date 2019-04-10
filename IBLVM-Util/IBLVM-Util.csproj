@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IIBLVMSocket.cs" />
+    <Compile Include="Interfaces\IPacketHandler.cs" />
+    <Compile Include="PacketHandlerChain.cs" />
     <Compile Include="SocketUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -50,5 +53,6 @@
       <Name>IBLVM-Libaray</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
