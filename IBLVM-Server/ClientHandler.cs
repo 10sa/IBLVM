@@ -20,7 +20,7 @@ namespace IBLVM_Server
 	/// <summary>
 	/// 클라이언트 소켓에 대한 응답 처리를 위한 클래스입니다.
 	/// </summary>
-	class ClientHandler : IIBLVMSocket
+	class ClientHandler : IIBLVMSocket, IDisposable
 	{
 		public Thread Thread { get; private set; }
 
@@ -45,9 +45,18 @@ namespace IBLVM_Server
 		{
 			Thread = new Thread(() =>
 			{
-				SocketUtil.ReceiveFull(socketStream, buffer, factory.PacketSize);
-				IPacket header = factory.ParseHeader(buffer);
-				chain.DoHandle(header);
+				while(true)
+				{
+					try
+					{
+						SocketUtil.ReceiveFull(socketStream, buffer, factory.PacketSize);
+						IPacket header = factory.ParseHeader(buffer);
+						chain.DoHandle(header);
+					}
+					finally {
+						Dispose();
+					}
+				}
 			});
 		}
 
@@ -57,6 +66,18 @@ namespace IBLVM_Server
 		public void SetSocketStatus(int status) => Status = (SocketStatus)status;
 
 		public NetworkStream GetSocketStream() => socketStream;
+		#endregion
+
+		#region IDisposable Implements
+		public void Dispose()
+		{
+			socket.Disconnect(false);
+			socket.Dispose();
+
+			socketStream.Close();
+			CryptoStream.Dispose();
+			buffer = null;
+		}
 		#endregion
 	}
 }
