@@ -31,7 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CryptoStream">
+    <Reference Include="CryptoStream, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\3rd-party-library\CryptoStream.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -56,6 +57,5 @@
       <Name>IBLVM-Libaray</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
