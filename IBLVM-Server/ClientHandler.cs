@@ -24,19 +24,19 @@ namespace IBLVM_Server
 		public Thread Thread { get; private set; }
 
 		private readonly NetworkStream socketStream;
-		private readonly PacketHandlerChain chain;
+		private readonly ServerHandlerChain chain;
 		private readonly IPacketFactory factory;
 		private byte[] buffer;
 		private readonly Socket socket;
 
-		public ClientHandler(Socket socket, IPacketFactory factory)
+		public ClientHandler(Socket socket, IPacketFactory packetFactory)
 		{
 			this.socket = socket;
-			this.factory = factory;
+			this.factory = packetFactory;
 
-			buffer = new byte[factory.PacketSize * 2];
+			buffer = new byte[packetFactory.PacketSize * 2];
 			socketStream = new NetworkStream(socket);
-			chain = new PacketHandlerChain(this);
+			chain = new ServerHandlerChain(this, packetFactory);
 		}
 
 		public void Start()
