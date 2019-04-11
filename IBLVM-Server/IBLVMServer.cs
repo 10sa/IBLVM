@@ -14,7 +14,7 @@ using System.Net;
 
 namespace IBLVM_Server
 {
-	class IBLVMServer
+	public class IBLVMServer
 	{
 		public Thread ServerThread { get; private set; }
 
