@@ -52,7 +52,7 @@ namespace IBLVM_Client
 			SocketUtil.ReceiveFull(networkStream, socketBuffer, packetFactory.PacketSize);
 			IPacket header = packetFactory.ParseHeader(socketBuffer);
 
-			if (header.Type == PacketType.ServerKeySend)
+			if (header.Type == PacketType.ServerKeyResponse)
 			{
 				byte[] publicKey = SocketUtil.ReceiveFull(networkStream, header.GetPayloadSize());
 				byte[] shareKey = keyExchanger.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));

@@ -25,8 +25,7 @@ namespace IBLVM_Libaray.Models
 			base.ParsePayload(payloadSize, stream);
 			serializedData = new byte[payloadSize];
 
-			int readedSize = 0;
-			for (; payloadSize > readedSize;)
+			for (int readedSize = 0; payloadSize > readedSize;)
 				readedSize += stream.Read(serializedData, readedSize, payloadSize - readedSize);
 
 			bitLockerVolumes = Deserialize();

@@ -9,7 +9,7 @@ namespace IBLVM_Libaray.Enums
 	public enum PacketType : short
 	{
 		Hello = 0,
-		ServerKeySend,
+		ServerKeyResponse,
 		ClientKeySend,
 		ExchangeInitializeVector,
 		BitLockerList

@@ -31,7 +31,7 @@ namespace IBLVM_Tests
 			byte[] bytes = packetFactroy.CreateServerKeyResponse(new byte[0]).GetPacketBytes();
 			IPacket packet = packetFactroy.ParseHeader(bytes);
 
-			Assert.IsTrue(packet.Type == PacketType.ServerKeySend);
+			Assert.IsTrue(packet.Type == PacketType.ServerKeyResponse);
 		}
 	}
 }

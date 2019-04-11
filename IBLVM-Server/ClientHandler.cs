@@ -27,9 +27,9 @@ namespace IBLVM_Server
 		public SocketStatus Status { get; private set; }
 
 		private readonly NetworkStream socketStream;
-		private byte[] buffer = new byte[256];
 		private readonly PacketHandlerChain chain;
 		private readonly IPacketFactory factory;
+		private byte[] buffer = new byte[256];
 		private readonly Socket socket;
 
 		public ClientHandler(Socket socket, IPacketFactory factory)
