@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CryptoStream">
+      <HintPath>..\3rd-party-library\CryptoStream.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -53,6 +56,7 @@
     <Compile Include="Models\BitLockerVolume.cs" />
     <Compile Include="Models\ClientHello.cs" />
     <Compile Include="Models\ClientKeyResponse.cs" />
+    <Compile Include="Models\CryptoProvider.cs" />
     <Compile Include="Models\ExchangeInitalizeVector.cs" />
     <Compile Include="Models\ServerKeyResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
