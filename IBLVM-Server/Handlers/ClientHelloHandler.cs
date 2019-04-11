@@ -39,7 +39,8 @@ namespace IBLVM_Server.Handlers
 				IPacket packet = packetFactory.CreateServerKeyResponse(keyExchanger.PublicKey.ToByteArray());
 				SocketUtil.SendPacket(socket.GetSocketStream(), packet);
 
-				socket.Status = (int)SocketStatus.KeyResponsed;
+				socket.Status = (int)SocketStatus.ServerKeyResponsed;
+				return true;
 			}
 
 			return false;
