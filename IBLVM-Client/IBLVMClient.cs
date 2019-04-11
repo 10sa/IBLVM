@@ -56,7 +56,7 @@ namespace IBLVM_Client
 				byte[] shareKey = CryptoProvider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
 
 				CryptoProvider.CryptoStream = new CryptoMemoryStream(shareKey, shareKey);
-				IPacket responsePacket = packetFactory.CreateServerKeyResponse(CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
+				IPacket responsePacket = packetFactory.CreateClientKeyResponse(CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
 				SocketUtil.SendPacket(networkStream, responsePacket);
 			}
 			else

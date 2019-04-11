@@ -10,7 +10,7 @@ namespace IBLVM_Libaray.Enums
 	{
 		Hello = 0,
 		ServerKeyResponse,
-		ClientKeySend,
+		ClientKeyResponse,
 		ExchangeInitializeVector,
 		BitLockerList
 	}

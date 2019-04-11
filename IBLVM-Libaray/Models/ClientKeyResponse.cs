@@ -14,7 +14,7 @@ namespace IBLVM_Libaray.Models
 	{
 		private readonly byte[] cryptoKey;
 
-		public ClientKeyResponse(byte[] cryptoKey) : base(PacketType.ClientKeySend)
+		public ClientKeyResponse(byte[] cryptoKey) : base(PacketType.ClientKeyResponse)
 		{
 			this.cryptoKey = cryptoKey;
 		}

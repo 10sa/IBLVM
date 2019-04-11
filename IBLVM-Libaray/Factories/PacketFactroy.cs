@@ -16,6 +16,8 @@ namespace IBLVM_Libaray.Factories
 
 		public IPacket CreateClientHello() => new ClientHello();
 
+		public IPacket CreateClientKeyResponse(byte[] cryptoKey) => new ClientKeyResponse(cryptoKey);
+
 		public IPacket CreateServerKeyResponse(byte[] cryptoKey) => new ServerKeyResponse(cryptoKey);
 
 		public IPacket ParseHeader(byte[] data)
