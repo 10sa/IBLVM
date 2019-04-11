@@ -26,12 +26,11 @@ namespace IBLVM_Server
 
 		public SocketStatus Status { get; private set; }
 
-		private CryptoMemoryStream cryptoStream;
-		private NetworkStream socketStream;
+		private readonly NetworkStream socketStream;
 		private byte[] buffer = new byte[256];
-		private PacketHandlerChain chain;
-		private IPacketFactory factory;
-		private Socket socket;
+		private readonly PacketHandlerChain chain;
+		private readonly IPacketFactory factory;
+		private readonly Socket socket;
 
 		public ClientHandler(Socket socket, IPacketFactory factory)
 		{
@@ -52,10 +51,12 @@ namespace IBLVM_Server
 			});
 		}
 
+		#region IIBLVMSocket Implements
+		public CryptoMemoryStream CryptoStream { get; set; }
+
 		public void SetSocketStatus(int status) => Status = (SocketStatus)status;
 
 		public NetworkStream GetSocketStream() => socketStream;
-
-		public CryptoMemoryStream GetCryptoStream() => cryptoStream;
+		#endregion
 	}
 }

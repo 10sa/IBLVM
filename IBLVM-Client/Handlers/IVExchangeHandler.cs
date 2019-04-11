@@ -18,7 +18,7 @@ namespace IBLVM_Client.Handlers
 			if (header.Type == PacketType.ExchangeInitializeVector)
 			{
 				socket.GetSocketStream();
-				CryptoMemoryStream stream = socket.GetCryptoStream();
+				CryptoMemoryStream stream = socket.CryptoStream();
 
 
 				return true;

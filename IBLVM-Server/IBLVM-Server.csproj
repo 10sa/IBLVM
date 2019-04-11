@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ClientHandler.cs" />
     <Compile Include="Enums\SocketStatus.cs" />
+    <Compile Include="Handlers\HandshakeHandler.cs" />
     <Compile Include="IBLVMServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,8 +60,6 @@
       <Name>IBLVM-Util</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Handlers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

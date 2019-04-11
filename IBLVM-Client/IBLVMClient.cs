@@ -29,7 +29,6 @@ namespace IBLVM_Client
 		private readonly ECDiffieHellmanCng keyExchanger = new ECDiffieHellmanCng();
 		private readonly IPacketFactory packetFactory = new PacketFactroy();
 		private readonly NetworkStream networkStream;
-		private CryptoMemoryStream cryptoStream;
 		private readonly byte[] socketBuffer;
 
 		public IBLVMClient()
@@ -58,7 +57,7 @@ namespace IBLVM_Client
 				byte[] publicKey = SocketUtil.ReceiveFull(networkStream, header.GetPayloadSize());
 				byte[] shareKey = keyExchanger.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
 
-				cryptoStream = new CryptoMemoryStream(shareKey, shareKey);
+				CryptoStream = new CryptoMemoryStream(shareKey, shareKey);
 				IPacket responsePacket = packetFactory.CreateServerKeyResponse(keyExchanger.PublicKey.ToByteArray());
 				SocketUtil.SendPacket(networkStream, responsePacket);
 			}
@@ -70,18 +69,18 @@ namespace IBLVM_Client
 		#region IDispose implements
 		public void Dispose()
 		{
-			cryptoStream.Dispose();
+			CryptoStream.Dispose();
 			keyExchanger.Dispose();
 			socket.Dispose();
 		}
 		#endregion
 
 		#region IIBLVMSocket implements
+		public CryptoMemoryStream CryptoStream { get; set; }
+
 		public void SetSocketStatus(int status) => Status = (SocketStatus)status;
 
 		public NetworkStream GetSocketStream() => networkStream;
-
-		public CryptoMemoryStream GetCryptoStream() => cryptoStream;
 		#endregion
 	}
 }

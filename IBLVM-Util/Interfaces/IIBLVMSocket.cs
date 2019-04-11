@@ -15,6 +15,6 @@ namespace IBLVM_Util.Interfaces
 
 		NetworkStream GetSocketStream();
 
-		CryptoMemoryStream GetCryptoStream();
+		CryptoMemoryStream CryptoStream { get; set; }
 	}
 }
