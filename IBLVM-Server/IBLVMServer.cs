@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
+using IBLVM_Libaray.Interfaces;
+using IBLVM_Libaray.Factories;
+
 using System.Net.Sockets;
 using System.Net;
 
@@ -15,6 +18,7 @@ namespace IBLVM_Server
 		public Thread ServerThread { get; private set; }
 
 		private Socket serverSocket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+		private readonly IPacketFactory factory = new PacketFactroy();
 		private List<ClientHandler> clientHandlers = new List<ClientHandler>();
 
 		public void Bind(EndPoint localEndPoint) => serverSocket.Bind(localEndPoint);
@@ -26,10 +30,8 @@ namespace IBLVM_Server
 			ServerThread = new Thread(() =>
 			{
 				Socket clientSocket = serverSocket.Accept();
-				ClientHandler clientHandler = new ClientHandler(clientSocket);
+				ClientHandler clientHandler = new ClientHandler(clientSocket, factory);
 				clientHandlers.Add(clientHandler);
-
-				clientHandler.Start();
 			});
 
 			ServerThread.Start();
