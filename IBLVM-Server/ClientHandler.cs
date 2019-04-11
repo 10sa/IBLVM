@@ -24,7 +24,7 @@ namespace IBLVM_Server
 	{
 		public Thread Thread { get; private set; }
 
-		public SocketStatus Status { get; private set; }
+		public int Status { get; set; } = (int)SocketStatus.Uninitialized;
 
 		private readonly NetworkStream socketStream;
 		private readonly PacketHandlerChain chain;
@@ -63,8 +63,6 @@ namespace IBLVM_Server
 
 		#region IIBLVMSocket Implements
 		public CryptoMemoryStream CryptoStream { get; set; }
-
-		public void SetSocketStatus(int status) => Status = (SocketStatus)status;
 
 		public NetworkStream GetSocketStream() => socketStream;
 		#endregion

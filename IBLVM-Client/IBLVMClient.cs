@@ -23,7 +23,7 @@ namespace IBLVM_Client
 {
 	public class IBLVMClient : IDisposable, IIBLVMSocket
 	{
-		public SocketStatus Status { get; private set; }
+		public int Status { get; set; }
 
 		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
 		private readonly ECDiffieHellmanCng keyExchanger = new ECDiffieHellmanCng();
@@ -77,8 +77,6 @@ namespace IBLVM_Client
 
 		#region IIBLVMSocket implements
 		public CryptoMemoryStream CryptoStream { get; set; }
-
-		public void SetSocketStatus(int status) => Status = (SocketStatus)status;
 
 		public NetworkStream GetSocketStream() => networkStream;
 		#endregion

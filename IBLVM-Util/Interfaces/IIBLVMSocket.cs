@@ -11,7 +11,7 @@ namespace IBLVM_Util.Interfaces
 {
 	public interface IIBLVMSocket
 	{
-		void SetSocketStatus(int status);
+		int Status { get; set; }
 
 		NetworkStream GetSocketStream();
 

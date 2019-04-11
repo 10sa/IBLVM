@@ -9,6 +9,11 @@ namespace IBLVM_Server.Enums
 	enum SocketStatus : int
 	{
 		/// <summary>
+		/// IBLVM 프로토콜의 핸드셰이크 과정이 이뤄지지 않았음을 의미합니다.
+		/// </summary>
+		Uninitialized,
+
+		/// <summary>
 		/// 클라이언트에게 키를 전송하였으며, 클라이언트 측의 공개 키를 기다리는 상태입니다.
 		/// </summary>
 		KeyResponsed,

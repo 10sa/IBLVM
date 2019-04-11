@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Net;
+
 using System.Security.Cryptography;
 
 using IBLVM_Libaray.Interfaces;
@@ -31,10 +33,13 @@ namespace IBLVM_Server.Handlers
 		{
 			if (header.Type == PacketType.Hello)
 			{
+				if (socket.Status != (int)SocketStatus.Uninitialized)
+					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
+
 				IPacket packet = packetFactory.CreateServerKeyResponse(keyExchanger.PublicKey.ToByteArray());
 				SocketUtil.SendPacket(socket.GetSocketStream(), packet);
 
-				socket.SetSocketStatus((int)SocketStatus.KeyResponsed);
+				socket.Status = (int)SocketStatus.KeyResponsed;
 			}
 
 			return false;
