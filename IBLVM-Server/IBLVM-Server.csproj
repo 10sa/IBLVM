@@ -47,6 +47,7 @@
     <Compile Include="ClientHandler.cs" />
     <Compile Include="Enums\SocketStatus.cs" />
     <Compile Include="Handlers\ClientHelloHandler.cs" />
+    <Compile Include="Handlers\ClientKeyResponseHandler.cs" />
     <Compile Include="IBLVMServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
