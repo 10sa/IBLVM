@@ -20,10 +20,14 @@ namespace IBLVM_Util
 
 		public void AddHandler(IPacketHandler handler) => handlers.Add(handler);
 
-		public void DoHandle(IPacket header)
+		public bool DoHandle(IPacket header)
 		{
-			for (int i = 0; i < handlers.Capacity
-			 && !handlers[i].Handle(header, socket); i++) ;
+			bool isHandled = false;
+
+			for (int i = 0; i < handlers.Capacity; i++)
+				isHandled = handlers[i].Handle(header, socket) || isHandled ? true : false;
+
+			return isHandled;
 		}
 	}
 }
