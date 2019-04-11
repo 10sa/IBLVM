@@ -33,6 +33,8 @@ namespace IBLVM_Server.Handlers
 			{
 				IPacket packet = packetFactory.CreateServerKeyResponse(keyExchanger.PublicKey.ToByteArray());
 				SocketUtil.SendPacket(socket.GetSocketStream(), packet);
+
+				socket.SetSocketStatus((int)SocketStatus.KeyResponsed);
 			}
 
 			return false;
