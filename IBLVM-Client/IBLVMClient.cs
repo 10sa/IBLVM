@@ -11,6 +11,7 @@ using System.IO;
 using IBLVM_Libaray.Interfaces;
 using IBLVM_Libaray.Factories;
 using IBLVM_Libaray.Enums;
+using IBLVM_Libaray.Models;
 
 using IBLVM_Util;
 using IBLVM_Util.Interfaces;
@@ -23,19 +24,16 @@ namespace IBLVM_Client
 {
 	public class IBLVMClient : IDisposable, IIBLVMSocket
 	{
-		public int Status { get; set; }
-
 		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
-		private readonly ECDiffieHellmanCng keyExchanger = new ECDiffieHellmanCng();
 		private readonly IPacketFactory packetFactory = new PacketFactroy();
 		private readonly NetworkStream networkStream;
 		private readonly byte[] socketBuffer;
 
 		public IBLVMClient()
 		{
-			keyExchanger.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
+			CryptoProvider.ECDiffieHellman.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
 			socketBuffer = new byte[packetFactory.PacketSize * 2];
-			keyExchanger.HashAlgorithm = CngAlgorithm.Sha256;
+			CryptoProvider.ECDiffieHellman.HashAlgorithm = CngAlgorithm.Sha256;
 			networkStream = new NetworkStream(socket);
 		}
 
@@ -55,10 +53,10 @@ namespace IBLVM_Client
 			if (header.Type == PacketType.ServerKeyResponse)
 			{
 				byte[] publicKey = SocketUtil.ReceiveFull(networkStream, header.GetPayloadSize());
-				byte[] shareKey = keyExchanger.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
+				byte[] shareKey = CryptoProvider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
 
-				CryptoStream = new CryptoMemoryStream(shareKey, shareKey);
-				IPacket responsePacket = packetFactory.CreateServerKeyResponse(keyExchanger.PublicKey.ToByteArray());
+				CryptoProvider.CryptoStream = new CryptoMemoryStream(shareKey, shareKey);
+				IPacket responsePacket = packetFactory.CreateServerKeyResponse(CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
 				SocketUtil.SendPacket(networkStream, responsePacket);
 			}
 			else
@@ -69,14 +67,16 @@ namespace IBLVM_Client
 		#region IDispose implements
 		public void Dispose()
 		{
-			CryptoStream.Dispose();
-			keyExchanger.Dispose();
+			CryptoProvider.CryptoStream.Dispose();
+			CryptoProvider.ECDiffieHellman.Dispose();
 			socket.Dispose();
 		}
 		#endregion
 
 		#region IIBLVMSocket implements
-		public CryptoMemoryStream CryptoStream { get; set; }
+		public int Status { get; set; }
+
+		public CryptoProvider CryptoProvider { get; set; }
 
 		public NetworkStream GetSocketStream() => networkStream;
 		#endregion

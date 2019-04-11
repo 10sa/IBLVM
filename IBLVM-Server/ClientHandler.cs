@@ -10,10 +10,9 @@ using IBLVM_Util;
 using IBLVM_Util.Interfaces;
 
 using IBLVM_Libaray.Interfaces;
+using IBLVM_Libaray.Models;
 
 using IBLVM_Server.Enums;
-
-using CryptoStream;
 
 namespace IBLVM_Server
 {
@@ -23,8 +22,6 @@ namespace IBLVM_Server
 	class ClientHandler : IIBLVMSocket, IDisposable
 	{
 		public Thread Thread { get; private set; }
-
-		public int Status { get; set; } = (int)SocketStatus.Uninitialized;
 
 		private readonly NetworkStream socketStream;
 		private readonly PacketHandlerChain chain;
@@ -62,7 +59,9 @@ namespace IBLVM_Server
 		}
 
 		#region IIBLVMSocket Implements
-		public CryptoMemoryStream CryptoStream { get; set; }
+		public int Status { get; set; } = (int)SocketStatus.Uninitialized;
+
+		public CryptoProvider CryptoProvider { get; set; }
 
 		public NetworkStream GetSocketStream() => socketStream;
 		#endregion
@@ -74,7 +73,7 @@ namespace IBLVM_Server
 			socket.Dispose();
 
 			socketStream.Close();
-			CryptoStream.Dispose();
+			CryptoProvider.Dispose();
 			buffer = null;
 		}
 		#endregion
