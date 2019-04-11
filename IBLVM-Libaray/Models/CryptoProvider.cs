@@ -18,6 +18,8 @@ namespace IBLVM_Libaray.Models
 		
 		public ECDiffieHellmanCng ECDiffieHellman { get; set; }
 
+		public byte[] SharedKey { get; set; }
+
 		public void Dispose()
 		{
 			if (CryptoStream != null)
@@ -25,6 +27,8 @@ namespace IBLVM_Libaray.Models
 
 			if (ECDiffieHellman != null)
 				ECDiffieHellman.Dispose();
+
+			SharedKey = null;
 		}
 	}
 }

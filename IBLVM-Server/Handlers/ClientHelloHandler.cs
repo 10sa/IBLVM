@@ -21,7 +21,6 @@ namespace IBLVM_Server.Handlers
 {
 	class ClientHelloHandler : IPacketHandler
 	{
-		private readonly ECDiffieHellmanCng keyExchanger = new ECDiffieHellmanCng();
 		private IPacketFactory packetFactory;
 
 		public ClientHelloHandler(IPacketFactory packetFactory)
@@ -36,7 +35,8 @@ namespace IBLVM_Server.Handlers
 				if (socket.Status != (int)SocketStatus.Uninitialized)
 					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
-				IPacket packet = packetFactory.CreateServerKeyResponse(keyExchanger.PublicKey.ToByteArray());
+				socket.CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng();
+				IPacket packet = packetFactory.CreateServerKeyResponse(socket.CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
 				SocketUtil.SendPacket(socket.GetSocketStream(), packet);
 
 				socket.Status = (int)SocketStatus.ServerKeyResponsed;
