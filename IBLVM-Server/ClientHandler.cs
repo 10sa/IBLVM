@@ -29,15 +29,16 @@ namespace IBLVM_Server
 		private readonly NetworkStream socketStream;
 		private readonly PacketHandlerChain chain;
 		private readonly IPacketFactory factory;
-		private byte[] buffer = new byte[256];
+		private byte[] buffer;
 		private readonly Socket socket;
 
 		public ClientHandler(Socket socket, IPacketFactory factory)
 		{
 			this.socket = socket;
 			this.factory = factory;
-			socketStream = new NetworkStream(socket);
 
+			buffer = new byte[factory.PacketSize * 2];
+			socketStream = new NetworkStream(socket);
 			chain = new PacketHandlerChain(this);
 		}
 
