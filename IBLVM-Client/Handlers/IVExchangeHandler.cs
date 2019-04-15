@@ -7,7 +7,7 @@ using IBLVM_Libaray.Interfaces;
 using IBLVM_Util.Interfaces;
 using IBLVM_Libaray.Enums;
 
-using CryptoStream;
+using SecureStream;
 
 namespace IBLVM_Client.Handlers
 {
@@ -18,7 +18,7 @@ namespace IBLVM_Client.Handlers
 			if (header.Type == PacketType.ExchangeInitializeVector)
 			{
 				socket.GetSocketStream();
-				CryptoMemoryStream stream = socket.CryptoStream();
+				CryptoMemoryStream stream = socket.CryptoProvider.CryptoStream;
 
 
 				return true;

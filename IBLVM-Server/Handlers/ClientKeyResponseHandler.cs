@@ -17,6 +17,8 @@ using IBLVM_Server.Enums;
 
 using IBLVM_Libaray.Enums;
 
+using SecureStream;
+
 namespace IBLVM_Server.Handlers
 {
 	class ClientKeyResponseHandler : IPacketHandler
@@ -32,7 +34,10 @@ namespace IBLVM_Server.Handlers
 
 				byte[] publicKey = SocketUtil.ReceiveFull(socket.GetSocketStream(), header.GetPayloadSize());
 				provider.SharedKey = provider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
+				provider.CryptoStream = new CryptoMemoryStream(provider.SharedKey);
+				Array.Copy(provider.SharedKey, provider.CryptoStream.IV, provider.CryptoStream.IV.Length);
 
+				
 				return true;
 			}
 

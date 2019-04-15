@@ -17,15 +17,21 @@ namespace IBLVM_Util
 		{
 			byte[] buffer = new byte[256];
 			byte[] packetData = packet.GetPacketBytes();
+			int payloadSize = packet.GetPayloadSize();
 
 			stream.Write(packetData, 0, packetData.Length);
-			if (packet.GetPayloadSize() > 0)
+			using (Stream payloadStream = packet.GetPayloadStream())
 			{
-				using (Stream payloadStream = packet.GetPayloadStream())
+				payloadStream.Position = 0;
+				int sendBytes = 0;
+				int readedSize = 0;
+
+				while (sendBytes <= payloadSize)
 				{
-					int readedSize;
-					while ((readedSize = payloadStream.Read(buffer, 0, buffer.Length)) > 0)
-						stream.Write(buffer, 0, readedSize);
+					readedSize = payloadStream.Read(buffer, 0, Math.Min(payloadSize - sendBytes, buffer.Length));
+					stream.Write(buffer, 0, readedSize);
+
+					sendBytes += readedSize;
 				}
 			}
 		}

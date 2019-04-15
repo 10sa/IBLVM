@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Security.Cryptography;
-using CryptoStream;
+using SecureStream;
 
 namespace IBLVM_Libaray.Models
 {

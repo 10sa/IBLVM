@@ -18,29 +18,31 @@ using IBLVM_Util.Interfaces;
 
 using IBLVM_Client.Enums;
 
-using CryptoStream;
+using SecureStream;
 
 namespace IBLVM_Client
 {
 	public class IBLVMClient : IDisposable, IIBLVMSocket
 	{
-		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+		private readonly Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private readonly IPacketFactory packetFactory = new PacketFactroy();
-		private readonly NetworkStream networkStream;
+		private NetworkStream networkStream;
 		private readonly byte[] socketBuffer;
 
 		public IBLVMClient()
 		{
+			CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng();
+
 			CryptoProvider.ECDiffieHellman.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
 			socketBuffer = new byte[packetFactory.PacketSize * 2];
 			CryptoProvider.ECDiffieHellman.HashAlgorithm = CngAlgorithm.Sha256;
-			networkStream = new NetworkStream(socket);
 		}
 
 		#region Public methods
 		public void Connect(IPEndPoint remoteEndPoint)
 		{
 			socket.Connect(remoteEndPoint);
+			networkStream = new NetworkStream(socket);
 			Handshake();
 		}
 
@@ -53,9 +55,10 @@ namespace IBLVM_Client
 			if (header.Type == PacketType.ServerKeyResponse)
 			{
 				byte[] publicKey = SocketUtil.ReceiveFull(networkStream, header.GetPayloadSize());
-				byte[] shareKey = CryptoProvider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
+				CryptoProvider.SharedKey = CryptoProvider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
+				CryptoProvider.CryptoStream = new CryptoMemoryStream(CryptoProvider.SharedKey);
+				int ivSize = CryptoProvider.CryptoStream.IVSize;
 
-				CryptoProvider.CryptoStream = new CryptoMemoryStream(shareKey, shareKey);
 				IPacket responsePacket = packetFactory.CreateClientKeyResponse(CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
 				SocketUtil.SendPacket(networkStream, responsePacket);
 			}
@@ -76,7 +79,7 @@ namespace IBLVM_Client
 		#region IIBLVMSocket implements
 		public int Status { get; set; }
 
-		public CryptoProvider CryptoProvider { get; set; }
+		public CryptoProvider CryptoProvider { get; set; } = new CryptoProvider();
 
 		public NetworkStream GetSocketStream() => networkStream;
 		#endregion

@@ -51,17 +51,19 @@ namespace IBLVM_Server
 						IPacket header = factory.ParseHeader(buffer);
 						chain.DoHandle(header);
 					}
-					finally {
+					catch(Exception e) {
 						Dispose();
 					}
 				}
 			});
+
+			Thread.Start();
 		}
 
 		#region IIBLVMSocket Implements
 		public int Status { get; set; } = (int)SocketStatus.Uninitialized;
 
-		public CryptoProvider CryptoProvider { get; set; }
+		public CryptoProvider CryptoProvider { get; set; } = new CryptoProvider();
 
 		public NetworkStream GetSocketStream() => socketStream;
 		#endregion

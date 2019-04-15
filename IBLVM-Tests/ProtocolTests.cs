@@ -13,7 +13,7 @@ using IBLVM_Client;
 namespace IBLVM_Tests
 {
 	[TestClass]
-	class ProtocolTests
+	public class ProtocolTests
 	{
 		[TestMethod]
 		public void HandshakeTest()

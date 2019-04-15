@@ -24,7 +24,7 @@ namespace IBLVM_Util
 		{
 			bool isHandled = false;
 
-			for (int i = 0; i < handlers.Capacity; i++)
+			for (int i = 0; i < handlers.Count; i++)
 				isHandled = handlers[i].Handle(header, socket) || isHandled ? true : false;
 
 			return isHandled;
