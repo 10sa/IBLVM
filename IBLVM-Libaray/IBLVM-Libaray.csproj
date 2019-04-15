@@ -57,9 +57,11 @@
     <Compile Include="Models\BitLockerVolume.cs" />
     <Compile Include="Models\ClientHello.cs" />
     <Compile Include="Models\ClientKeyResponse.cs" />
+    <Compile Include="Models\ClientLoginRequest.cs" />
     <Compile Include="Models\CryptoProvider.cs" />
     <Compile Include="Models\ExchangeInitalizeVector.cs" />
     <Compile Include="Models\ServerKeyResponse.cs" />
+    <Compile Include="Models\ServerLoginResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

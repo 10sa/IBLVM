@@ -12,6 +12,8 @@ namespace IBLVM_Libaray.Enums
 		ServerKeyResponse,
 		ClientKeyResponse,
 		ExchangeInitializeVector,
+		ClientLoginRequest,
+		ServerLoginResponse,
 		BitLockerList
 	}
 }
