@@ -50,21 +50,6 @@ namespace IBLVM_Client
 		private void Handshake()
 		{
 			socket.Send(PacketFactory.CreateClientHello().GetPacketBytes());
-			SocketUtil.ReceiveFull(networkStream, socketBuffer, PacketFactory.PacketSize);
-			IPacket header = PacketFactory.ParseHeader(socketBuffer);
-
-			if (header.Type == PacketType.ServerKeyResponse)
-			{
-				byte[] publicKey = SocketUtil.ReceiveFull(networkStream, header.GetPayloadSize());
-				CryptoProvider.SharedKey = CryptoProvider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
-				CryptoProvider.CryptoStream = new CryptoMemoryStream(CryptoProvider.SharedKey);
-				Array.Copy(CryptoProvider.SharedKey, CryptoProvider.CryptoStream.IV, CryptoProvider.CryptoStream.IV.Length);
-
-				IPacket responsePacket = PacketFactory.CreateClientKeyResponse(CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
-				SocketUtil.SendPacket(networkStream, responsePacket);
-			}
-			else
-				throw new ProtocolViolationException("Received wrong header.");
 		}
 		#endregion
 
