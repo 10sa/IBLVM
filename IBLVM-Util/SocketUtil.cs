@@ -26,7 +26,7 @@ namespace IBLVM_Util
 				int sendBytes = 0;
 				int readedSize = 0;
 
-				while (sendBytes <= payloadSize)
+				while (sendBytes < payloadSize)
 				{
 					readedSize = payloadStream.Read(buffer, 0, Math.Min(payloadSize - sendBytes, buffer.Length));
 					stream.Write(buffer, 0, readedSize);
