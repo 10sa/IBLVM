@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CryptoStream">
-      <HintPath>..\3rd-party-library\CryptoStream.dll</HintPath>
+    <Reference Include="SecureStream">
+      <HintPath>..\3rd-party-library\SecureStream.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
