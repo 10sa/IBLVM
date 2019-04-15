@@ -23,24 +23,22 @@ namespace IBLVM_Client.Handlers
 	{
 		public bool Handle(IPacket header, IIBLVMSocket socket)
 		{
-			if (socket.Status == (int)SocketStatus.Disconnected)
+			if (header.Type == PacketType.ServerKeyResponse)
 			{
-				if (header.Type == PacketType.ServerKeyResponse)
-				{
-					byte[] publicKey = SocketUtil.ReceiveFull(socket.GetSocketStream(), header.GetPayloadSize());
-					CryptoProvider cryptoProvider = socket.CryptoProvider;
+				if (socket.Status != (int)SocketStatus.Disconnected)
+					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
-					cryptoProvider.SharedKey = cryptoProvider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
-					cryptoProvider.CryptoStream = new CryptoMemoryStream(cryptoProvider.SharedKey);
-					Array.Copy(cryptoProvider.SharedKey, cryptoProvider.CryptoStream.IV, cryptoProvider.CryptoStream.IV.Length);
+				byte[] publicKey = SocketUtil.ReceiveFull(socket.GetSocketStream(), header.GetPayloadSize());
+				CryptoProvider cryptoProvider = socket.CryptoProvider;
 
-					IPacket responsePacket = socket.PacketFactory.CreateClientKeyResponse(cryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
-					SocketUtil.SendPacket(socket.GetSocketStream(), responsePacket);
+				cryptoProvider.SharedKey = cryptoProvider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
+				cryptoProvider.CryptoStream = new CryptoMemoryStream(cryptoProvider.SharedKey);
+				Array.Copy(cryptoProvider.SharedKey, cryptoProvider.CryptoStream.IV, cryptoProvider.CryptoStream.IV.Length);
 
-					return true;
-				}
-				else
-					throw new ProtocolViolationException("Received invalid handshaking packet!");
+				IPacket responsePacket = socket.PacketFactory.CreateClientKeyResponse(cryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
+				SocketUtil.SendPacket(socket.GetSocketStream(), responsePacket);
+
+				return true;
 			}
 
 			return false;
