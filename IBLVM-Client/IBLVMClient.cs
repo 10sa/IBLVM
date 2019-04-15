@@ -24,8 +24,9 @@ namespace IBLVM_Client
 {
 	public class IBLVMClient : IDisposable, IIBLVMSocket
 	{
+		public IPacketFactory PacketFactory { get; private set; } = new PacketFactroy();
+
 		private readonly Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-		private readonly IPacketFactory packetFactory = new PacketFactroy();
 		private NetworkStream networkStream;
 		private readonly byte[] socketBuffer;
 
@@ -34,7 +35,7 @@ namespace IBLVM_Client
 			CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng();
 
 			CryptoProvider.ECDiffieHellman.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
-			socketBuffer = new byte[packetFactory.PacketSize * 2];
+			socketBuffer = new byte[PacketFactory.PacketSize * 2];
 			CryptoProvider.ECDiffieHellman.HashAlgorithm = CngAlgorithm.Sha256;
 		}
 
@@ -48,9 +49,9 @@ namespace IBLVM_Client
 
 		private void Handshake()
 		{
-			socket.Send(packetFactory.CreateClientHello().GetPacketBytes());
-			SocketUtil.ReceiveFull(networkStream, socketBuffer, packetFactory.PacketSize);
-			IPacket header = packetFactory.ParseHeader(socketBuffer);
+			socket.Send(PacketFactory.CreateClientHello().GetPacketBytes());
+			SocketUtil.ReceiveFull(networkStream, socketBuffer, PacketFactory.PacketSize);
+			IPacket header = PacketFactory.ParseHeader(socketBuffer);
 
 			if (header.Type == PacketType.ServerKeyResponse)
 			{
@@ -59,7 +60,7 @@ namespace IBLVM_Client
 				CryptoProvider.CryptoStream = new CryptoMemoryStream(CryptoProvider.SharedKey);
 				Array.Copy(CryptoProvider.SharedKey, CryptoProvider.CryptoStream.IV, CryptoProvider.CryptoStream.IV.Length);
 
-				IPacket responsePacket = packetFactory.CreateClientKeyResponse(CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
+				IPacket responsePacket = PacketFactory.CreateClientKeyResponse(CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
 				SocketUtil.SendPacket(networkStream, responsePacket);
 			}
 			else

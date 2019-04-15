@@ -23,16 +23,18 @@ namespace IBLVM_Server
 	{
 		public Thread Thread { get; private set; }
 
+		public IPacketFactory PacketFactory { get; private set; }
+
+
 		private readonly NetworkStream socketStream;
 		private readonly ServerHandlerChain chain;
-		private readonly IPacketFactory factory;
 		private byte[] buffer;
 		private readonly Socket socket;
 
 		public ClientHandler(Socket socket, IPacketFactory packetFactory)
 		{
 			this.socket = socket;
-			this.factory = packetFactory;
+			this.PacketFactory = packetFactory;
 
 			buffer = new byte[packetFactory.PacketSize * 2];
 			socketStream = new NetworkStream(socket);
@@ -47,8 +49,8 @@ namespace IBLVM_Server
 				{
 					try
 					{
-						SocketUtil.ReceiveFull(socketStream, buffer, factory.PacketSize);
-						IPacket header = factory.ParseHeader(buffer);
+						SocketUtil.ReceiveFull(socketStream, buffer, PacketFactory.PacketSize);
+						IPacket header = PacketFactory.ParseHeader(buffer);
 						chain.DoHandle(header);
 					}
 					catch(Exception e) {
