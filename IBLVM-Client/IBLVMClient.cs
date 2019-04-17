@@ -28,14 +28,12 @@ namespace IBLVM_Client
 
 		private readonly Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private NetworkStream networkStream;
-		private readonly byte[] socketBuffer;
 
 		public IBLVMClient()
 		{
 			CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng();
 
 			CryptoProvider.ECDiffieHellman.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
-			socketBuffer = new byte[PacketFactory.PacketSize * 2];
 			CryptoProvider.ECDiffieHellman.HashAlgorithm = CngAlgorithm.Sha256;
 		}
 
