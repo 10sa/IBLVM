@@ -31,12 +31,12 @@ namespace IBLVM_Server.Handlers
 					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
 				CryptoProvider provider = socket.CryptoProvider;
+				ClientKeyResponse packet = new ClientKeyResponse(null);
+				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
-				byte[] publicKey = SocketUtil.ReceiveFull(socket.GetSocketStream(), header.GetPayloadSize());
-				provider.SharedKey = provider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(publicKey, CngKeyBlobFormat.EccPublicBlob));
+				provider.SharedKey = provider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(packet.Key, CngKeyBlobFormat.EccPublicBlob));
 				provider.CryptoStream = new CryptoMemoryStream(provider.SharedKey);
 				Array.Copy(provider.SharedKey, provider.CryptoStream.IV, provider.CryptoStream.IV.Length);
-
 
 				socket.Status = (int)SocketStatus.Connected;
 				return true;

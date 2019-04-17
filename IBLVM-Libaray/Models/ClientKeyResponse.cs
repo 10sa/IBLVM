@@ -12,21 +12,27 @@ namespace IBLVM_Libaray.Models
 {
 	public class ClientKeyResponse : BasePacket
 	{
-		private readonly byte[] cryptoKey;
+		public byte[] Key { get; set; }
 
-		public ClientKeyResponse(byte[] cryptoKey) : base(PacketType.ClientKeyResponse)
+		public ClientKeyResponse(byte[] key) : base(PacketType.ClientKeyResponse)
 		{
-			this.cryptoKey = cryptoKey;
+			Key = key;
 		}
 
 		public override Stream GetPayloadStream()
 		{
 			Stream stream = base.GetPayloadStream();
-			WriteToStream(stream, cryptoKey);
+			WriteToStream(stream, Key);
 
 			return stream;
 		}
 
-		public override int GetPayloadSize() => base.GetPayloadSize() + cryptoKey.Length;
+		public override int GetPayloadSize() => base.GetPayloadSize() + Key.Length;
+
+		public override void ParsePayload(int payloadSize, Stream stream)
+		{
+			base.ParsePayload(payloadSize, stream);
+			this.Key = StreamUtil.ReadFull(stream, payloadSize);
+		}
 	}
 }
