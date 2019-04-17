@@ -10,7 +10,7 @@ using IBLVM_Libaray.Enums;
 
 namespace IBLVM_Libaray.Models
 {
-	class ServerLoginResponse : BasePacket
+	public sealed class ServerLoginResponse : BasePacket
 	{
 		public bool Success { get; private set; }
 
@@ -33,7 +33,7 @@ namespace IBLVM_Libaray.Models
 		public override void ParsePayload(int payloadSize, Stream stream)
 		{
 			base.ParsePayload(payloadSize, stream);
-			byte[] buffer = new byte[sizeof(byte)];
+			byte[] buffer = new byte[sizeof(bool)];
 			stream.Read(buffer, 0, buffer.Length);
 
 			Success = BitConverter.ToBoolean(buffer, 0);

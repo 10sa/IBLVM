@@ -8,17 +8,16 @@ using System.Threading.Tasks;
 using SecureStream;
 
 using IBLVM_Libaray.Enums;
-using Iblvm;
 
 namespace IBLVM_Libaray.Models
 {
-	class ClientLoginRequest : BasePacket
+	public sealed class ClientLoginRequest : BasePacket
 	{
 		public string Id { get; private set; }
 
 		public string Password { get; private set; }
 
-		private CryptoMemoryStream cryptor;
+		private readonly CryptoMemoryStream cryptor;
 
 		public ClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) : base(PacketType.ClientLoginRequest)
 		{
