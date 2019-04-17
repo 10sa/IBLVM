@@ -42,21 +42,21 @@ namespace IBLVM_Client
 		{
 			socket.Connect(remoteEndPoint);
 			networkStream = new NetworkStream(socket);
-			Handshake();
-		}
 
-		private void Handshake()
-		{
 			Status = (int)SocketStatus.Handshaking;
 			socket.Send(PacketFactory.CreateClientHello().GetPacketBytes());
+		}
+
+		public void Login(string id, string password)
+		{
+
 		}
 		#endregion
 
 		#region IDispose implements
 		public void Dispose()
 		{
-			CryptoProvider.CryptoStream.Dispose();
-			CryptoProvider.ECDiffieHellman.Dispose();
+			CryptoProvider.Dispose();
 			socket.Dispose();
 		}
 		#endregion
