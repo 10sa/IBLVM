@@ -28,8 +28,8 @@ namespace IBLVM_Client.Handlers
 				if (socket.Status != (int)SocketStatus.Handshaking)
 					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
-				ICryptoExchanger packet = socket.PacketFactory.CreateServerKeyResponse(null);
 				CryptoProvider cryptoProvider = socket.CryptoProvider;
+				ICryptoExchanger packet = socket.PacketFactory.CreateServerKeyResponse(null);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
 				cryptoProvider.SharedKey = cryptoProvider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(packet.Data, CngKeyBlobFormat.EccPublicBlob));
