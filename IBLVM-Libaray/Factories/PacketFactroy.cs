@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using IBLVM_Libaray.Interfaces;
 using IBLVM_Libaray.Models;
 
+using SecureStream;
+
 namespace IBLVM_Libaray.Factories
 {
 	public class PacketFactroy : IPacketFactory
@@ -19,6 +21,10 @@ namespace IBLVM_Libaray.Factories
 		public IPacket CreateClientKeyResponse(byte[] cryptoKey) => new ClientKeyResponse(cryptoKey);
 
 		public IPacket CreateServerKeyResponse(byte[] cryptoKey) => new ServerKeyResponse(cryptoKey);
+
+		public IPacket CreateServerLoginResponse(bool isSuccess) => new ServerLoginResponse(isSuccess);
+
+		public IPacket CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) => new ClientLoginRequest(id, password, cryptor);
 
 		public IPacket ParseHeader(byte[] data)
 		{
