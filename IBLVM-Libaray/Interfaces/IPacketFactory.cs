@@ -10,9 +10,9 @@ namespace IBLVM_Libaray.Interfaces
 	{
 		IPacket CreateClientHello();
 
-		IPacket CreateServerKeyResponse(byte[] cryptoKey);
+		ICryptoExchanger CreateServerKeyResponse(byte[] data);
 
-		IPacket CreateClientKeyResponse(byte[] cryptoKey);
+		ICryptoExchanger CreateClientKeyResponse(byte[] data);
 
 		IPacket ParseHeader(byte[] data);
 
