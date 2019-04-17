@@ -8,23 +8,29 @@ using IBLVM_Libaray.Interfaces;
 
 namespace IBLVM_Libaray.Models
 {
-	sealed class ServerKeyResponse : BasePacket
+	public sealed class ServerKeyResponse : BasePacket
 	{
-		private readonly byte[] cryptoKey;
+		public byte[] Key { get; private set; }
 
 		public ServerKeyResponse(byte[] cryptoKey) : base(Enums.PacketType.ServerKeyResponse)
 		{
-			this.cryptoKey = cryptoKey;
+			Key = cryptoKey;
 		}
 
 		public override Stream GetPayloadStream()
 		{
 			Stream buffer = base.GetPayloadStream();
-			WriteToStream(buffer, cryptoKey);
+			WriteToStream(buffer, Key);
 
 			return buffer;
 		}
 
-		public override int GetPayloadSize() => base.GetPayloadSize() + cryptoKey.Length;
+		public override int GetPayloadSize() => base.GetPayloadSize() + Key.Length;
+
+		public override void ParsePayload(int payloadSize, Stream stream)
+		{
+			base.ParsePayload(payloadSize, stream);
+			Key = StreamUtil.ReadFull(stream, payloadSize);
+		}
 	}
 }
