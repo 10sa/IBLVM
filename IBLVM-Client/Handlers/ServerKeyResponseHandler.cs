@@ -25,7 +25,7 @@ namespace IBLVM_Client.Handlers
 		{
 			if (header.Type == PacketType.ServerKeyResponse)
 			{
-				if (socket.Status != (int)SocketStatus.Disconnected)
+				if (socket.Status != (int)SocketStatus.Handshaking)
 					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
 				byte[] publicKey = SocketUtil.ReceiveFull(socket.GetSocketStream(), header.GetPayloadSize());
@@ -38,6 +38,7 @@ namespace IBLVM_Client.Handlers
 				IPacket responsePacket = socket.PacketFactory.CreateClientKeyResponse(cryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
 				SocketUtil.SendPacket(socket.GetSocketStream(), responsePacket);
 
+				socket.Status = (int)SocketStatus.Connected;
 				return true;
 			}
 

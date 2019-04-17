@@ -37,7 +37,8 @@ namespace IBLVM_Server.Handlers
 				provider.CryptoStream = new CryptoMemoryStream(provider.SharedKey);
 				Array.Copy(provider.SharedKey, provider.CryptoStream.IV, provider.CryptoStream.IV.Length);
 
-				
+
+				socket.Status = (int)SocketStatus.Connected;
 				return true;
 			}
 

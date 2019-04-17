@@ -49,6 +49,7 @@ namespace IBLVM_Client
 
 		private void Handshake()
 		{
+			Status = (int)SocketStatus.Handshaking;
 			socket.Send(PacketFactory.CreateClientHello().GetPacketBytes());
 		}
 		#endregion
@@ -63,7 +64,7 @@ namespace IBLVM_Client
 		#endregion
 
 		#region IIBLVMSocket implements
-		public int Status { get; set; }
+		public int Status { get; set; } = (int)SocketStatus.Disconnected;
 
 		public CryptoProvider CryptoProvider { get; set; } = new CryptoProvider();
 
