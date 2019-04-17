@@ -9,7 +9,7 @@ using System.IO;
 
 namespace IBLVM_Libaray.Models
 {
-	public class BitLockerList : BasePacket
+	public sealed class BitLockerList : BasePacket
 	{
 		private BitLockerVolume[] bitLockerVolumes;
 		private byte[] serializedData;

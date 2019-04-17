@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IBLVM_Libaray.Models
 {
-	public class BitLockerVolume
+	public sealed class BitLockerVolume
 	{
 		public string DeviceID { get; private set; }
 

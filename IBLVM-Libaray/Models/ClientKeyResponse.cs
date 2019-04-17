@@ -10,7 +10,7 @@ using IBLVM_Libaray.Interfaces;
 
 namespace IBLVM_Libaray.Models
 {
-	public class ClientKeyResponse : BasePacket
+	public sealed class ClientKeyResponse : BasePacket
 	{
 		public byte[] Key { get; set; }
 

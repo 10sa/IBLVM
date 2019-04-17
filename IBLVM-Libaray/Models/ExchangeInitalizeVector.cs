@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IBLVM_Libaray.Models
 {
-	class ExchangeInitalizeVector : BasePacket
+	public sealed class ExchangeInitalizeVector : BasePacket
 	{
 		private readonly byte[] initializeVector;
 

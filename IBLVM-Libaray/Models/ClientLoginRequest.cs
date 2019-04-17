@@ -5,32 +5,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SecureStream;
+
 using IBLVM_Libaray.Enums;
+using Iblvm;
 
 namespace IBLVM_Libaray.Models
 {
 	class ClientLoginRequest : BasePacket
 	{
-		public string ID { get; private set; }
+		public string Id { get; private set; }
 
 		public string Password { get; private set; }
 
-		public ClientLoginRequest(string ID, string password) : base(PacketType.ClientLoginRequest)
+		private CryptoMemoryStream cryptor;
+
+		public ClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) : base(PacketType.ClientLoginRequest)
 		{
-			this.ID = ID;
-			this.Password = password;
+			Id = id;
+			Password = password;
+			this.cryptor = cryptor;
 		}
 
-		public override int GetPayloadSize() => Encoding.UTF8.GetByteCount(ID) + Encoding.UTF8.GetByteCount(Password);
+		public override int GetPayloadSize() => Encoding.UTF8.GetByteCount(Id) + Encoding.UTF8.GetByteCount(Password);
 
 		public override Stream GetPayloadStream()
 		{
 			Stream buffer = base.GetPayloadStream();
-			byte[] id = Encoding.UTF8.GetBytes(ID);
+			byte[] id = Encoding.UTF8.GetBytes(Id);
 			byte[] password = Encoding.UTF8.GetBytes(Password);
 
-			buffer.Write(id, 0, id.Length);
-			buffer.Write(password, 0, password.Length);
+			cryptor.Encrypt(id, 0, id.Length);
+			cryptor.Encrypt(password, 0, password.Length);
+
+			byte[] encryptBytes = new byte[id.Length + password.Length + 2];
+			cryptor.Read(encryptBytes, 0, encryptBytes.Length);
 
 			return buffer;
 		}
@@ -38,13 +47,18 @@ namespace IBLVM_Libaray.Models
 		public override void ParsePayload(int payloadSize, Stream stream)
 		{
 			base.ParsePayload(payloadSize, stream);
-			byte[] buffer = new byte[512]; // Maximun 256 character (utf8)
+			byte[] encryptBytes = new byte[payloadSize];
+			byte[] datas = new byte[payloadSize];
 
-			stream.Read(buffer, 0, buffer.Length);
-			int paritionIndex = Array.IndexOf(buffer, 0x0);
+			for (int i = 0; i < payloadSize;)
+				i += stream.Read(encryptBytes, i, payloadSize - i);
 
-			ID = Encoding.UTF8.GetString(buffer, 0, paritionIndex);
-			Password = Encoding.UTF8.GetString(buffer, paritionIndex + 1, buffer.Length - paritionIndex - 1);
+			cryptor.Write(encryptBytes, 0, encryptBytes.Length);
+			cryptor.Decrypt(datas, 0, datas.Length);
+
+			int teminateOffset = Array.IndexOf(datas, 0x0);
+			Id = Encoding.UTF8.GetString(datas, 0, teminateOffset);
+			Password = Encoding.UTF8.GetString(datas, teminateOffset, datas.Length - teminateOffset);
 		}
 	}
 }
