@@ -23,6 +23,7 @@ namespace IBLVM_Server
 
 		public IPacketFactory PacketFactory { get; private set; }
 
+		public event Action<ClientHandler> OnHandlerDisposed = (a) => { };
 
 		private readonly NetworkStream socketStream;
 		private readonly ServerHandlerChain chain;
@@ -77,6 +78,8 @@ namespace IBLVM_Server
 			socketStream.Close();
 			CryptoProvider.Dispose();
 			buffer = null;
+
+			OnHandlerDisposed(this);
 		}
 		#endregion
 	}

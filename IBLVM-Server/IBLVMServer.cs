@@ -18,7 +18,8 @@ namespace IBLVM_Server
 	{
 		public Thread ServerThread { get; private set; }
 
-		private Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		private readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		private readonly List<ClientHandler> clientHandlers = new List<ClientHandler>();
 		private readonly IPacketFactory factory = new PacketFactroy();
 
 		public void Bind(EndPoint localEndPoint) => serverSocket.Bind(localEndPoint);
@@ -33,11 +34,19 @@ namespace IBLVM_Server
 				{
 					Socket clientSocket = serverSocket.Accept();
 					ClientHandler clientHandler = new ClientHandler(clientSocket, factory);
+					clientHandlers.Add(clientHandler);
+					clientHandler.OnHandlerDisposed += OnClientDisconnected;
+
 					clientHandler.Start();
 				}
 			});
 
 			ServerThread.Start();
+		}
+
+		private void OnClientDisconnected(ClientHandler handler)
+		{
+			clientHandlers.Remove(handler);
 		}
 	}
 }
