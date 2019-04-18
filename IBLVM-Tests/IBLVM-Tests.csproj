@@ -66,9 +66,9 @@
       <Project>{a476d869-1536-4cbd-b87d-d46186039c4c}</Project>
       <Name>IBLVM-Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\IBLVM-Libaray\IBLVM-Libaray.csproj">
+    <ProjectReference Include="..\IBLVM-Library\IBLVM-Library.csproj">
       <Project>{1f042069-73bc-4cac-a331-181c190ced10}</Project>
-      <Name>IBLVM-Libaray</Name>
+      <Name>IBLVM-Library</Name>
     </ProjectReference>
     <ProjectReference Include="..\IBLVM-Server\IBLVM-Server.csproj">
       <Project>{09c7c586-aa7c-4dce-8469-2f014d289306}</Project>

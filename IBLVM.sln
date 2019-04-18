@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBLVM-Libaray", "IBLVM-Libaray\IBLVM-Libaray.csproj", "{1F042069-73BC-4CAC-A331-181C190CED10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBLVM-Library", "IBLVM-Library\IBLVM-Library.csproj", "{1F042069-73BC-4CAC-A331-181C190CED10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBLVM-Tests", "IBLVM-Tests\IBLVM-Tests.csproj", "{E30BCD92-3F91-47C8-82F3-65E9866163AD}"
 EndProject

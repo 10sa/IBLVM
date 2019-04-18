@@ -52,9 +52,9 @@
     <Compile Include="SocketHandlerChain.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IBLVM-Libaray\IBLVM-Libaray.csproj">
+    <ProjectReference Include="..\IBLVM-Library\IBLVM-Library.csproj">
       <Project>{1f042069-73bc-4cac-a331-181c190ced10}</Project>
-      <Name>IBLVM-Libaray</Name>
+      <Name>IBLVM-Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
