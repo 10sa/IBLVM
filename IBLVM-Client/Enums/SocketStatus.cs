@@ -10,6 +10,7 @@ namespace IBLVM_Client.Enums
 	{
 		Disconnected,
 		Handshaking,
-		Connected
+		Connected,
+		LoggedIn
 	}
 }
