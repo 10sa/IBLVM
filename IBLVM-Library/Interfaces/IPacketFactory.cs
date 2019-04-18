@@ -14,20 +14,20 @@ namespace IBLVM_Libaray.Interfaces
 	public interface IPacketFactory
 	{
 		/// <summary>
-		/// ClientHello 패킷을 생성합니다.
+		/// 핸드셰이크 시작 요청 패킷을 생성합니다.
 		/// </summary>
-		/// <returns>생성된 ClientHello 패킷입니다.</returns>
+		/// <returns>생성된 클라이언트 Hello 패킷입니다.</returns>
 		IPacket CreateClientHello();
 
 		/// <summary>
-		/// 암호화 키 교환에 사용되는 ServerKeyResponse 패킷을 생성합니다.
+		/// 암호화 키 교환에 사용되는 서버 키 응답 패킷을 생성합니다.
 		/// </summary>
 		/// <param name="data">키 교환 과정에서 사용될 데이터입니다.</param>
 		/// <returns>생성된 ServerKeyResponse 패킷입니다.</returns>
 		ICryptoExchanger CreateServerKeyResponse(byte[] data);
 
 		/// <summary>
-		/// 암호화 키 교환에 사용되는 ClientKeyResponse 패킷을 생성합니다.
+		/// 암호화 키 교환에 사용되는 클라이언트 키 응답 패킷을 생성합니다.
 		/// </summary>
 		/// <param name="data">키 교환 과정에서 사용될 데이터입니다.</param>
 		/// <returns>생성된 ClientKeyResponse 패킷입니다.</returns>
@@ -37,7 +37,7 @@ namespace IBLVM_Libaray.Interfaces
 		/// 클라이언트의 로그인 요청에 대한 응답 패킷을 생성합니다.
 		/// </summary>
 		/// <param name="isSuccess">로그인 요청의 성공 여부입니다.</param>
-		/// <returns></returns>
+		/// <returns>생성된 로그인 응답 패킷입니다.</returns>
 		IPacket CreateServerLoginResponse(bool isSuccess);
 
 		/// <summary>
@@ -46,7 +46,7 @@ namespace IBLVM_Libaray.Interfaces
 		/// <param name="id">로그인에 사용될 사용자의 식별자입니다.</param>
 		/// <param name="password">로그인에 사용될 사용자의 비밀번호입니다.</param>
 		/// <param name="cryptor">사용자 정보 암호화에 사용될 CryptoMemoryStream 클래스 인스턴스입니다.</param>
-		/// <returns></returns>
+		/// <returns>생성된 로그인 요청 패킷입니다.</returns>
 		IAuthentication CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor);
 
 		/// <summary>
