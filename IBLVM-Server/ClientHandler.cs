@@ -10,6 +10,7 @@ using IBLVM_Library;
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Models;
 
+using IBLVM_Server.Interfaces;
 using IBLVM_Server.Enums;
 
 namespace IBLVM_Server
@@ -30,14 +31,14 @@ namespace IBLVM_Server
 		private byte[] buffer;
 		private readonly Socket socket;
 
-		public ClientHandler(Socket socket, IPacketFactory packetFactory)
+		public ClientHandler(Socket socket, IUserValidate userValidate, IPacketFactory packetFactory)
 		{
 			this.socket = socket;
 			this.PacketFactory = packetFactory;
 
 			buffer = new byte[packetFactory.PacketSize * 2];
 			socketStream = new NetworkStream(socket);
-			chain = new ServerHandlerChain(this, packetFactory);
+			chain = new ServerHandlerChain(this, userValidate, packetFactory);
 		}
 
 		public void Start()

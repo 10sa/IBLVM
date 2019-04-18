@@ -8,7 +8,8 @@ using System.Threading;
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Factories;
 
-using IBLVM_Library.Models;
+using IBLVM_Server.Interfaces;
+
 using System.Net.Sockets;
 using System.Net;
 
@@ -18,9 +19,16 @@ namespace IBLVM_Server
 	{
 		public Thread ServerThread { get; private set; }
 
+		public readonly IUserValidate userValidate;
+
 		private readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private readonly List<ClientHandler> clientHandlers = new List<ClientHandler>();
 		private readonly IPacketFactory factory = new PacketFactroy();
+
+		public IBLVMServer(IUserValidate userValidate)
+		{
+			this.userValidate = userValidate;
+		}
 
 		public void Bind(EndPoint localEndPoint) => serverSocket.Bind(localEndPoint);
 

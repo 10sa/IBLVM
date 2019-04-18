@@ -29,5 +29,10 @@ namespace IBLVM_Tests
 
 			client.Dispose();
 		}
+
+		public void LoginTest()
+		{
+
+		}
 	}
 }

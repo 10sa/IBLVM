@@ -9,7 +9,7 @@ namespace IBLVM_Server.Interfaces
 	/// <summary>
 	/// 사용자의 인증 정보의 유효성 검증을 제공합니다.
 	/// </summary>
-	interface IUserValidate
+	public interface IUserValidate
 	{
 		/// <summary>
 		/// 식별자-비밀번호 기반의 사용자 인증 정보의 유효성을 검증합니다.
