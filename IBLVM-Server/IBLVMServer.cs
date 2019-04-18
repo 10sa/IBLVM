@@ -20,7 +20,6 @@ namespace IBLVM_Server
 
 		private Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private readonly IPacketFactory factory = new PacketFactroy();
-		private List<ClientHandler> clientHandlers = new List<ClientHandler>();
 
 		public void Bind(EndPoint localEndPoint) => serverSocket.Bind(localEndPoint);
 
@@ -34,8 +33,6 @@ namespace IBLVM_Server
 				{
 					Socket clientSocket = serverSocket.Accept();
 					ClientHandler clientHandler = new ClientHandler(clientSocket, factory);
-					clientHandlers.Add(clientHandler);
-
 					clientHandler.Start();
 				}
 			});
