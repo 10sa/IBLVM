@@ -44,10 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\CryptoProvider.cs" />
     <Compile Include="Interfaces\IIBLVMSocket.cs" />
     <Compile Include="Interfaces\IPacketHandler.cs" />
     <Compile Include="PacketHandlerChain.cs" />
-    <Compile Include="SocketUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

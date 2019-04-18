@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using IBLVM_Util;
 using IBLVM_Util.Interfaces;
 
+using IBLVM_Libaray;
 using IBLVM_Libaray.Interfaces;
 using IBLVM_Libaray.Models;
 
@@ -49,11 +50,11 @@ namespace IBLVM_Server
 				{
 					try
 					{
-						SocketUtil.ReceiveFull(socketStream, buffer, PacketFactory.PacketSize);
+						StreamUtil.ReadFull(socketStream, buffer, PacketFactory.PacketSize);
 						IPacket header = PacketFactory.ParseHeader(buffer);
 						chain.DoHandle(header);
 					}
-					catch(Exception e) {
+					catch(Exception) {
 						Dispose();
 					}
 				}

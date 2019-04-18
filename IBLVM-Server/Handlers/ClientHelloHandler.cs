@@ -10,11 +10,10 @@ using System.Security.Cryptography;
 
 using IBLVM_Libaray.Interfaces;
 using IBLVM_Util.Interfaces;
-using IBLVM_Libaray.Models;
-using IBLVM_Util;
 
 using IBLVM_Server.Enums;
 
+using IBLVM_Libaray;
 using IBLVM_Libaray.Enums;
 
 namespace IBLVM_Server.Handlers
@@ -37,7 +36,7 @@ namespace IBLVM_Server.Handlers
 
 				socket.CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng();
 				IPacket packet = packetFactory.CreateServerKeyResponse(socket.CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
-				SocketUtil.SendPacket(socket.GetSocketStream(), packet);
+				StreamUtil.SendPacket(socket.GetSocketStream(), packet);
 
 				socket.Status = (int)SocketStatus.ServerKeyResponsed;
 				return true;

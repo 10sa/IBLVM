@@ -10,11 +10,11 @@ using SecureStream;
 
 using IBLVM_Client.Enums;
 
+using IBLVM_Libaray;
 using IBLVM_Libaray.Interfaces;
 using IBLVM_Libaray.Enums;
 using IBLVM_Libaray.Models;
 
-using IBLVM_Util;
 using IBLVM_Util.Interfaces;
 
 namespace IBLVM_Client.Handlers
@@ -37,7 +37,7 @@ namespace IBLVM_Client.Handlers
 				Array.Copy(cryptoProvider.SharedKey, cryptoProvider.CryptoStream.IV, cryptoProvider.CryptoStream.IV.Length);
 
 				IPacket responsePacket = socket.PacketFactory.CreateClientKeyResponse(cryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
-				SocketUtil.SendPacket(socket.GetSocketStream(), responsePacket);
+				StreamUtil.SendPacket(socket.GetSocketStream(), responsePacket);
 
 				socket.Status = (int)SocketStatus.Connected;
 				return true;
