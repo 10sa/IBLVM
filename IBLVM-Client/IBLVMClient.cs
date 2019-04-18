@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Security.Cryptography;
 using System.IO;
+using System.Threading;
 
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Factories;
@@ -23,8 +24,12 @@ namespace IBLVM_Client
 	{
 		public IPacketFactory PacketFactory { get; private set; } = new PacketFactroy();
 
+		public Thread Receiver { get; private set; }
+
 		private readonly Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private NetworkStream networkStream;
+		private SocketHandlerChain chain;
+		private byte[] buffer;
 
 		public IBLVMClient()
 		{
@@ -32,6 +37,9 @@ namespace IBLVM_Client
 
 			CryptoProvider.ECDiffieHellman.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
 			CryptoProvider.ECDiffieHellman.HashAlgorithm = CngAlgorithm.Sha256;
+
+			buffer = new byte[PacketFactory.PacketSize * 2];
+			chain = new SocketHandlerChain(this);
 		}
 
 		#region Public methods
@@ -39,6 +47,23 @@ namespace IBLVM_Client
 		{
 			socket.Connect(remoteEndPoint);
 			networkStream = new NetworkStream(socket);
+			Receiver = new Thread(() =>
+			{
+				while (true)
+				{
+					try
+					{
+						Utils.ReadFull(networkStream, buffer, PacketFactory.PacketSize);
+						IPacket header = PacketFactory.ParseHeader(buffer);
+						chain.DoHandle(header);
+					}
+					catch(Exception)
+					{
+						Dispose();
+					}
+				}
+			});
+			Receiver.Start();
 
 			Status = (int)SocketStatus.Handshaking;
 			socket.Send(PacketFactory.CreateClientHello().GetPacketBytes());

@@ -26,13 +26,28 @@ namespace IBLVM_Tests
 
 			IBLVMClient client = new IBLVMClient();
 			client.Connect(new IPEndPoint(IPAddress.Loopback, 47857));
-
 			client.Dispose();
+
+			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.Connected) ;
 		}
 
+		[TestMethod]
 		public void LoginTest()
 		{
+			IBLVMServer server = new IBLVMServer(new UserValidate());
+			server.Bind(new IPEndPoint(IPAddress.Any, 47857));
+			server.Listen(5);
 
+			server.Start();
+
+			IBLVMClient client = new IBLVMClient();
+			client.Connect(new IPEndPoint(IPAddress.Loopback, 47857));
+			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.Connected) ;
+
+			client.Login("Test", "Test");
+			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.LoggedIn) ;
+
+			client.Dispose();
 		}
 	}
 }

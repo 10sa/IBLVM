@@ -40,9 +40,13 @@ namespace IBLVM_Server.Handlers
 				IAuthentication packet = socket.PacketFactory.CreateClientLoginRequest(null, null, socket.CryptoProvider.CryptoStream);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
-				if (!userValidate.Validate(packet.Id, packet.Password))
-					throw new InvalidAuthorizationDataException();
+				bool isSuccess = userValidate.Validate(packet.Id, packet.Password);
+				IPacket response = socket.PacketFactory.CreateServerLoginResponse(isSuccess);
+				Utils.SendPacket(socket.GetSocketStream(), response);
 
+				if (!isSuccess)
+					throw new InvalidAuthorizationDataException();
+				
 				socket.Status = (int)SocketStatus.LoggedIn;
 				return true;
 			}

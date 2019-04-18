@@ -73,10 +73,14 @@ namespace IBLVM_Server
 		#region IDisposable Implements
 		public void Dispose()
 		{
-			socket.Disconnect(false);
-			socket.Dispose();
+			if (socket.Connected)
+			{
+				socket.Disconnect(false);
+				socket.Dispose();
 
-			socketStream.Close();
+				socketStream.Close();
+			}
+			
 			CryptoProvider.Dispose();
 			buffer = null;
 

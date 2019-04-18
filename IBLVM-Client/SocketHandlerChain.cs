@@ -18,6 +18,8 @@ namespace IBLVM_Client
 		public SocketHandlerChain(IIBLVMSocket socket)
 		{
 			chain = new PacketHandlerChain(socket);
+			chain.AddHandler(new ServerKeyResponseHandler());
+			chain.AddHandler(new ServerLoginResponseHandler());
 			chain.AddHandler(new IVExchangeHandler());
 		}
 
