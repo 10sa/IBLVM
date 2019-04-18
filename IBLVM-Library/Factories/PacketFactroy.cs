@@ -22,7 +22,7 @@ namespace IBLVM_Library.Factories
 
 		public ICryptoExchanger CreateServerKeyResponse(byte[] data) => new ServerKeyResponse(data);
 
-		public IPacket CreateServerLoginResponse(bool isSuccess) => new ServerLoginResponse(isSuccess);
+		public IActionResult CreateServerLoginResponse(bool isSuccess) => new ServerLoginResponse(isSuccess);
 
 		public IAuthentication CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) => new ClientLoginRequest(id, password, cryptor);
 

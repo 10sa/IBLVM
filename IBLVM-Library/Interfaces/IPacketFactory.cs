@@ -38,7 +38,7 @@ namespace IBLVM_Library.Interfaces
 		/// </summary>
 		/// <param name="isSuccess">로그인 요청의 성공 여부입니다.</param>
 		/// <returns>생성된 로그인 응답 패킷입니다.</returns>
-		IPacket CreateServerLoginResponse(bool isSuccess);
+		IActionResult CreateServerLoginResponse(bool isSuccess);
 
 		/// <summary>
 		/// 서버에 로그인 하기 위한 요청 패킷을 생성합니다.
