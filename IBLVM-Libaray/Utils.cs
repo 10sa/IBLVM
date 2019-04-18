@@ -11,7 +11,7 @@ using IBLVM_Libaray.Interfaces;
 
 namespace IBLVM_Libaray
 {
-	public static class StreamUtil
+	public static class Utils
 	{
 		public static byte[] ReadFull(Stream stream, int size)
 		{

@@ -36,7 +36,7 @@ namespace IBLVM_Server.Handlers
 
 				socket.CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng();
 				IPacket packet = packetFactory.CreateServerKeyResponse(socket.CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
-				StreamUtil.SendPacket(socket.GetSocketStream(), packet);
+				Utils.SendPacket(socket.GetSocketStream(), packet);
 
 				socket.Status = (int)SocketStatus.ServerKeyResponsed;
 				return true;

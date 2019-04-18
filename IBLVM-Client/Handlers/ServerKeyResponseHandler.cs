@@ -37,7 +37,7 @@ namespace IBLVM_Client.Handlers
 				Array.Copy(cryptoProvider.SharedKey, cryptoProvider.CryptoStream.IV, cryptoProvider.CryptoStream.IV.Length);
 
 				IPacket responsePacket = socket.PacketFactory.CreateClientKeyResponse(cryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
-				StreamUtil.SendPacket(socket.GetSocketStream(), responsePacket);
+				Utils.SendPacket(socket.GetSocketStream(), responsePacket);
 
 				socket.Status = (int)SocketStatus.Connected;
 				return true;

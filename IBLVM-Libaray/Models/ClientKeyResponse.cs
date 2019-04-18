@@ -32,7 +32,7 @@ namespace IBLVM_Libaray.Models
 		public override void ParsePayload(int payloadSize, Stream stream)
 		{
 			base.ParsePayload(payloadSize, stream);
-			this.Data = StreamUtil.ReadFull(stream, payloadSize);
+			this.Data = Utils.ReadFull(stream, payloadSize);
 		}
 	}
 }

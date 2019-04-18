@@ -50,7 +50,7 @@ namespace IBLVM_Server
 				{
 					try
 					{
-						StreamUtil.ReadFull(socketStream, buffer, PacketFactory.PacketSize);
+						Utils.ReadFull(socketStream, buffer, PacketFactory.PacketSize);
 						IPacket header = PacketFactory.ParseHeader(buffer);
 						chain.DoHandle(header);
 					}
