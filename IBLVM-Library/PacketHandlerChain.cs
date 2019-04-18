@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 
-using IBLVM_Util.Interfaces;
+using IBLVM_Library.Interfaces;
 
 using IBLVM_Library.Interfaces;
 
-namespace IBLVM_Util
+namespace IBLVM_Library
 {
 	/// <summary>
 	/// 책임 연쇄 패턴 (Chain of responsibility pattern) 구현을 위한 처리자 제어 클래스입니다.

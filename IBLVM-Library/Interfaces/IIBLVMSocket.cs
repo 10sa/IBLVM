@@ -9,7 +9,7 @@ using IBLVM_Library.Interfaces;
 
 using System.Net.Sockets;
 
-namespace IBLVM_Util.Interfaces
+namespace IBLVM_Library.Interfaces
 {
 	/// <summary>
 	/// IBLVM 프로토콜 통신에 사용되는 소켓을 나타냅니다.

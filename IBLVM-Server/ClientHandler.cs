@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net.Sockets;
 
-using IBLVM_Util;
-using IBLVM_Util.Interfaces;
+using IBLVM_Library;
+using IBLVM_Library.Interfaces;
 
 using IBLVM_Library;
 using IBLVM_Library.Interfaces;

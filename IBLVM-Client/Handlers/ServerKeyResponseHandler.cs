@@ -15,8 +15,6 @@ using IBLVM_Library.Interfaces;
 using IBLVM_Library.Enums;
 using IBLVM_Library.Models;
 
-using IBLVM_Util.Interfaces;
-
 namespace IBLVM_Client.Handlers
 {
 	class ServerKeyResponseHandler : IPacketHandler
