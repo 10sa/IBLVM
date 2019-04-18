@@ -56,10 +56,6 @@
       <Project>{1f042069-73bc-4cac-a331-181c190ced10}</Project>
       <Name>IBLVM-Libaray</Name>
     </ProjectReference>
-    <ProjectReference Include="..\IBLVM-Util\IBLVM-Util.csproj">
-      <Project>{5036b510-c2c2-46f1-bd1d-9e2361b2cbc3}</Project>
-      <Name>IBLVM-Util</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

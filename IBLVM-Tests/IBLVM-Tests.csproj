@@ -74,10 +74,6 @@
       <Project>{09c7c586-aa7c-4dce-8469-2f014d289306}</Project>
       <Name>IBLVM-Server</Name>
     </ProjectReference>
-    <ProjectReference Include="..\IBLVM-Util\IBLVM-Util.csproj">
-      <Project>{5036b510-c2c2-46f1-bd1d-9e2361b2cbc3}</Project>
-      <Name>IBLVM-Util</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

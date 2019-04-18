@@ -51,8 +51,10 @@
     <Compile Include="Enums\PacketType.cs" />
     <Compile Include="Factories\PacketFactroy.cs" />
     <Compile Include="Interfaces\ICryptoExchanger.cs" />
+    <Compile Include="Interfaces\IIBLVMSocket.cs" />
     <Compile Include="Interfaces\IPacket.cs" />
     <Compile Include="Interfaces\IPacketFactory.cs" />
+    <Compile Include="Interfaces\IPacketHandler.cs" />
     <Compile Include="Models\BasePacket.cs" />
     <Compile Include="Models\BitLockerList.cs" />
     <Compile Include="Models\BitLockerVolume.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="Models\ExchangeInitalizeVector.cs" />
     <Compile Include="Models\ServerKeyResponse.cs" />
     <Compile Include="Models\ServerLoginResponse.cs" />
+    <Compile Include="PacketHandlerChain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamUtil.cs" />
   </ItemGroup>
