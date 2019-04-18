@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using SecureStream;
 
 using IBLVM_Libaray.Enums;
+using IBLVM_Libaray.Interfaces;
 
 namespace IBLVM_Libaray.Models
 {
-	public sealed class ClientLoginRequest : BasePacket
+	public sealed class ClientLoginRequest : BasePacket, IAuthentication
 	{
 		public string Id { get; private set; }
 

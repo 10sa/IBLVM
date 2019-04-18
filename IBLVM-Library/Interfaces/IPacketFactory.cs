@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SecureStream;
+
 namespace IBLVM_Libaray.Interfaces
 {
 	/// <summary>
@@ -30,6 +32,22 @@ namespace IBLVM_Libaray.Interfaces
 		/// <param name="data">키 교환 과정에서 사용될 데이터입니다.</param>
 		/// <returns>생성된 ClientKeyResponse 패킷입니다.</returns>
 		ICryptoExchanger CreateClientKeyResponse(byte[] data);
+
+		/// <summary>
+		/// 클라이언트의 로그인 요청에 대한 응답 패킷을 생성합니다.
+		/// </summary>
+		/// <param name="isSuccess">로그인 요청의 성공 여부입니다.</param>
+		/// <returns></returns>
+		IPacket CreateServerLoginResponse(bool isSuccess);
+
+		/// <summary>
+		/// 서버에 로그인 하기 위한 요청 패킷을 생성합니다.
+		/// </summary>
+		/// <param name="id">로그인에 사용될 사용자의 식별자입니다.</param>
+		/// <param name="password">로그인에 사용될 사용자의 비밀번호입니다.</param>
+		/// <param name="cryptor">사용자 정보 암호화에 사용될 CryptoMemoryStream 클래스 인스턴스입니다.</param>
+		/// <returns></returns>
+		IAuthentication CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor);
 
 		/// <summary>
 		/// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.

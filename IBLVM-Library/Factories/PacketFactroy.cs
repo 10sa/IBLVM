@@ -24,7 +24,7 @@ namespace IBLVM_Libaray.Factories
 
 		public IPacket CreateServerLoginResponse(bool isSuccess) => new ServerLoginResponse(isSuccess);
 
-		public IPacket CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) => new ClientLoginRequest(id, password, cryptor);
+		public IAuthentication CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) => new ClientLoginRequest(id, password, cryptor);
 
 		public IPacket ParseHeader(byte[] data)
 		{

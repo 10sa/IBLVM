@@ -50,6 +50,7 @@
     <Compile Include="Enums\ProtectionStatus.cs" />
     <Compile Include="Enums\PacketType.cs" />
     <Compile Include="Factories\PacketFactroy.cs" />
+    <Compile Include="Interfaces\IAuthentication.cs" />
     <Compile Include="Interfaces\ICryptoExchanger.cs" />
     <Compile Include="Interfaces\IIBLVMSocket.cs" />
     <Compile Include="Interfaces\IPacket.cs" />
