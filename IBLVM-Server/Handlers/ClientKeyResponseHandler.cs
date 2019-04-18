@@ -35,7 +35,9 @@ namespace IBLVM_Server.Handlers
 
 				provider.SharedKey = provider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(packet.Data, CngKeyBlobFormat.EccPublicBlob));
 				provider.CryptoStream = new CryptoMemoryStream(provider.SharedKey);
-				Array.Copy(provider.SharedKey, provider.CryptoStream.IV, provider.CryptoStream.IV.Length);
+				byte[] nonce = new byte[provider.CryptoStream.IV.Length];
+				Array.Copy(provider.SharedKey, nonce, nonce.Length);
+				provider.CryptoStream.IV = nonce;
 
 				socket.Status = (int)SocketStatus.Connected;
 				return true;
