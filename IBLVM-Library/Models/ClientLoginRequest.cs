@@ -39,6 +39,7 @@ namespace IBLVM_Libaray.Models
 
 			byte[] encryptBytes = new byte[id.Length + password.Length + 2];
 			cryptor.Read(encryptBytes, 0, encryptBytes.Length);
+			buffer.Write(encryptBytes, 0, encryptBytes.Length);
 
 			return buffer;
 		}
@@ -49,9 +50,7 @@ namespace IBLVM_Libaray.Models
 			byte[] encryptBytes = new byte[payloadSize];
 			byte[] datas = new byte[payloadSize];
 
-			for (int i = 0; i < payloadSize;)
-				i += stream.Read(encryptBytes, i, payloadSize - i);
-
+			Utils.ReadFull(stream, datas, payloadSize);
 			cryptor.Write(encryptBytes, 0, encryptBytes.Length);
 			cryptor.Decrypt(datas, 0, datas.Length);
 
