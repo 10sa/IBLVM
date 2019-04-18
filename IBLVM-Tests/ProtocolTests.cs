@@ -18,7 +18,7 @@ namespace IBLVM_Tests
 		[TestMethod]
 		public void HandshakeTest()
 		{
-			IBLVMServer server = new IBLVMServer();
+			IBLVMServer server = new IBLVMServer(new UserValidate());
 			server.Bind(new IPEndPoint(IPAddress.Any, 47857));
 			server.Listen(5);
 

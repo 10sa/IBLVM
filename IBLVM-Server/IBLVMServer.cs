@@ -41,7 +41,7 @@ namespace IBLVM_Server
 				while(true)
 				{
 					Socket clientSocket = serverSocket.Accept();
-					ClientHandler clientHandler = new ClientHandler(clientSocket, factory);
+					ClientHandler clientHandler = new ClientHandler(clientSocket, userValidate, factory);
 					clientHandlers.Add(clientHandler);
 					clientHandler.OnHandlerDisposed += OnClientDisconnected;
 
