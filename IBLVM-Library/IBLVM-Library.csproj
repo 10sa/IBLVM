@@ -49,6 +49,7 @@
     <Compile Include="BitLocker.cs" />
     <Compile Include="Enums\ProtectionStatus.cs" />
     <Compile Include="Enums\PacketType.cs" />
+    <Compile Include="Exceptions\InvalidAuthorizationDataException.cs" />
     <Compile Include="Factories\PacketFactroy.cs" />
     <Compile Include="Interfaces\IActionResult.cs" />
     <Compile Include="Interfaces\IAuthentication.cs" />

@@ -8,6 +8,7 @@ using System.Net;
 
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Enums;
+using IBLVM_Library.Exceptions;
 using IBLVM_Client.Enums;
 
 namespace IBLVM_Client.Handlers
@@ -25,7 +26,7 @@ namespace IBLVM_Client.Handlers
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
 				if (!packet.Success)
-					throw new ArgumentException("Invalid user data.");
+					throw new InvalidAuthorizationDataException();
 
 				socket.Status = (int)SocketStatus.LoggedIn;
 				return true;

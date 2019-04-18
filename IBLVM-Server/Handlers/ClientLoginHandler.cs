@@ -13,6 +13,7 @@ using IBLVM_Library;
 
 using IBLVM_Server.Enums;
 using IBLVM_Server.Interfaces;
+using IBLVM_Library.Exceptions;
 
 using IBLVM_Library.Enums;
 
@@ -40,7 +41,7 @@ namespace IBLVM_Server.Handlers
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
 				if (!userValidate.Validate(packet.Id, packet.Password))
-					throw new ArgumentException("Invalid user data!");
+					throw new InvalidAuthorizationDataException();
 
 				socket.Status = (int)SocketStatus.LoggedIn;
 				return true;
