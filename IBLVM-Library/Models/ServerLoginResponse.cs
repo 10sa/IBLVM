@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBLVM_Libaray.Interfaces;
+using IBLVM_Library.Interfaces;
 
-using IBLVM_Libaray.Enums;
+using IBLVM_Library.Enums;
 
-namespace IBLVM_Libaray.Models
+namespace IBLVM_Library.Models
 {
 	public sealed class ServerLoginResponse : BasePacket
 	{

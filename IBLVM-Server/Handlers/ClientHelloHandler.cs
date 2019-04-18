@@ -8,13 +8,13 @@ using System.Net;
 
 using System.Security.Cryptography;
 
-using IBLVM_Libaray.Interfaces;
+using IBLVM_Library.Interfaces;
 using IBLVM_Util.Interfaces;
 
 using IBLVM_Server.Enums;
 
-using IBLVM_Libaray;
-using IBLVM_Libaray.Enums;
+using IBLVM_Library;
+using IBLVM_Library.Enums;
 
 namespace IBLVM_Server.Handlers
 {

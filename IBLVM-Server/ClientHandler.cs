@@ -9,9 +9,9 @@ using System.Net.Sockets;
 using IBLVM_Util;
 using IBLVM_Util.Interfaces;
 
-using IBLVM_Libaray;
-using IBLVM_Libaray.Interfaces;
-using IBLVM_Libaray.Models;
+using IBLVM_Library;
+using IBLVM_Library.Interfaces;
+using IBLVM_Library.Models;
 
 using IBLVM_Server.Enums;
 

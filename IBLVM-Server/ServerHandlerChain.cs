@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using IBLVM_Libaray.Interfaces;
+using IBLVM_Library.Interfaces;
 
 using IBLVM_Util.Interfaces;
 using IBLVM_Util;

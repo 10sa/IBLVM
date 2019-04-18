@@ -9,7 +9,7 @@ using IBLVM_Util.Interfaces;
 
 using IBLVM_Client.Handlers;
 
-using IBLVM_Libaray.Interfaces;
+using IBLVM_Library.Interfaces;
 
 namespace IBLVM_Client
 {

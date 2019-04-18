@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 using SecureStream;
 
-using IBLVM_Libaray.Enums;
-using IBLVM_Libaray.Interfaces;
+using IBLVM_Library.Enums;
+using IBLVM_Library.Interfaces;
 
-namespace IBLVM_Libaray.Models
+namespace IBLVM_Library.Models
 {
 	public sealed class ClientLoginRequest : BasePacket, IAuthentication
 	{

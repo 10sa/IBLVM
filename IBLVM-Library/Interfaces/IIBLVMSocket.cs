@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using IBLVM_Libaray.Models;
-using IBLVM_Libaray.Interfaces;
+using IBLVM_Library.Models;
+using IBLVM_Library.Interfaces;
 
 using System.Net.Sockets;
 

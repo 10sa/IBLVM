@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using IBLVM_Libaray;
+using IBLVM_Library;
 
 namespace IBLVM_Tests
 {

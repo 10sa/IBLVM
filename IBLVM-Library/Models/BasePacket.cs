@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using IBLVM_Libaray.Enums;
-using IBLVM_Libaray.Interfaces;
+using IBLVM_Library.Enums;
+using IBLVM_Library.Interfaces;
 using System.IO;
 
-namespace IBLVM_Libaray.Models
+namespace IBLVM_Library.Models
 {
 	public class BasePacket : IPacket
 	{

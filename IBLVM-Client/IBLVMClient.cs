@@ -8,10 +8,10 @@ using System.Net;
 using System.Security.Cryptography;
 using System.IO;
 
-using IBLVM_Libaray.Interfaces;
-using IBLVM_Libaray.Factories;
-using IBLVM_Libaray.Enums;
-using IBLVM_Libaray.Models;
+using IBLVM_Library.Interfaces;
+using IBLVM_Library.Factories;
+using IBLVM_Library;
+using IBLVM_Library.Models;
 
 using IBLVM_Util;
 using IBLVM_Util.Interfaces;
@@ -49,7 +49,10 @@ namespace IBLVM_Client
 
 		public void Login(string id, string password)
 		{
+			if (Status != (int)SocketStatus.Connected)
+				throw new InvalidOperationException("Not logged in!");
 
+			Utils.SendPacket(networkStream, PacketFactory.CreateClientLoginRequest(id, password, CryptoProvider.CryptoStream));
 		}
 		#endregion
 

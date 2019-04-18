@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using SecureStream;
 
-namespace IBLVM_Libaray.Interfaces
+namespace IBLVM_Library.Interfaces
 {
 	/// <summary>
 	/// 패킷 생성에 사용되는 팩토리 클래스 인터페이스입니다..

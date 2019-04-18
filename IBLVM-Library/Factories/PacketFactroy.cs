@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBLVM_Libaray.Interfaces;
-using IBLVM_Libaray.Models;
+using IBLVM_Library.Interfaces;
+using IBLVM_Library.Models;
 
 using SecureStream;
 
-namespace IBLVM_Libaray.Factories
+namespace IBLVM_Library.Factories
 {
 	public class PacketFactroy : IPacketFactory
 	{

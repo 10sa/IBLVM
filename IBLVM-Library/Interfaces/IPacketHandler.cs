@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 
-using IBLVM_Libaray.Interfaces;
+using IBLVM_Library.Interfaces;
 
 namespace IBLVM_Util.Interfaces
 {

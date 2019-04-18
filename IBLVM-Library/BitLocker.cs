@@ -7,9 +7,9 @@ using System.Management;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-using IBLVM_Libaray.Enums;
+using IBLVM_Library.Enums;
 
-namespace IBLVM_Libaray
+namespace IBLVM_Library
 {
 	/// <summary>
 	/// BitLocker로 암호화된 드라이브를 나타내는 클래스입니다.

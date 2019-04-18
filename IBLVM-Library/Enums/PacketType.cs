@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBLVM_Libaray.Enums
+namespace IBLVM_Library.Enums
 {
 	/// <summary>
 	/// 패킷의 타입을 나타내는 열거형입니다.

@@ -7,8 +7,8 @@
     <ProjectGuid>{1F042069-73BC-4CAC-A331-181C190CED10}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IBLVM_Libaray</RootNamespace>
-    <AssemblyName>IBLVM-Libaray</AssemblyName>
+    <RootNamespace>IBLVM_Library</RootNamespace>
+    <AssemblyName>IBLVM_LibraryLibaray</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

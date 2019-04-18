@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBLVM_Libaray.Interfaces
+namespace IBLVM_Library.Interfaces
 {
 	/// <summary>
 	/// 식별자-비밀번호 기반의 사용자 인증 정보를 제공합니다.

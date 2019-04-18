@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-using IBLVM_Libaray.Enums;
+using IBLVM_Library.Enums;
 
-namespace IBLVM_Libaray.Interfaces
+namespace IBLVM_Library.Interfaces
 {
 	/// <summary>
 	/// 패킷의 데이터 요구를 정의합니다.

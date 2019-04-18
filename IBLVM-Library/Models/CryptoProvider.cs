@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using SecureStream;
 
-namespace IBLVM_Libaray.Models
+namespace IBLVM_Library.Models
 {
 	/// <summary>
 	/// IBLVM 통신에 사용되는 암호화 클래스 인스턴스 제공자입니다.

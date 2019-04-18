@@ -10,10 +10,10 @@ using SecureStream;
 
 using IBLVM_Client.Enums;
 
-using IBLVM_Libaray;
-using IBLVM_Libaray.Interfaces;
-using IBLVM_Libaray.Enums;
-using IBLVM_Libaray.Models;
+using IBLVM_Library;
+using IBLVM_Library.Interfaces;
+using IBLVM_Library.Enums;
+using IBLVM_Library.Models;
 
 using IBLVM_Util.Interfaces;
 

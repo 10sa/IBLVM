@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBLVM_Libaray.Models
+namespace IBLVM_Library.Models
 {
 	public sealed class ExchangeInitalizeVector : BasePacket
 	{

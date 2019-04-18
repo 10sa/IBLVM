@@ -7,7 +7,7 @@ using System.Net.Sockets;
 
 using IBLVM_Util.Interfaces;
 
-using IBLVM_Libaray.Interfaces;
+using IBLVM_Library.Interfaces;
 
 namespace IBLVM_Util
 {

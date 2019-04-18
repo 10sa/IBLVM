@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.IO;
 
 using System.Net.Sockets;
-using IBLVM_Libaray.Interfaces;
+using IBLVM_Library.Interfaces;
 
-namespace IBLVM_Libaray
+namespace IBLVM_Library
 {
 	public static class Utils
 	{
