@@ -26,7 +26,7 @@ namespace IBLVM_Libaray.Models
 			this.cryptor = cryptor;
 		}
 
-		public override int GetPayloadSize() => Encoding.UTF8.GetByteCount(Id) + Encoding.UTF8.GetByteCount(Password);
+		public override int GetPayloadSize() => Encoding.UTF8.GetByteCount(Id) + Encoding.UTF8.GetByteCount(Password) + 1;
 
 		public override Stream GetPayloadStream()
 		{
@@ -34,10 +34,13 @@ namespace IBLVM_Libaray.Models
 			byte[] id = Encoding.UTF8.GetBytes(Id);
 			byte[] password = Encoding.UTF8.GetBytes(Password);
 
-			cryptor.Encrypt(id, 0, id.Length);
-			cryptor.Encrypt(password, 0, password.Length);
+			byte[] datas = new byte[GetPayloadSize()];
+			id.CopyTo(datas, 0);
+			password.CopyTo(datas, id.Length + 1);
 
-			byte[] encryptBytes = new byte[id.Length + password.Length + 2];
+			cryptor.Encrypt(datas, 0, datas.Length);
+
+			byte[] encryptBytes = new byte[id.Length + password.Length + 1];
 			cryptor.Read(encryptBytes, 0, encryptBytes.Length);
 			buffer.Write(encryptBytes, 0, encryptBytes.Length);
 
@@ -50,12 +53,12 @@ namespace IBLVM_Libaray.Models
 			byte[] encryptBytes = new byte[payloadSize];
 			byte[] datas = new byte[payloadSize];
 
-			Utils.ReadFull(stream, datas, payloadSize);
+			Utils.ReadFull(stream, encryptBytes, payloadSize);
 			cryptor.Write(encryptBytes, 0, encryptBytes.Length);
 			cryptor.Decrypt(datas, 0, datas.Length);
 
-			int teminateOffset = Array.IndexOf(datas, 0x0);
-			Id = Encoding.UTF8.GetString(datas, 0, teminateOffset);
+			int teminateOffset = Array.IndexOf(datas, (byte)0x0) + 1;
+			Id = Encoding.UTF8.GetString(datas, 0, teminateOffset - 1);
 			Password = Encoding.UTF8.GetString(datas, teminateOffset, datas.Length - teminateOffset);
 		}
 	}
