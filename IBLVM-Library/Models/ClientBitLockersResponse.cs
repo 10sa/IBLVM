@@ -5,19 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 using IBLVM_Library.Enums;
+using IBLVM_Library.Interfaces;
+
 using System.IO;
+
 
 namespace IBLVM_Library.Models
 {
-	public sealed class BitLockerList : BasePacket
+	public sealed class ClientBitLockersResponse : BasePacket, IBitLockers
 	{
-		private BitLockerVolume[] bitLockerVolumes;
+		public BitLockerVolume[] Volumes { get; private set; }
 		private byte[] serializedData;
 
-		public BitLockerList(BitLockerVolume[] bitLockers) : base(PacketType.BitLockerList)
+		public ClientBitLockersResponse(BitLockerVolume[] bitLockers) : base(PacketType.ClientBitLockersResponse)
 		{
-			bitLockerVolumes = bitLockers;
-			serializedData = Serialize();
+			Volumes = bitLockers;
 		}
 
 		public override void ParsePayload(int payloadSize, Stream stream)
@@ -25,19 +27,8 @@ namespace IBLVM_Library.Models
 			base.ParsePayload(payloadSize, stream);
 			serializedData = new byte[payloadSize];
 
-			for (int readedSize = 0; payloadSize > readedSize;)
-				readedSize += stream.Read(serializedData, readedSize, payloadSize - readedSize);
+			Utils.ReadFull(stream, payloadSize);
 
-			bitLockerVolumes = Deserialize();
-		}
-
-		public override int GetPayloadSize()
-		{
-			return base.GetPayloadSize() + serializedData.Length;
-		}
-
-		private BitLockerVolume[] Deserialize()
-		{
 			string serializedString = Encoding.UTF8.GetString(serializedData);
 			List<BitLockerVolume> volumes = new List<BitLockerVolume>();
 
@@ -47,13 +38,14 @@ namespace IBLVM_Library.Models
 				volumes.Add(new BitLockerVolume(data[0], data[1]));
 			}
 
-			return volumes.ToArray();
+			Volumes = volumes.ToArray();
 		}
 
-		private byte[] Serialize()
+		public override Stream GetPayloadStream()
 		{
+			Stream buffer = base.GetPayloadStream();
 			StringBuilder builder = new StringBuilder();
-			foreach(var bitlocker in bitLockerVolumes)
+			foreach (var bitlocker in Volumes)
 			{
 				builder.Append(bitlocker.DriveLetter);
 				builder.Append("/");
@@ -61,7 +53,18 @@ namespace IBLVM_Library.Models
 				builder.Append(";");
 			}
 
-			return Encoding.UTF8.GetBytes(builder.ToString());
+			serializedData = Encoding.UTF8.GetBytes(builder.ToString());
+			buffer.Write(serializedData, 0, serializedData.Length);
+
+			return buffer;
+		}
+
+		public override int GetPayloadSize()
+		{
+			if (base.GetPayloadSize() > 0)
+				return base.GetPayloadSize();
+			else
+				return -1;
 		}
 	}
 }

@@ -42,6 +42,8 @@ namespace IBLVM_Library.Enums
 		ServerLoginResponse,
 
 
-		BitLockerList
+		ClientBitLockersResponse,
+
+		ServerBitLockersRequest
 	}
 }

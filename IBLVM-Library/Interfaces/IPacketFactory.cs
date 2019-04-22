@@ -50,6 +50,15 @@ namespace IBLVM_Library.Interfaces
 		IAuthentication CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor);
 
 		/// <summary>
+		/// 서버에서 요청한 BitLocker 볼륨 목록에 대한 응답 패킷을 생성합니다.
+		/// </summary>
+		/// <param name="volumes">서버에 응답할 BitLocker 볼륨들입니다.</param>
+		/// <returns></returns>
+		IBitLockers CreateClientBitLockersResponse(BitLocker[] volumes);
+
+		IPacket CreateServerBitLockersReqeust();
+
+		/// <summary>
 		/// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.
 		/// </summary>
 		/// <param name="data">파싱할 데이터가 든 바이트 배열입니다.</param>
