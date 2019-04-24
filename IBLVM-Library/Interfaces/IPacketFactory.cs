@@ -53,9 +53,13 @@ namespace IBLVM_Library.Interfaces
 		/// 서버에서 요청한 BitLocker 볼륨 목록에 대한 응답 패킷을 생성합니다.
 		/// </summary>
 		/// <param name="volumes">서버에 응답할 BitLocker 볼륨들입니다.</param>
-		/// <returns></returns>
+		/// <returns>생성된 볼륨 목록 패킷입니다.</returns>
 		IBitLockers CreateClientBitLockersResponse(BitLocker[] volumes);
 
+        /// <summary>
+        /// 서버에서 클라이언트에게 BitLocker 볼륨 목록 요청 패킷을 생성합니다.
+        /// </summary>
+        /// <returns>생성된 볼륨 요청 패킷입니다.</returns>
 		IPacket CreateServerBitLockersReqeust();
 
 		/// <summary>

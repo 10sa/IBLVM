@@ -41,9 +41,14 @@ namespace IBLVM_Library.Enums
 		/// </summary>
 		ServerLoginResponse,
 
-
+        /// <summary>
+        /// 서버에서 요청한 BitLocker 볼륨에 대한 응답을 나타냅니다.
+        /// </summary>
 		ClientBitLockersResponse,
 
+        /// <summary>
+        /// 서버에서 클라이언트에게 BitLocker 볼륨 목록에 대한 요청을 나타냅니다.
+        /// </summary>
 		ServerBitLockersRequest
 	}
 }
