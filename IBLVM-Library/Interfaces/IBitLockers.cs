@@ -8,7 +8,7 @@ using IBLVM_Library.Models;
 
 namespace IBLVM_Library.Interfaces
 {
-	public interface IBitLockers
+	public interface IBitLockers : IPacket
 	{
 		BitLockerVolume[] Volumes { get; }
 	}

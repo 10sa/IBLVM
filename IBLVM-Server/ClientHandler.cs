@@ -62,6 +62,12 @@ namespace IBLVM_Server
 			Thread.Start();
 		}
 
+        public void GetBitLockerVolumes()
+        {
+            IPacket packet = PacketFactory.CreateServerBitLockersReqeust();
+            Utils.SendPacket(socketStream, packet);
+        }
+
 		#region IIBLVMSocket Implements
 		public int Status { get; set; } = (int)SocketStatus.Uninitialized;
 
