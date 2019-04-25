@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitLocker.cs" />
+    <Compile Include="Enums\BitLockerCommand.cs" />
     <Compile Include="Enums\ProtectionStatus.cs" />
     <Compile Include="Enums\PacketType.cs" />
     <Compile Include="Exceptions\InvalidAuthorizationDataException.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Interfaces\IActionResult.cs" />
     <Compile Include="Interfaces\IAuthentication.cs" />
     <Compile Include="Interfaces\IBitLockers.cs" />
+    <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\ICryptoExchanger.cs" />
     <Compile Include="Interfaces\IIBLVMSocket.cs" />
     <Compile Include="Interfaces\IPacket.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Models\CryptoProvider.cs" />
     <Compile Include="Models\IVChangeRequest.cs" />
     <Compile Include="Models\IVChangeResponse.cs" />
+    <Compile Include="Models\ServerBitLockerControl.cs" />
     <Compile Include="Models\ServerBitLockersRequest.cs" />
     <Compile Include="Models\ServerKeyResponse.cs" />
     <Compile Include="Models\ServerLoginResponse.cs" />

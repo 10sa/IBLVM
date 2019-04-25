@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IBLVM_Library.Enums;
 
 using SecureStream;
 
@@ -75,6 +76,8 @@ namespace IBLVM_Library.Interfaces
         /// <param name="isSuccess">요청에 대한 성공 여부입니다.</param>
         /// <returns>생성된 초기화 벡터 변경 요청에 대한 응답 패킷입니다.</returns>
         IActionResult CreateIVChangeResposne(bool isSuccess);
+
+        ICommand CreateServerBitLockerControl(BitLockerCommand command, string arguments);
 
         /// <summary>
         /// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.

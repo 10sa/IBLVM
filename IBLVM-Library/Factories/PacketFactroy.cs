@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IBLVM_Library.Enums;
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Models;
 
@@ -41,6 +42,8 @@ namespace IBLVM_Library.Factories
         public ICryptoExchanger CreateIVChangeRequest(byte[] initializeVector) => new IVChangeRequest(initializeVector);
 
         public IActionResult CreateIVChangeResposne(bool isSuccess) => new IVChangeResponse(isSuccess);
+
+        public ICommand CreateServerBitLockerControl(BitLockerCommand command, object data) => new ServerBitLockerControl(command, data);
 
         public IPacket ParseHeader(byte[] data)
 		{
