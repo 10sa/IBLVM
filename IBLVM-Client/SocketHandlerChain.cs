@@ -20,7 +20,7 @@ namespace IBLVM_Client
 			chain = new PacketHandlerChain(socket);
 			chain.AddHandler(new ServerKeyResponseHandler());
 			chain.AddHandler(new ServerLoginResponseHandler());
-			chain.AddHandler(new IVExchangeHandler());
+			chain.AddHandler(new IVChangeRequestHandler());
 		}
 
 		// Proxy

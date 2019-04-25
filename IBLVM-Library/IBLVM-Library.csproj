@@ -51,6 +51,8 @@
     <Compile Include="Enums\PacketType.cs" />
     <Compile Include="Exceptions\InvalidAuthorizationDataException.cs" />
     <Compile Include="Factories\PacketFactroy.cs" />
+    <Compile Include="Handlers\IVChangeRequestHandler.cs" />
+    <Compile Include="Handlers\IVChangeResponseHandler.cs" />
     <Compile Include="Interfaces\IActionResult.cs" />
     <Compile Include="Interfaces\IAuthentication.cs" />
     <Compile Include="Interfaces\IBitLockers.cs" />
@@ -66,7 +68,7 @@
     <Compile Include="Models\ClientKeyResponse.cs" />
     <Compile Include="Models\ClientLoginRequest.cs" />
     <Compile Include="Models\CryptoProvider.cs" />
-    <Compile Include="Models\ExchangeInitalizeVector.cs" />
+    <Compile Include="Models\IVChangeRequest.cs" />
     <Compile Include="Models\ServerBitLockersRequest.cs" />
     <Compile Include="Models\ServerKeyResponse.cs" />
     <Compile Include="Models\ServerLoginResponse.cs" />

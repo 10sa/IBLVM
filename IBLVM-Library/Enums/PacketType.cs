@@ -27,9 +27,14 @@ namespace IBLVM_Library.Enums
 		ClientKeyResponse,
 
 		/// <summary>
-		/// 암호화에 사용되는 IV (Initialization Vector) 교환을 알립니다.
+		/// 암호화에 사용되는 초기화 벡터 교환에 대한 요청입니다.
 		/// </summary>
-		ExchangeInitializeVector,
+		IVChangeReqeust,
+
+        /// <summary>
+        /// 암호화에 사용되는 초기화 벡터 교환에 대한 응답입니다.
+        /// </summary>
+        IVChangeResponse,
 
 		/// <summary>
 		/// 클라이언트가 서버에 로그인함을 나타냅니다.

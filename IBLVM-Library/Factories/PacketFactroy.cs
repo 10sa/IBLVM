@@ -40,6 +40,8 @@ namespace IBLVM_Library.Factories
 
         public IPacket CreateServerBitLockersReqeust() => new ServerBitLockersRequest();
 
+        public ICryptoExchanger CreateIVChangeRequest(byte[] initializeVector) => new IVChangeRequest(initializeVector);
+
         public IPacket ParseHeader(byte[] data)
 		{
 			int offset = 0;

@@ -5,22 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Enums;
+using IBLVM_Library;
 
 using SecureStream;
 
-namespace IBLVM_Client.Handlers
+namespace IBLVM_Library.Handlers
 {
-	class IVExchangeHandler : IPacketHandler
+	class IVChangeRequestHandler : IPacketHandler
 	{
 		public bool Handle(IPacket header, IIBLVMSocket socket)
 		{
-			if (header.Type == PacketType.ExchangeInitializeVector)
+			if (header.Type == PacketType.IVChangeReqeust)
 			{
-				socket.GetSocketStream();
-				CryptoMemoryStream stream = socket.CryptoProvider.CryptoStream;
-
-
-				return true;
+                
+                return true;
 			}
 
 			return false;
