@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Models;
 
+using IBLVM_Library.Models;
+
 using SecureStream;
 
 namespace IBLVM_Library.Factories
@@ -26,10 +28,22 @@ namespace IBLVM_Library.Factories
 
 		public IAuthentication CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) => new ClientLoginRequest(id, password, cryptor);
 
-		public IPacket ParseHeader(byte[] data)
+        public IBitLockers CreateClientBitLockersResponse(BitLocker[] volumes)
+        {
+            List<BitLockerVolume> bitLockers = new List<BitLockerVolume>();
+            foreach (BitLocker locker in volumes)
+                bitLockers.Add(new BitLockerVolume(locker.DeviceID, locker.DriveLetter));
+
+
+            return new ClientBitLockersResponse(bitLockers.ToArray());
+        }
+
+        public IPacket CreateServerBitLockersReqeust() => new ServerBitLockersRequest();
+
+        public IPacket ParseHeader(byte[] data)
 		{
 			int offset = 0;
 			return new BasePacket(data, ref offset);
 		}
-	}
+    }
 }

@@ -17,11 +17,13 @@ namespace IBLVM_Tests
 			}
 		}
 
+        /*
 		[TestMethod]
 		public void Lock()
 		{
 			BitLocker volume = BitLocker.GetVolumes().Single((a) => { return a.DriveLetter == "E:"; });
 			volume.Lock(true);
 		}
+        */
 	}
 }

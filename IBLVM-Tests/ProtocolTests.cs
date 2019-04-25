@@ -26,10 +26,9 @@ namespace IBLVM_Tests
 
 			IBLVMClient client = new IBLVMClient();
 			client.Connect(new IPEndPoint(IPAddress.Loopback, 47857));
-			client.Dispose();
 
 			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.Connected) ;
-		}
+        }
 
 		[TestMethod]
 		public void LoginTest()
@@ -46,8 +45,6 @@ namespace IBLVM_Tests
 
 			client.Login("Test", "Test");
 			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.LoggedIn) ;
-
-			client.Dispose();
 		}
 	}
 }
