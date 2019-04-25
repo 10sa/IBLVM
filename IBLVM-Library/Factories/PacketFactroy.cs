@@ -45,7 +45,8 @@ namespace IBLVM_Library.Factories
 
         public ICommand CreateServerBitLockerControl(BitLockerCommand command, params object[] arguments)
         {
-            
+
+            return null;
         }
 
         public IPacket ParseHeader(byte[] data)

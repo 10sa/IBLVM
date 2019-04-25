@@ -64,6 +64,8 @@
     <Compile Include="Interfaces\IPacketFactory.cs" />
     <Compile Include="Interfaces\IPacketHandler.cs" />
     <Compile Include="Models\BasePacket.cs" />
+    <Compile Include="Models\BitLockerCommandLock.cs" />
+    <Compile Include="Models\BitLockerCommandUnlock.cs" />
     <Compile Include="Models\ClientBitLockersResponse.cs" />
     <Compile Include="Models\BitLockerVolume.cs" />
     <Compile Include="Models\ClientHello.cs" />
