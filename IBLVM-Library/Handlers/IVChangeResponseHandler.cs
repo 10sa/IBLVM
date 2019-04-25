@@ -9,7 +9,7 @@ using IBLVM_Library;
 
 namespace IBLVM_Library.Handlers
 {
-    class IVChangeResponseHandler : IPacketHandler
+    public class IVChangeResponseHandler : IPacketHandler
     {
         public bool Handle(IPacket header, IIBLVMSocket socket)
         {

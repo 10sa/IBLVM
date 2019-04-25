@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using IBLVM_Library.Interfaces;
+using IBLVM_Library.Handlers;
 using IBLVM_Library;
 
 using IBLVM_Server.Handlers;
@@ -22,7 +23,9 @@ namespace IBLVM_Server
 			chain.AddHandler(new ClientHelloHandler(packetFactory));
 			chain.AddHandler(new ClientKeyResponseHandler());
 			chain.AddHandler(new ClientLoginHandler(userValidate));
-		}
+            chain.AddHandler(new IVChangeRequestHandler());
+            chain.AddHandler(new IVChangeResponseHandler());
+        }
 
 		public bool DoHandle(IPacket header) => chain.DoHandle(header);
 	}

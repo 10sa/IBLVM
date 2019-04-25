@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using IBLVM_Library;
+using IBLVM_Library.Handlers;
 using IBLVM_Library.Interfaces;
 
 using IBLVM_Client.Handlers;
@@ -21,6 +22,7 @@ namespace IBLVM_Client
 			chain.AddHandler(new ServerKeyResponseHandler());
 			chain.AddHandler(new ServerLoginResponseHandler());
 			chain.AddHandler(new IVChangeRequestHandler());
+            chain.AddHandler(new IVChangeResponseHandler());
 		}
 
 		// Proxy

@@ -11,7 +11,7 @@ using SecureStream;
 
 namespace IBLVM_Library.Handlers
 {
-	class IVChangeRequestHandler : IPacketHandler
+	public class IVChangeRequestHandler : IPacketHandler
 	{
 		public bool Handle(IPacket header, IIBLVMSocket socket)
 		{
