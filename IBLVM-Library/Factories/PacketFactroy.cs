@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Models;
 
-using IBLVM_Library.Models;
-
 using SecureStream;
 
 namespace IBLVM_Library.Factories
@@ -41,6 +39,8 @@ namespace IBLVM_Library.Factories
         public IPacket CreateServerBitLockersReqeust() => new ServerBitLockersRequest();
 
         public ICryptoExchanger CreateIVChangeRequest(byte[] initializeVector) => new IVChangeRequest(initializeVector);
+
+        public IActionResult CreateIVChangeResposne(bool isSuccess) => new IVChangeResponse(isSuccess);
 
         public IPacket ParseHeader(byte[] data)
 		{

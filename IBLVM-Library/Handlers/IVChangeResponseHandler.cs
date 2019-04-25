@@ -15,8 +15,17 @@ namespace IBLVM_Library.Handlers
         {
             if (header.Type == PacketType.IVChangeResponse)
             {
-                
+
+                IActionResult result = socket.PacketFactory.CreateIVChangeResposne(false);
+                result.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
+
+                if (!result.Success)
+                    throw new InvalidOperationException("IV Change request isn't accepted.");
+
+                return true;
             }
+
+            return false;
         }
     }
 }

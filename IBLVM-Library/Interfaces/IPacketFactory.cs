@@ -62,12 +62,26 @@ namespace IBLVM_Library.Interfaces
         /// <returns>생성된 볼륨 요청 패킷입니다.</returns>
 		IPacket CreateServerBitLockersReqeust();
 
-		/// <summary>
-		/// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.
-		/// </summary>
-		/// <param name="data">파싱할 데이터가 든 바이트 배열입니다.</param>
-		/// <returns>헤더 부분의 데이터만을 가진 인터페이스를 구현하는 클래스 인스턴스입니다.</returns>
-		IPacket ParseHeader(byte[] data);
+        /// <summary>
+        /// 암호화 알고리즘에 사용되는 초기화 벡터의 변경 요청 패킷을 생성합니다.
+        /// </summary>
+        /// <param name="initializeVector">변경할 초기화 벡터입니다.</param>
+        /// <returns>생성된 초기화 벡터 변경 요청 패킷입니다.</returns>
+        ICryptoExchanger CreateIVChangeRequest(byte[] initializeVector);
+
+        /// <summary>
+        /// 암호화 알고리즘에 사용되는 초기화 벡터 변경 요청에 대한 응답 패킷을 생성합니다.
+        /// </summary>
+        /// <param name="isSuccess">요청에 대한 성공 여부입니다.</param>
+        /// <returns>생성된 초기화 벡터 변경 요청에 대한 응답 패킷입니다.</returns>
+        IActionResult CreateIVChangeResposne(bool isSuccess);
+
+        /// <summary>
+        /// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.
+        /// </summary>
+        /// <param name="data">파싱할 데이터가 든 바이트 배열입니다.</param>
+        /// <returns>헤더 부분의 데이터만을 가진 인터페이스를 구현하는 클래스 인스턴스입니다.</returns>
+        IPacket ParseHeader(byte[] data);
 
 		/// <summary>
 		/// 패킷에 사용되는 매직 바이트입니다.

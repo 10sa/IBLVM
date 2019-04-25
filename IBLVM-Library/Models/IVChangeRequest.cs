@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using IBLVM_Library.Interfaces;
+using IBLVM_Library.Enums;
 
 using SecureStream;
 
@@ -15,10 +16,12 @@ namespace IBLVM_Library.Models
 	{
 		public byte[] Data { get; private set; }
 
-		public IVChangeRequest(byte[] initializeVector) : base(Enums.PacketType.IVChangeReqeust)
+		public IVChangeRequest(byte[] initializeVector) : base(PacketType.IVChangeReqeust)
 		{
             Data = initializeVector;
 		}
+
+        public override int GetPayloadSize() => base.GetPayloadSize() + Data.Length;
 
         public override Stream GetPayloadStream()
         {
@@ -34,7 +37,5 @@ namespace IBLVM_Library.Models
 
             Data = Utils.ReadFull(stream, payloadSize);
         }
-
-        public override int GetPayloadSize() => base.GetPayloadSize() + Data.Length;
 	}
 }

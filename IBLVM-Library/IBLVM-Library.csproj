@@ -69,6 +69,7 @@
     <Compile Include="Models\ClientLoginRequest.cs" />
     <Compile Include="Models\CryptoProvider.cs" />
     <Compile Include="Models\IVChangeRequest.cs" />
+    <Compile Include="Models\IVChangeResponse.cs" />
     <Compile Include="Models\ServerBitLockersRequest.cs" />
     <Compile Include="Models\ServerKeyResponse.cs" />
     <Compile Include="Models\ServerLoginResponse.cs" />
