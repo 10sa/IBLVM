@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IBLVM_Library</RootNamespace>
-    <AssemblyName>IBLVM_LibraryLibaray</AssemblyName>
+    <AssemblyName>IBLVM_Library</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
