@@ -17,10 +17,5 @@ namespace IBLVM_Library.Interfaces
         /// 제어 명령입니다.
         /// </summary>
         BitLockerCommand Command { get; }
-
-        /// <summary>
-        /// 제어 명령에 대한 인자입니다.
-        /// </summary>
-        string Arguments { get; }
     }
 }

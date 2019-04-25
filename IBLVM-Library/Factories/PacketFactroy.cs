@@ -43,7 +43,10 @@ namespace IBLVM_Library.Factories
 
         public IActionResult CreateIVChangeResposne(bool isSuccess) => new IVChangeResponse(isSuccess);
 
-        public ICommand CreateServerBitLockerControl(BitLockerCommand command, object data) => new ServerBitLockerControl(command, data);
+        public ICommand CreateServerBitLockerControl(BitLockerCommand command, params object[] arguments)
+        {
+            
+        }
 
         public IPacket ParseHeader(byte[] data)
 		{

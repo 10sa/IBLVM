@@ -77,7 +77,7 @@ namespace IBLVM_Library.Interfaces
         /// <returns>생성된 초기화 벡터 변경 요청에 대한 응답 패킷입니다.</returns>
         IActionResult CreateIVChangeResposne(bool isSuccess);
 
-        ICommand CreateServerBitLockerControl(BitLockerCommand command, string arguments);
+        ICommand CreateServerBitLockerControl(BitLockerCommand command, params object[] arguments);
 
         /// <summary>
         /// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.
