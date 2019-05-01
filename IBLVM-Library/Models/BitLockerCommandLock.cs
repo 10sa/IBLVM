@@ -11,10 +11,8 @@ using System.IO;
 
 namespace IBLVM_Library.Models
 {
-    public class BitLockerCommandLock : BasePacket, ICommand
+    public class BitLockerCommandLock : BasePacket
     {
-        public BitLockerCommand Command => BitLockerCommand.Lock;
-
-        public BitLockerCommandLock() : base(PacketType.ServerBitLockerCommand) { }
+        public BitLockerCommandLock() : base(PacketType.ServerBitLockerLockCommand) { }
     }
 }

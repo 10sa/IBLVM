@@ -10,7 +10,7 @@ using SecureStream;
 namespace IBLVM_Library.Interfaces
 {
 	/// <summary>
-	/// 패킷 생성에 사용되는 팩토리 클래스 인터페이스입니다..
+	/// 패킷 생성에 사용되는 팩토리 클래스 인터페이스입니다.
 	/// </summary>
 	public interface IPacketFactory
 	{
@@ -77,7 +77,13 @@ namespace IBLVM_Library.Interfaces
         /// <returns>생성된 초기화 벡터 변경 요청에 대한 응답 패킷입니다.</returns>
         IActionResult CreateIVChangeResposne(bool isSuccess);
 
-        ICommand CreateServerBitLockerControl(BitLockerCommand command, params object[] arguments);
+
+        /// <summary>
+        /// BitLocker 볼륨 제어 명령에 대한 응답 패킷을 생성합니다.
+        /// </summary>
+        /// <param name="isSuccess">명령 실행에 대한 성공 여부입니다.</param>
+        /// <returns>생성된 BitLocker 볼륨 제어 명령에 대한 응답 패킷입니다.</returns>
+        IActionResult CreateBitLockerCommandResponse(bool isSuccess);
 
         /// <summary>
         /// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.

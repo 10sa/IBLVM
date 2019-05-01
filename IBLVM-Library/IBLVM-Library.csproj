@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\IPacket.cs" />
     <Compile Include="Interfaces\IPacketFactory.cs" />
     <Compile Include="Interfaces\IPacketHandler.cs" />
+    <Compile Include="Models\BaseActionResultPacket.cs" />
     <Compile Include="Models\BasePacket.cs" />
     <Compile Include="Models\BitLockerCommandLock.cs" />
     <Compile Include="Models\BitLockerCommandUnlock.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="Models\CryptoProvider.cs" />
     <Compile Include="Models\IVChangeRequest.cs" />
     <Compile Include="Models\IVChangeResponse.cs" />
-    <Compile Include="Models\ServerBitLockerControl.cs" />
     <Compile Include="Models\ServerBitLockersRequest.cs" />
     <Compile Include="Models\ServerKeyResponse.cs" />
     <Compile Include="Models\ServerLoginResponse.cs" />

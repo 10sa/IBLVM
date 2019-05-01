@@ -56,9 +56,10 @@ namespace IBLVM_Library.Enums
         /// </summary>
 		ServerBitLockersRequest,
 
-        /// <summary>
-        /// 서버에서의 BitLocker 볼륨에 대한 제어 명령을 나타냅니다.
-        /// </summary>
-        ServerBitLockerCommand
+        ServerBitLockerUnlockCommand,
+
+        ServerBitLockerLockCommand,
+
+        ClientBitLockerCommandResponse
 	}
 }

@@ -9,7 +9,7 @@ using IBLVM_Library.Enums;
 namespace IBLVM_Library.Interfaces
 {
     /// <summary>
-    /// BitLocker 제어를 위한 명령을 나타냅니다.
+    /// BitLocker 제어를 위한 명령 패킷 인터페이스입니다.
     /// </summary>
     public interface ICommand : IPacket
     {

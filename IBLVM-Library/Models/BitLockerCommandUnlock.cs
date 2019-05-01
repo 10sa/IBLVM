@@ -11,15 +11,13 @@ using System.IO;
 
 namespace IBLVM_Library.Models
 {
-    public class BitLockerCommandUnlock : BasePacket, ICommand
+    public class BitLockerUnlockCommand : BasePacket
     {
-        public BitLockerCommand Command => BitLockerCommand.Unlock;
-
         public string Password { get; set; }
 
         private CryptoMemoryStream cryptor;
 
-        public BitLockerCommandUnlock(string password, CryptoMemoryStream cryptor) : base(PacketType.ServerBitLockerCommand)
+        public BitLockerUnlockCommand(string password, CryptoMemoryStream cryptor) : base(PacketType.ServerBitLockerUnlockCommand)
         {
             Password = password;
             this.cryptor = cryptor;
