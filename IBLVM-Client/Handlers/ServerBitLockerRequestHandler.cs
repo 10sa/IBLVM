@@ -25,7 +25,7 @@ namespace IBLVM_Client.Handlers
                 if (header.GetPayloadSize() > 0)
                     throw new ProtocolViolationException("Protocol violation by unreasonable payload.");
 
-                IBitLockers bitlockers = socket.PacketFactory.CreateClientBitLockersResponse(BitLocker.GetVolumes());
+                IPacket bitlockers = socket.PacketFactory.CreateClientBitLockersResponse(BitLocker.GetVolumes());
                 Utils.SendPacket(socket.GetSocketStream(), bitlockers);
 
                 return true;

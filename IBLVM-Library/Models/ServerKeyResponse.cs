@@ -8,29 +8,29 @@ using IBLVM_Library.Interfaces;
 
 namespace IBLVM_Library.Models
 {
-	public sealed class ServerKeyResponse : BasePacket, ICryptoExchanger
+	public sealed class ServerKeyResponse : BasePacket, IPayload<byte[]>
 	{
-		public byte[] Data { get; private set; }
+        public byte[] Payload { get; private set; }
 
-		public ServerKeyResponse(byte[] cryptoKey) : base(Enums.PacketType.ServerKeyResponse)
+        public ServerKeyResponse(byte[] cryptoKey) : base(Enums.PacketType.ServerKeyResponse)
 		{
-			Data = cryptoKey;
+			Payload = cryptoKey;
 		}
 
 		public override Stream GetPayloadStream()
 		{
 			Stream buffer = base.GetPayloadStream();
-			WriteToStream(buffer, Data);
+			WriteToStream(buffer, Payload);
 
 			return buffer;
 		}
 
-		public override int GetPayloadSize() => base.GetPayloadSize() + Data.Length;
+		public override int GetPayloadSize() => base.GetPayloadSize() + Payload.Length;
 
 		public override void ParsePayload(int payloadSize, Stream stream)
 		{
 			base.ParsePayload(payloadSize, stream);
-			Data = Utils.ReadFull(stream, payloadSize);
+			Payload = Utils.ReadFull(stream, payloadSize);
 		}
 	}
 }

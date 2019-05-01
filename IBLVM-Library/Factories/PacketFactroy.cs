@@ -19,35 +19,30 @@ namespace IBLVM_Library.Factories
 
 		public IPacket CreateClientHello() => new ClientHello();
 
-		public ICryptoExchanger CreateClientKeyResponse(byte[] data) => new ClientKeyResponse(data);
+		public IPayload<byte[]> CreateClientKeyResponse(byte[] data) => new ClientKeyResponse(data);
 
-		public ICryptoExchanger CreateServerKeyResponse(byte[] data) => new ServerKeyResponse(data);
+		public IPayload<byte[]> CreateServerKeyResponse(byte[] data) => new ServerKeyResponse(data);
 
-		public IActionResult CreateServerLoginResponse(bool isSuccess) => new ServerLoginResponse(isSuccess);
+		public IPayload<bool> CreateServerLoginResponse(bool isSuccess) => new ServerLoginResponse(isSuccess);
 
-		public IAuthentication CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) => new ClientLoginRequest(id, password, cryptor);
+		public IPayload<IAccount> CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) => new ClientLoginRequest(id, password, cryptor);
 
-        public IBitLockers CreateClientBitLockersResponse(BitLocker[] volumes)
+        public IPayload<BitLockerVolume[]> CreateClientBitLockersResponse(BitLocker[] volumes)
         {
             List<BitLockerVolume> bitLockers = new List<BitLockerVolume>();
             foreach (BitLocker locker in volumes)
                 bitLockers.Add(new BitLockerVolume(locker.DeviceID, locker.DriveLetter));
-
 
             return new ClientBitLockersResponse(bitLockers.ToArray());
         }
 
         public IPacket CreateServerBitLockersReqeust() => new ServerBitLockersRequest();
 
-        public ICryptoExchanger CreateIVChangeRequest(byte[] initializeVector) => new IVChangeRequest(initializeVector);
+        public IPayload<byte[]> CreateIVChangeRequest(byte[] initializeVector) => new IVChangeRequest(initializeVector);
 
-        public IActionResult CreateIVChangeResposne(bool isSuccess) => new IVChangeResponse(isSuccess);
+        public IPayload<bool> CreateIVChangeResposne(bool isSuccess) => new IVChangeResponse(isSuccess);
 
-        public ICommand CreateServerBitLockerControl(BitLockerCommand command, params object[] arguments)
-        {
-
-            return null;
-        }
+        public IPayload<bool> CreateBitLockerCommandResponse(bool isSuccess) => new ClientBitLockerCommandResponse(isSuccess);
 
         public IPacket ParseHeader(byte[] data)
 		{

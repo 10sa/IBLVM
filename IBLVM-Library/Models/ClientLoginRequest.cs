@@ -12,28 +12,25 @@ using IBLVM_Library.Interfaces;
 
 namespace IBLVM_Library.Models
 {
-	public sealed class ClientLoginRequest : BasePacket, IAuthentication
+	public sealed class ClientLoginRequest : BasePacket, IPayload<IAccount>
 	{
-		public string Id { get; private set; }
-
-		public string Password { get; private set; }
+        public IAccount Payload { get; private set; }
 
 		private readonly CryptoMemoryStream cryptor;
 
 		public ClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) : base(PacketType.ClientLoginRequest)
 		{
-			Id = id;
-			Password = password;
+            Payload = new Account(id, password);
 			this.cryptor = cryptor;
 		}
 
-		public override int GetPayloadSize() => Encoding.UTF8.GetByteCount(Id) + Encoding.UTF8.GetByteCount(Password) + 1;
+		public override int GetPayloadSize() => Encoding.UTF8.GetByteCount(Payload.Id) + Encoding.UTF8.GetByteCount(Payload.Password) + 1;
 
 		public override Stream GetPayloadStream()
 		{
 			Stream buffer = base.GetPayloadStream();
-			byte[] id = Encoding.UTF8.GetBytes(Id);
-			byte[] password = Encoding.UTF8.GetBytes(Password);
+			byte[] id = Encoding.UTF8.GetBytes(Payload.Id);
+			byte[] password = Encoding.UTF8.GetBytes(Payload.Password);
 
 			byte[] datas = new byte[GetPayloadSize()];
 			id.CopyTo(datas, 0);
@@ -59,8 +56,10 @@ namespace IBLVM_Library.Models
 			cryptor.Decrypt(datas, 0, datas.Length);
 
 			int teminateOffset = Array.IndexOf(datas, (byte)0x0) + 1;
-			Id = Encoding.UTF8.GetString(datas, 0, teminateOffset - 1);
-			Password = Encoding.UTF8.GetString(datas, teminateOffset, datas.Length - teminateOffset);
+			string id = Encoding.UTF8.GetString(datas, 0, teminateOffset - 1);
+			string password = Encoding.UTF8.GetString(datas, teminateOffset, datas.Length - teminateOffset);
+
+            Payload = new Account(id, password);
 		}
 	}
 }

@@ -12,14 +12,14 @@ using System.IO;
 
 namespace IBLVM_Library.Models
 {
-	public sealed class ClientBitLockersResponse : BasePacket, IBitLockers
+	public sealed class ClientBitLockersResponse : BasePacket, IPayload<BitLockerVolume[]>
 	{
-		public BitLockerVolume[] Volumes { get; private set; }
+		public BitLockerVolume[] Payload { get; private set; }
 		private byte[] serializedData;
 
 		public ClientBitLockersResponse(BitLockerVolume[] bitLockers) : base(PacketType.ClientBitLockersResponse)
 		{
-			Volumes = bitLockers;
+			Payload = bitLockers;
 		}
 
 		public override void ParsePayload(int payloadSize, Stream stream)
@@ -38,14 +38,14 @@ namespace IBLVM_Library.Models
 				volumes.Add(new BitLockerVolume(data[0], data[1]));
 			}
 
-			Volumes = volumes.ToArray();
+			Payload = volumes.ToArray();
 		}
 
 		public override Stream GetPayloadStream()
 		{
 			Stream buffer = base.GetPayloadStream();
 			StringBuilder builder = new StringBuilder();
-			foreach (var bitlocker in Volumes)
+			foreach (var bitlocker in Payload)
 			{
 				builder.Append(bitlocker.DriveLetter);
 				builder.Append(",");

@@ -17,12 +17,12 @@ namespace IBLVM_Library.Handlers
 		{
 			if (header.Type == PacketType.IVChangeReqeust)
 			{
-                ICryptoExchanger cryptoPacket = socket.PacketFactory.CreateIVChangeRequest(null);
+                IPayload<byte[]> cryptoPacket = socket.PacketFactory.CreateIVChangeRequest(null);
                 cryptoPacket.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
-                Array.Copy(cryptoPacket.Data, socket.CryptoProvider.CryptoStream.IV, cryptoPacket.Data.Length);
+                Array.Copy(cryptoPacket.Payload, socket.CryptoProvider.CryptoStream.IV, cryptoPacket.Payload.Length);
 
                 // TO DO:: IV Changing accept event
-                IActionResult resultPacket = socket.PacketFactory.CreateIVChangeResposne(true);
+                var resultPacket = socket.PacketFactory.CreateIVChangeResposne(true);
                 Utils.SendPacket(socket.GetSocketStream(), resultPacket);
 
                 return true;

@@ -37,10 +37,10 @@ namespace IBLVM_Server.Handlers
 				if (socket.Status != (int)SocketStatus.Connected)
 					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
-				IAuthentication packet = socket.PacketFactory.CreateClientLoginRequest(null, null, socket.CryptoProvider.CryptoStream);
+                IPayload<IAccount> packet = socket.PacketFactory.CreateClientLoginRequest(null, null, socket.CryptoProvider.CryptoStream);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
-				bool isSuccess = userValidate.Validate(packet.Id, packet.Password);
+				bool isSuccess = userValidate.Validate(packet.Payload.Id, packet.Payload.Password);
 				IPacket response = socket.PacketFactory.CreateServerLoginResponse(isSuccess);
 				Utils.SendPacket(socket.GetSocketStream(), response);
 

@@ -30,10 +30,10 @@ namespace IBLVM_Server.Handlers
 					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
 				CryptoProvider provider = socket.CryptoProvider;
-				ICryptoExchanger packet = socket.PacketFactory.CreateClientKeyResponse(null);
+				var packet = socket.PacketFactory.CreateClientKeyResponse(null);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
-				provider.SharedKey = provider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(packet.Data, CngKeyBlobFormat.EccPublicBlob));
+				provider.SharedKey = provider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(packet.Payload, CngKeyBlobFormat.EccPublicBlob));
 				provider.CryptoStream = new CryptoMemoryStream(provider.SharedKey);
 				byte[] nonce = new byte[provider.CryptoStream.IV.Length];
 				Array.Copy(provider.SharedKey, nonce, nonce.Length);

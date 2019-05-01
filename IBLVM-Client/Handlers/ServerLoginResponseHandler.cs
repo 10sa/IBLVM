@@ -22,10 +22,10 @@ namespace IBLVM_Client.Handlers
 				if (socket.Status != (int)SocketStatus.Connected)
 					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
-				IActionResult packet = socket.PacketFactory.CreateServerLoginResponse(false);
+			    IPayload<bool> packet = socket.PacketFactory.CreateServerLoginResponse(false);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
-				if (!packet.Success)
+				if (!packet.Payload)
 					throw new InvalidAuthorizationDataException();
 
 				socket.Status = (int)SocketStatus.LoggedIn;

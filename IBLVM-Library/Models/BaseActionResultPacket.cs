@@ -10,18 +10,18 @@ using IBLVM_Library.Interfaces;
 
 namespace IBLVM_Library.Models
 {
-    public abstract class BaseActionResultPacket : BasePacket, IActionResult
+    public abstract class BaseActionResultPacket : BasePacket, IPayload<bool>
     {
-        public bool Success { get; private set; }
+        public bool Payload { get; private set; }
 
-        public BaseActionResultPacket(bool isSuccess, PacketType type) : base(type) => Success = isSuccess;
+        public BaseActionResultPacket(bool isSuccess, PacketType type) : base(type) => Payload = isSuccess;
 
         public sealed override int GetPayloadSize() => base.GetPayloadSize() + sizeof(bool);
 
         public sealed override Stream GetPayloadStream()
         {
             Stream buffer = base.GetPayloadStream();
-            byte[] data = BitConverter.GetBytes(Success);
+            byte[] data = BitConverter.GetBytes(Payload);
 
             buffer.Write(data, 0, data.Length);
             return buffer;
@@ -30,7 +30,7 @@ namespace IBLVM_Library.Models
         public sealed override void ParsePayload(int payloadSize, Stream stream)
         {
             base.ParsePayload(payloadSize, stream);
-            Success = BitConverter.ToBoolean(Utils.ReadFull(stream, payloadSize), 0);
+            Payload = BitConverter.ToBoolean(Utils.ReadFull(stream, payloadSize), 0);
         }
     }
 }

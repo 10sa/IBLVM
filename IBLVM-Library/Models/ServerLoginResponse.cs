@@ -10,7 +10,7 @@ using IBLVM_Library.Enums;
 
 namespace IBLVM_Library.Models
 {
-	public sealed class ServerLoginResponse : BaseActionResultPacket, IActionResult
+	public sealed class ServerLoginResponse : BaseActionResultPacket
 	{
 		public ServerLoginResponse(bool isSuccess) : base(isSuccess, PacketType.ServerLoginResponse) { }
 	}

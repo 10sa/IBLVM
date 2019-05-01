@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using IBLVM_Library.Models;
-
 namespace IBLVM_Library.Interfaces
 {
     /// <summary>
-    /// BitLocker 볼륨 목록을 나타내는 패킷 인터페이스입니다.
+    /// 서버에 로그인하기 위한 정보를 나타내는 인터페이스입니다.
     /// </summary>
-	public interface IBitLockers : IPacket
-	{
-		BitLockerVolume[] Volumes { get; }
-	}
+    public interface IAccount
+    {
+        string Id { get; }
+
+        string Password { get; }
+    }
 }

@@ -12,21 +12,21 @@ using SecureStream;
 
 namespace IBLVM_Library.Models
 {
-	public sealed class IVChangeRequest : BasePacket, ICryptoExchanger
+	public sealed class IVChangeRequest : BasePacket, IPayload<byte[]>
 	{
-		public byte[] Data { get; private set; }
+        public byte[] Payload { get; private set; }
 
-		public IVChangeRequest(byte[] initializeVector) : base(PacketType.IVChangeReqeust)
+        public IVChangeRequest(byte[] initializeVector) : base(PacketType.IVChangeReqeust)
 		{
-            Data = initializeVector;
+            Payload = initializeVector;
 		}
 
-        public override int GetPayloadSize() => base.GetPayloadSize() + Data.Length;
+        public override int GetPayloadSize() => base.GetPayloadSize() + Payload.Length;
 
         public override Stream GetPayloadStream()
         {
             Stream stream = base.GetPayloadStream();
-            stream.Write(Data, 0, Data.Length);
+            stream.Write(Payload, 0, Payload.Length);
 
             return stream;
         }
@@ -35,7 +35,7 @@ namespace IBLVM_Library.Models
         {
             base.ParsePayload(payloadSize, stream);
 
-            Data = Utils.ReadFull(stream, payloadSize);
+            Payload = Utils.ReadFull(stream, payloadSize);
         }
 	}
 }

@@ -12,13 +12,13 @@ using System.IO;
 
 namespace IBLVM_Library.Models
 {
-    class IVChangeResponse : BasePacket, IActionResult
+    class IVChangeResponse : BasePacket, IPayload<bool>
     {
-        public bool Success { get; private set; }
+        public bool Payload { get; private set; }
 
         public IVChangeResponse(bool isSuccess) : base(PacketType.IVChangeResponse)
         {
-            Success = isSuccess;
+            Payload = isSuccess;
         }
 
         public override int GetPayloadSize() => base.GetPayloadSize() + sizeof(bool);
@@ -26,7 +26,7 @@ namespace IBLVM_Library.Models
         public override Stream GetPayloadStream()
         {
             Stream stream = base.GetPayloadStream();
-            byte[] payload = BitConverter.GetBytes(Success);
+            byte[] payload = BitConverter.GetBytes(Payload);
             stream.Write(payload, 0, payload.Length);
 
             return stream;
@@ -35,7 +35,7 @@ namespace IBLVM_Library.Models
         public override void ParsePayload(int payloadSize, Stream stream)
         {
             base.ParsePayload(payloadSize, stream);
-            Success = BitConverter.ToBoolean(Utils.ReadFull(stream, payloadSize), 0);
+            Payload = BitConverter.ToBoolean(Utils.ReadFull(stream, payloadSize), 0);
         }
     }
 }
