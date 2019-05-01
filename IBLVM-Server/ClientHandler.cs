@@ -43,24 +43,27 @@ namespace IBLVM_Server
 
 		public void Start()
 		{
-			Thread = new Thread(() =>
-			{
-				while(true)
-				{
-					try
-					{
-						Utils.ReadFull(socketStream, buffer, PacketFactory.PacketSize);
-						IPacket header = PacketFactory.ParseHeader(buffer);
-						chain.DoHandle(header);
-					}
-					catch(Exception) {
-						Dispose();
+            Thread = new Thread(() =>
+            {
+                while (true)
+                {
+                    try
+                    {
+                        Utils.ReadFull(socketStream, buffer, PacketFactory.PacketSize);
+                        IPacket header = PacketFactory.ParseHeader(buffer);
+                        chain.DoHandle(header);
+                    }
+                    catch (Exception)
+                    {
+                        Dispose();
                         throw;
-					}
-				}
-			});
-
-			Thread.Start();
+                    }
+                }
+            })
+            {
+                Name = string.Format("IBLVM Client handler [{0}]", socket.RemoteEndPoint.ToString())
+            };
+            Thread.Start();
 		}
 
         public void GetBitLockerVolumes()

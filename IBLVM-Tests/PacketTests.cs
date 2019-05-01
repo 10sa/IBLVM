@@ -52,7 +52,7 @@ namespace IBLVM_Tests
 			ClientLoginRequest parsedPacket = new ClientLoginRequest(null, null, provider.CryptoStream);
 			parsedPacket.ParsePayload(packet.GetPayloadSize(), payload);
 
-			Assert.IsTrue(packet.Id == parsedPacket.Id && packet.Password == parsedPacket.Password);
+			Assert.IsTrue(packet.Payload.Id == parsedPacket.Payload.Id && packet.Payload.Password == parsedPacket.Payload.Password);
 		}
 	}
 }

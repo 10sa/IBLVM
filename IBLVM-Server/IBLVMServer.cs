@@ -15,7 +15,7 @@ using System.Net;
 
 namespace IBLVM_Server
 {
-	public class IBLVMServer
+	public class IBLVMServer : IDisposable
 	{
 		public Thread ServerThread { get; private set; }
 
@@ -36,25 +36,44 @@ namespace IBLVM_Server
 
 		public void Start()
 		{
-			ServerThread = new Thread(() =>
-			{
-				while(true)
-				{
-					Socket clientSocket = serverSocket.Accept();
-					ClientHandler clientHandler = new ClientHandler(clientSocket, userValidate, factory);
-					clientHandlers.Add(clientHandler);
-					clientHandler.OnHandlerDisposed += OnClientDisconnected;
+            ServerThread = new Thread(() =>
+            {
+                while (true)
+                {
+                    try
+                    {
+                        Socket clientSocket = serverSocket.Accept();
+                        ClientHandler clientHandler = new ClientHandler(clientSocket, userValidate, factory);
+                        clientHandlers.Add(clientHandler);
+                        clientHandler.OnHandlerDisposed += OnClientDisconnected;
 
-					clientHandler.Start();
-				}
-			});
+                        clientHandler.Start();
+                    }
+                    catch (ThreadAbortException)
+                    {
 
-			ServerThread.Start();
+                    }
+                }
+            })
+            {
+                Name = "IBLVM Server main thread"
+            };
+            ServerThread.Start();
 		}
 
 		private void OnClientDisconnected(ClientHandler handler)
 		{
 			clientHandlers.Remove(handler);
 		}
-	}
+
+        public void Dispose()
+        {
+            for (int i = 0; i < clientHandlers.Count; i++)
+                clientHandlers[i].Dispose();
+
+            ServerThread.Abort();
+            serverSocket.Dispose();
+            return;
+        }
+    }
 }
