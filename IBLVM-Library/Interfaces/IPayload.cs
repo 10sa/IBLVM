@@ -12,6 +12,9 @@ namespace IBLVM_Library.Interfaces
     /// <typeparam name="T">페이로드의 자료형입니다.</typeparam>
     public interface IPayload<T> : IPacket
     {
+        /// <summary>
+        /// 패킷의 페이로드입니다.
+        /// </summary>
         T Payload { get; }
     }
 }
