@@ -61,10 +61,10 @@ namespace IBLVM_Library.Models
 
 		public override int GetPayloadSize()
 		{
-			if (base.GetPayloadSize() > 0)
-				return base.GetPayloadSize();
-			else
-				return -1;
-		}
+            if (base.GetPayloadSize() > 0)
+                return base.GetPayloadSize();
+            else
+                return serializedData.Length;
+        }
 	}
 }
