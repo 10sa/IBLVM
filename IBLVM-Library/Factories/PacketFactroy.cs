@@ -4,8 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBLVM_Library.Enums;
+
 using IBLVM_Library.Interfaces;
+using IBLVM_Library.Packets;
 using IBLVM_Library.Models;
 
 using SecureStream;

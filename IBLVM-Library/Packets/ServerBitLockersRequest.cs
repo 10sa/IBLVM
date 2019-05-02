@@ -9,7 +9,7 @@ using IBLVM_Library.Interfaces;
 
 using System.IO;
 
-namespace IBLVM_Library.Models
+namespace IBLVM_Library.Packets
 {
 	class ServerBitLockersRequest : BasePacket
 	{

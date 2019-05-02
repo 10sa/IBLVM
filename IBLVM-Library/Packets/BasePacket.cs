@@ -8,7 +8,7 @@ using IBLVM_Library.Enums;
 using IBLVM_Library.Interfaces;
 using System.IO;
 
-namespace IBLVM_Library.Models
+namespace IBLVM_Library.Packets
 {
 	public class BasePacket : IPacket
 	{

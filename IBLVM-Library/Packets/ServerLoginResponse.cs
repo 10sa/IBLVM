@@ -8,7 +8,7 @@ using IBLVM_Library.Interfaces;
 
 using IBLVM_Library.Enums;
 
-namespace IBLVM_Library.Models
+namespace IBLVM_Library.Packets
 {
 	public sealed class ServerLoginResponse : BaseActionResultPacket
 	{

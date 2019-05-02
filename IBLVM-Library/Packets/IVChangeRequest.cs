@@ -10,7 +10,7 @@ using IBLVM_Library.Enums;
 
 using SecureStream;
 
-namespace IBLVM_Library.Models
+namespace IBLVM_Library.Packets
 {
 	public sealed class IVChangeRequest : BasePacket, IPayload<byte[]>
 	{

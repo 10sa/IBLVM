@@ -8,7 +8,7 @@ using System.IO;
 using IBLVM_Library.Enums;
 using IBLVM_Library.Interfaces;
 
-namespace IBLVM_Library.Models
+namespace IBLVM_Library.Packets
 {
     public class ClientDrivesResponse : BasePacket, IPayload<DriveInfomation[]>
     {

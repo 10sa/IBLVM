@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using IBLVM_Library.Enums;
 
-namespace IBLVM_Library.Models
+namespace IBLVM_Library.Packets
 {
     public class ServerDrivesRequest : BasePacket
     {

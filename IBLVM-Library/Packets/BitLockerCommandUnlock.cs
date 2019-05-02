@@ -9,7 +9,7 @@ using IBLVM_Library.Enums;
 using SecureStream;
 using System.IO;
 
-namespace IBLVM_Library.Models
+namespace IBLVM_Library.Packets
 {
     public class BitLockerUnlockCommand : BasePacket, IPayload<string>
     {

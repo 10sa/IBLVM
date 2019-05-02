@@ -10,7 +10,7 @@ using SecureStream;
 using IBLVM_Library.Enums;
 using IBLVM_Library.Interfaces;
 
-namespace IBLVM_Library.Models
+namespace IBLVM_Library.Packets
 {
 	public sealed class ClientLoginRequest : BasePacket, IPayload<IAccount>
 	{
