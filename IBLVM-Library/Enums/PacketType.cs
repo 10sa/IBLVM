@@ -60,6 +60,10 @@ namespace IBLVM_Library.Enums
 
         ServerBitLockerLockCommand,
 
-        ClientBitLockerCommandResponse
+        ClientBitLockerCommandResponse,
+
+        ServerDrivesRequest,
+
+        ClientDrivesResponse
 	}
 }

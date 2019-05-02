@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBLVM_Library.Enums;
+using System.IO;
 
 using IBLVM_Library.Models;
 using SecureStream;
@@ -79,11 +79,38 @@ namespace IBLVM_Library.Interfaces
         IPayload<bool> CreateIVChangeResposne(bool isSuccess);
 
         /// <summary>
+        /// BitLocker 볼륨의 잠금을 해제하는 명령 패킷을 생성합니다.
+        /// </summary>
+        /// <param name="password">잠금 해제에 사용될 비밀번호입니다.</param>
+        /// <param name="cryptor">비밀번호 암호화에 사용될 CryptoMemoryStream 클래스 인스턴스입니다.</param>
+        /// <returns>생성된 BitLocker 볼륨 잠금 해제 명령 패킷입니다.</returns>
+        IPayload<string> CreateBitLockerUnlockCommand(string password, CryptoMemoryStream cryptor);
+
+        /// <summary>
+        /// BitLocker 볼륨의 잠금 명령 패킷을 생성합니다.
+        /// </summary>
+        /// <returns>생성된 BItLocker 볼륨 잠금 명령 패킷입니다.</returns>
+        IPacket CreateBitLockerLockCommand();
+
+        /// <summary>
         /// BitLocker 볼륨 제어 명령에 대한 응답 패킷을 생성합니다.
         /// </summary>
         /// <param name="isSuccess">명령 실행에 대한 성공 여부입니다.</param>
         /// <returns>생성된 BitLocker 볼륨 제어 명령에 대한 응답 패킷입니다.</returns>
-        IPayload<bool> CreateBitLockerCommandResponse(bool isSuccess);
+        IPayload<bool> CreateClientBitLockerCommandResponse(bool isSuccess);
+
+        /// <summary>
+        /// 클라이언트 디바이스에 존재하는 드라이브 정보 요청 패킷을 생성합니다.
+        /// </summary>
+        /// <returns>생성된 디바이스 드라이브 정보 요청 패킷입니다.</returns>
+        IPacket CreateServerDrivesRequest();
+
+        /// <summary>
+        /// 클라이언트 디바이스 드라이브 정보 요청에 대한 응답 패킷을 생성합니다.
+        /// </summary>
+        /// <param name="drives">응답으로 전송될 드라이브 정보입니다.</param>
+        /// <returns>생성된 클라이언트 디바이스 드라이브 정보 요청에 대한 응답 패킷입니다.</returns>
+        IPayload<DriveInfomation[]> CreateClientDrivesResponse(DriveInfo[] drives);
 
         /// <summary>
         /// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.

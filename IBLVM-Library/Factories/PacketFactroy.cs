@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,12 +43,20 @@ namespace IBLVM_Library.Factories
 
         public IPayload<bool> CreateIVChangeResposne(bool isSuccess) => new IVChangeResponse(isSuccess);
 
-        public IPayload<bool> CreateBitLockerCommandResponse(bool isSuccess) => new ClientBitLockerCommandResponse(isSuccess);
+        public IPayload<bool> CreateClientBitLockerCommandResponse(bool isSuccess) => new ClientBitLockerCommandResponse(isSuccess);
+
+        public IPayload<string> CreateBitLockerUnlockCommand(string password, CryptoMemoryStream cryptor) => new BitLockerUnlockCommand(password, cryptor);
+
+        public IPacket CreateBitLockerLockCommand() => new BitLockerLockCommand();
+
+        public IPacket CreateServerDrivesRequest() => new ServerDrivesRequest();
+
+        public IPayload<DriveInfomation[]> CreateClientDrivesResponse(DriveInfo[] driveInfos) => new ClientDrivesResponse(driveInfos);
 
         public IPacket ParseHeader(byte[] data)
-		{
-			int offset = 0;
-			return new BasePacket(data, ref offset);
-		}
+        {
+            int offset = 0;
+            return new BasePacket(data, ref offset);
+        }
     }
 }
