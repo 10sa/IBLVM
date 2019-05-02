@@ -9,6 +9,7 @@ namespace IBLVM_Library.Exceptions
 	/// <summary>
 	/// 잘못된 인증 정보에 대한 예외입니다.
 	/// </summary>
+    [Serializable]
 	public class InvalidAuthorizationDataException : Exception
 	{
 	}
