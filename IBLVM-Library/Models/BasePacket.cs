@@ -14,11 +14,9 @@ namespace IBLVM_Library.Models
 	{
 		public PacketType Type { get; private set; }
 
-		byte[] IPacket.MagicBytes => MagicBytes;
+        public static readonly byte[] MagicBytes = new byte[] { 0xDA, 0xAB, 0xBC, 0xCD };
 
-		public static readonly byte[] MagicBytes = new byte[] { 0xDA, 0xAB, 0xBC, 0xCD };
-
-		private int payloadSize = 0;
+        private int payloadSize = 0;
 
 		private BasePacket() { }
 

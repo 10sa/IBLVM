@@ -43,10 +43,5 @@ namespace IBLVM_Library.Interfaces
 		/// 패킷의 역활을 나타내는 타입입니다.
 		/// </summary>
 		PacketType Type { get; }
-
-		/// <summary>
-		/// 패킷에 사용되는 매직 바이트를 반환합니다.
-		/// </summary>
-		byte[] MagicBytes { get; }
 	}
 }
