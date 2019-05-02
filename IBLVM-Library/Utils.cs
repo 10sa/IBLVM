@@ -30,11 +30,12 @@ namespace IBLVM_Library
 		public static void SendPacket(NetworkStream stream, IPacket packet)
 		{
 			byte[] buffer = new byte[256];
-			byte[] packetData = packet.GetPacketBytes();
-			int payloadSize = packet.GetPayloadSize();
+            Stream payloadStream = packet.GetPayloadStream();
+            int payloadSize = packet.GetPayloadSize();
 
+            byte[] packetData = packet.GetPacketBytes();
 			stream.Write(packetData, 0, packetData.Length);
-			using (Stream payloadStream = packet.GetPayloadStream())
+			using (payloadStream)
 			{
 				payloadStream.Position = 0;
 				int sendBytes = 0;
