@@ -15,7 +15,7 @@ using System.Net;
 
 namespace IBLVM_Server
 {
-	public class IBLVMServer : IDisposable
+	public sealed class IBLVMServer : IDisposable
 	{
 		public Thread ServerThread { get; private set; }
 
@@ -73,7 +73,7 @@ namespace IBLVM_Server
 
             ServerThread.Abort();
             serverSocket.Dispose();
-            return;
+            GC.SuppressFinalize(this);
         }
     }
 }

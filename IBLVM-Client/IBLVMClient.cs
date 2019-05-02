@@ -20,7 +20,7 @@ using SecureStream;
 
 namespace IBLVM_Client
 {
-	public class IBLVMClient : IDisposable, IIBLVMSocket
+	public sealed class IBLVMClient : IDisposable, IIBLVMSocket
 	{
 		public IPacketFactory PacketFactory { get; private set; } = new PacketFactroy();
 
@@ -49,19 +49,20 @@ namespace IBLVM_Client
 			networkStream = new NetworkStream(socket);
 			Receiver = new Thread(() =>
 			{
-				while (true)
-				{
-					try
-					{
-						Utils.ReadFull(networkStream, buffer, PacketFactory.PacketSize);
-						IPacket header = PacketFactory.ParseHeader(buffer);
-						chain.DoHandle(header);
-					}
-					catch(Exception)
-					{
-						Dispose();
-					}
-				}
+                try
+                {
+                    while (true)
+                    {
+                        Utils.ReadFull(networkStream, buffer, PacketFactory.PacketSize);
+                        IPacket header = PacketFactory.ParseHeader(buffer);
+                        chain.DoHandle(header);
+                    }
+                }
+                catch (Exception)
+                {
+                    Dispose();
+                }
+                
 			});
 			Receiver.Start();
 
@@ -82,7 +83,9 @@ namespace IBLVM_Client
 		public void Dispose()
 		{
 			CryptoProvider.Dispose();
+            networkStream.Dispose();
 			socket.Dispose();
+            GC.SuppressFinalize(this);
 		}
 		#endregion
 
