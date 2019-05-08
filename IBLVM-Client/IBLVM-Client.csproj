@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\SocketStatus.cs" />
+    <Compile Include="Handlers\BitLockerLockCommandHandler.cs" />
     <Compile Include="Handlers\ServerBitLockerRequestHandler.cs" />
     <Compile Include="Handlers\ServerKeyResponseHandler.cs" />
     <Compile Include="Handlers\ServerLoginResponseHandler.cs" />

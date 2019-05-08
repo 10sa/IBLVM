@@ -48,7 +48,7 @@ namespace IBLVM_Library.Factories
 
         public IPayload<string> CreateBitLockerUnlockCommand(string password, CryptoMemoryStream cryptor) => new BitLockerUnlockCommand(password, cryptor);
 
-        public IPacket CreateBitLockerLockCommand() => new BitLockerLockCommand();
+        public IPayload<BitLockerVolume> CreateBitLockerLockCommand(BitLockerVolume volume) => new BitLockerLockCommand(volume);
 
         public IPacket CreateServerDrivesRequest() => new ServerDrivesRequest();
 

@@ -17,5 +17,10 @@ namespace IBLVM_Library.Models
 			DeviceID = deviceID;
 			DriveLetter = driveLetter;
 		}
-	}
+
+        public override string ToString()
+        {
+            return DeviceID + ';' + DriveLetter;
+        }
+    }
 }
