@@ -28,8 +28,11 @@ namespace IBLVM_Server.Handlers
 				if (socket.Status != (int)SocketStatus.ServerKeyResponsed)
 					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
-				CryptoProvider provider = socket.CryptoProvider;
-				var packet = socket.PacketFactory.CreateClientKeyResponse(null);
+                if (header.GetPayloadSize() == 0)
+                    throw new ProtocolViolationException("Protocol violation by empty payload.");
+
+                CryptoProvider provider = socket.CryptoProvider;
+				IPayload<byte[]> packet = socket.PacketFactory.CreateClientKeyResponse(null);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
 				provider.SharedKey = provider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(packet.Payload, CngKeyBlobFormat.EccPublicBlob));

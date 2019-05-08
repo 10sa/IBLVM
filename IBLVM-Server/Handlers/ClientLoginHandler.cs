@@ -37,6 +37,9 @@ namespace IBLVM_Server.Handlers
 				if (socket.Status != (int)SocketStatus.Connected)
 					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
+                if (header.GetPayloadSize() == 0)
+                    throw new ProtocolViolationException("Protocol violation by empty payload.");
+
                 IPayload<IAccount> packet = socket.PacketFactory.CreateClientLoginRequest(null, null, socket.CryptoProvider.CryptoStream);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 

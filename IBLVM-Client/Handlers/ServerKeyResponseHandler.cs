@@ -26,7 +26,10 @@ namespace IBLVM_Client.Handlers
 				if (socket.Status != (int)SocketStatus.Handshaking)
 					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
 
-				CryptoProvider cryptoProvider = socket.CryptoProvider;
+                if (header.GetPayloadSize() == 0)
+                    throw new ProtocolViolationException("Protocol violation by empty payload.");
+
+                CryptoProvider cryptoProvider = socket.CryptoProvider;
 				IPayload<byte[]> packet = socket.PacketFactory.CreateServerKeyResponse(null);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
