@@ -30,11 +30,7 @@ namespace IBLVM_Server.Handlers
 		{
 			if (header.Type == PacketType.Hello)
 			{
-				if (socket.Status != (int)SocketStatus.Uninitialized)
-					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
-
-                if (header.GetPayloadSize() > 0)
-                    throw new ProtocolViolationException("Protocol violation by unreasonable payload.");
+                Utils.PacketValidation(socket.Status, (int)SocketStatus.Uninitialized, header.GetPayloadSize(), false);
 
                 socket.CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng();
 				IPacket packet = packetFactory.CreateServerKeyResponse(socket.CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());

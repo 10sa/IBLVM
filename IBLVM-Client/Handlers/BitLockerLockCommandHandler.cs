@@ -20,11 +20,7 @@ namespace IBLVM_Client.Handlers
         {
             if (header.Type == PacketType.ServerBitLockerLockCommand)
             {
-                if (socket.Status != (int)SocketStatus.LoggedIn)
-                    throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
-
-                if (header.GetPayloadSize() == 0)
-                    throw new ProtocolViolationException("Protocol violation by empty payload.");
+                Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize());
 
                 IPayload<BitLockerVolume> packet = socket.PacketFactory.CreateBitLockerLockCommand(null);
                 packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());

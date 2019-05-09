@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.IO;
 
 using System.Net.Sockets;
+using System.Net;
 using IBLVM_Library.Interfaces;
+using IBLVM_Library.Enums;
 
 namespace IBLVM_Library
 {
@@ -50,5 +52,24 @@ namespace IBLVM_Library
 				}
 			}
 		}
-	}
+
+        public static void PacketValidation(int socketStatus, int reqStatus, int payloadSize, bool isEmpty)
+        {
+            if (socketStatus != reqStatus)
+                throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
+
+            if (isEmpty)
+            {
+                if (payloadSize > 0)
+                    throw new ProtocolViolationException("Protocol violation by unreasonable payload.");
+            }
+            else if (payloadSize == 0)
+                throw new ProtocolViolationException("Protocol violation by empty payload.");
+        }
+
+        public static void PacketValidation(int socketStatus, int reqStatus, int payloadSize)
+        {
+            PacketValidation(socketStatus, reqStatus, payloadSize, false);
+        }
+    }
 }

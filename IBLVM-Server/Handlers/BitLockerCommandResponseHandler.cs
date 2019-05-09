@@ -23,11 +23,7 @@ namespace IBLVM_Server.Handlers
         {
             if (header.Type == PacketType.ClientBitLockerCommandResponse)
             {
-                if (socket.Status !=  (int)SocketStatus.LoggedIn)
-                    throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
-
-                if (header.GetPayloadSize() == 0)
-                    throw new ProtocolViolationException("Protocol violation by empty payload.");
+                Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize());
 
                 // TO DO :: Handling message queue //
 

@@ -19,11 +19,7 @@ namespace IBLVM_Client.Handlers
         {
             if (header.Type == PacketType.ServerBitLockersRequest)
             {
-                if (socket.Status != (int)SocketStatus.LoggedIn)
-                    throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
-
-                if (header.GetPayloadSize() > 0)
-                    throw new ProtocolViolationException("Protocol violation by unreasonable payload.");
+                Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize(), true);
 
                 IPacket bitlockers = socket.PacketFactory.CreateClientBitLockersResponse(BitLocker.GetVolumes());
                 Utils.SendPacket(socket.GetSocketStream(), bitlockers);

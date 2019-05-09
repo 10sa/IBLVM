@@ -11,6 +11,8 @@ using IBLVM_Library.Enums;
 using IBLVM_Library.Exceptions;
 using IBLVM_Client.Enums;
 
+using IBLVM_Library;
+
 namespace IBLVM_Client.Handlers
 {
 	class ServerLoginResponseHandler : IPacketHandler
@@ -19,11 +21,7 @@ namespace IBLVM_Client.Handlers
 		{
 			if (header.Type == PacketType.ServerLoginResponse)
 			{
-				if (socket.Status != (int)SocketStatus.Connected)
-					throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
-
-                if (header.GetPayloadSize() == 0)
-                    throw new ProtocolViolationException("Protocol violation by empty payload.");
+                Utils.PacketValidation(socket.Status, (int)SocketStatus.Connected, header.GetPayloadSize());
 
                 IPayload<bool> packet = socket.PacketFactory.CreateServerLoginResponse(false);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
