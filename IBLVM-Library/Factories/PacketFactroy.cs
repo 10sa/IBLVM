@@ -46,7 +46,7 @@ namespace IBLVM_Library.Factories
 
         public IPayload<bool> CreateClientBitLockerCommandResponse(bool isSuccess) => new ClientBitLockerCommandResponse(isSuccess);
 
-        public IPayload<string> CreateBitLockerUnlockCommand(string password, CryptoMemoryStream cryptor) => new BitLockerUnlockCommand(password, cryptor);
+        public IPayload<BitLockerUnlock> CreateBitLockerUnlockCommand(BitLockerUnlock bitlockerUnlock, CryptoMemoryStream cryptor) => new BitLockerUnlockCommand(bitlockerUnlock, cryptor);
 
         public IPayload<BitLockerVolume> CreateBitLockerLockCommand(BitLockerVolume volume) => new BitLockerLockCommand(volume);
 
