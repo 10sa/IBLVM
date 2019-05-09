@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ClientHandler.cs" />
     <Compile Include="Enums\SocketStatus.cs" />
+    <Compile Include="Handlers\BitLockerCommandResponseHandler.cs" />
     <Compile Include="Handlers\ClientHelloHandler.cs" />
     <Compile Include="Handlers\ClientKeyResponseHandler.cs" />
     <Compile Include="Handlers\ClientLoginHandler.cs" />

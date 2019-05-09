@@ -19,7 +19,7 @@ namespace IBLVM_Server.Handlers
 {
 	class ClientHelloHandler : IPacketHandler
 	{
-		private IPacketFactory packetFactory;
+		private readonly IPacketFactory packetFactory;
 
 		public ClientHelloHandler(IPacketFactory packetFactory)
 		{
