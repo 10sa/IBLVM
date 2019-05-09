@@ -26,10 +26,24 @@ namespace IBLVM_Client.Handlers
                 if (header.GetPayloadSize() == 0)
                     throw new ProtocolViolationException("Protocol violation by empty payload.");
 
-                IPayload<BitLockerUnlock> payload = socket.PacketFactory.CreateBitLockerUnlockCommand(null, socket.CryptoProvider.CryptoStream);
-                payload.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
+                IPayload<BitLockerUnlock> packet = socket.PacketFactory.CreateBitLockerUnlockCommand(null, socket.CryptoProvider.CryptoStream);
+                packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
-                
+                BitLockerVolume volume = packet.Payload.Volume;
+
+                BitLocker bitLocker = BitLocker.GetVolume(volume.DriveLetter, volume.DeviceID);
+                bool isSuccess = true;
+                try
+                {
+                    bitLocker.Unlock(packet.Payload.Password);
+                }
+                catch (Exception)
+                {
+                    isSuccess = false;
+                }
+
+                IPayload<bool> result = socket.PacketFactory.CreateClientBitLockerCommandResponse(isSuccess);
+                Utils.SendPacket(socket.GetSocketStream(), result);
             }
 
             return false;
