@@ -43,14 +43,12 @@ namespace IBLVM_Library.Packets
         {
             base.ParsePayload(payloadSize, stream);
             byte[] encryptedBytes = Utils.ReadFull(stream, payloadSize);
-            byte[] passwordBytes = new byte[encryptedBytes.Length];
+            byte[] data = new byte[encryptedBytes.Length];
 
             cryptor.Decrypt(encryptedBytes, 0, encryptedBytes.Length);
-            cryptor.Read(passwordBytes, 0, passwordBytes.Length);
+            cryptor.Read(data, 0, data.Length);
 
-            string[] datas = Encoding.UTF8.GetString(passwordBytes).Split(';');
-
-            Payload = new BitLockerUnlock(new BitLockerVolume(datas[0], datas[1]), datas[2]);
+			Payload = BitLockerUnlock.FromString(Encoding.UTF8.GetString(data));
         }
     }
 }

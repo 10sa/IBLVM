@@ -18,9 +18,12 @@ namespace IBLVM_Library.Models
 			DriveLetter = driveLetter;
 		}
 
-        public override string ToString()
-        {
-            return DeviceID + ';' + DriveLetter;
-        }
-    }
+		public override string ToString() => DeviceID + ',' + DriveLetter;
+
+		public static BitLockerVolume FromString(string str)
+		{
+			string[] data = str.Split(';');
+			return new BitLockerVolume(data[0], data[1]);
+		}
+	}
 }

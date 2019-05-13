@@ -12,12 +12,18 @@ namespace IBLVM_Library.Models
        
         public string Password { get; private set; }
 
-        public override string ToString() => Volume.ToString() + ";" + Password;
+		public BitLockerUnlock(BitLockerVolume volume, string password)
+		{
+			Volume = volume;
+			Password = password;
+		}
 
-        public BitLockerUnlock(BitLockerVolume volume, string password)
-        {
-            Volume = volume;
-            Password = password;
-        }
+		public override string ToString() => Volume.ToString() + "," + Password;
+
+		public static BitLockerUnlock FromString(string str)
+		{
+			string[] datas = str.Split(',');
+			return new BitLockerUnlock(BitLockerVolume.FromString(str), datas.Last());
+		}
     }
 }

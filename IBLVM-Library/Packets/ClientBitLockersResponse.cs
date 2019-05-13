@@ -16,7 +16,6 @@ namespace IBLVM_Library.Packets
 	public sealed class ClientBitLockersResponse : BasePacket, IPayload<BitLockerVolume[]>
 	{
 		public BitLockerVolume[] Payload { get; private set; }
-		private byte[] serializedData;
 
 		public ClientBitLockersResponse(BitLockerVolume[] bitLockers) : base(PacketType.ClientBitLockersResponse)
 		{
@@ -26,46 +25,27 @@ namespace IBLVM_Library.Packets
 		public override void ParsePayload(int payloadSize, Stream stream)
 		{
 			base.ParsePayload(payloadSize, stream);
-			serializedData = new byte[payloadSize];
+			byte[] datas = Utils.ReadFull(stream, payloadSize);
 
-			Utils.ReadFull(stream, payloadSize);
-
-			string serializedString = Encoding.UTF8.GetString(serializedData);
 			List<BitLockerVolume> volumes = new List<BitLockerVolume>();
-
-			foreach (string volumeInfo in serializedString.Split(';'))
-			{
-				string[] data = volumeInfo.Split(',');
-				volumes.Add(new BitLockerVolume(data[0], data[1]));
-			}
+			foreach (string volumeInfo in Encoding.UTF8.GetString(datas).Split(';'))
+				volumes.Add(BitLockerVolume.FromString(volumeInfo));
 
 			Payload = volumes.ToArray();
 		}
 
 		public override Stream GetPayloadStream()
 		{
-			Stream buffer = base.GetPayloadStream();
-			StringBuilder builder = new StringBuilder();
+			Stream stream = base.GetPayloadStream();
 			foreach (var bitlocker in Payload)
 			{
-				builder.Append(bitlocker.DriveLetter);
-				builder.Append(",");
-				builder.Append(bitlocker.DeviceID);
-				builder.Append(";");
+				byte[] data = Encoding.UTF8.GetBytes(bitlocker.ToString());
+				stream.Write(data, 0, data.Length);
 			}
 
-			serializedData = Encoding.UTF8.GetBytes(builder.ToString());
-			buffer.Write(serializedData, 0, serializedData.Length);
-
-			return buffer;
+			return stream;
 		}
 
-		public override int GetPayloadSize()
-		{
-            if (base.GetPayloadSize() > 0)
-                return base.GetPayloadSize();
-            else
-                return serializedData.Length;
-        }
+		public override int GetPayloadSize() => -1;
 	}
 }
