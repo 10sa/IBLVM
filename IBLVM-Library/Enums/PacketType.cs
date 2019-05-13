@@ -56,18 +56,39 @@ namespace IBLVM_Library.Enums
         /// </summary>
 		ServerBitLockersRequest,
 
+		/// <summary>
+		/// 서버에서 클라이언트의 BitLocker 볼륨의 잠금 해제 명렁을 나타냅니다.
+		/// </summary>
         ServerBitLockerUnlockCommand,
 
+		/// <summary>
+		/// 서버에서 클라이언트의 BitLocker 볼륨의 잠금 명령을 나타냅니다.
+		/// </summary>
         ServerBitLockerLockCommand,
 
+		/// <summary>
+		/// 클라이언트에서 서버의 명령 실행 여부에 대한 응답을 나타냅니다.
+		/// </summary>
         ClientBitLockerCommandResponse,
 
+		/// <summary>
+		/// 서버에서 클라이언트의 드라이브 목록 요청을 나타냅니다.
+		/// </summary>
         ServerDrivesRequest,
 
+		/// <summary>
+		/// 클라이언트에서 서버의 드라이브 목록 요청에 대한 응답을 나타냅니다.
+		/// </summary>
         ClientDrivesResponse,
 
+		/// <summary>
+		/// 클라이언트에서 서버에 디바이스 목록 요청을 나타냅니다.
+		/// </summary>
         ClientDevicesRequest,
 
+		/// <summary>
+		/// 서버에서 클라이언트의 디바이스 목록 요청에 대한 응답을 나타냅니다.
+		/// </summary>
         ServerDevicesResponse
     }
 }
