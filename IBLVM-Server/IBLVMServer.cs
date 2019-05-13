@@ -51,7 +51,7 @@ namespace IBLVM_Server
                     }
                     catch (ThreadAbortException)
                     {
-
+						return;
                     }
                 }
             })
@@ -71,8 +71,8 @@ namespace IBLVM_Server
             for (int i = 0; i < clientHandlers.Count; i++)
                 clientHandlers[i].Dispose();
 
-            ServerThread.Abort();
-            serverSocket.Dispose();
+			serverSocket.Dispose();
+			ServerThread.Abort();
             GC.SuppressFinalize(this);
         }
     }

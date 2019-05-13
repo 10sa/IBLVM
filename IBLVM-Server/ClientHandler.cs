@@ -58,6 +58,8 @@ namespace IBLVM_Server
 						Dispose();
 						if (socket.Connected)
 							throw;
+
+						return;
                     }
                 }
             })

@@ -29,6 +29,7 @@ namespace IBLVM_Tests
 
 			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.Connected) ;
             client.Dispose();
+			server.Dispose();
         }
 
 		[TestMethod]
@@ -46,6 +47,8 @@ namespace IBLVM_Tests
 
 			client.Login("Test", "Test");
 			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.LoggedIn) ;
+			client.Dispose();
+			server.Dispose();
 		}
 	}
 }
