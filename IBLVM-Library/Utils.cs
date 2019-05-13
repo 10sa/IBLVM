@@ -34,6 +34,8 @@ namespace IBLVM_Library
 			byte[] buffer = new byte[256];
             Stream payloadStream = packet.GetPayloadStream();
             int payloadSize = packet.GetPayloadSize();
+			if (payloadSize == -1)
+				payloadSize = (int)payloadStream.Length;
 
             byte[] packetData = packet.GetPacketBytes();
 			stream.Write(packetData, 0, packetData.Length);
