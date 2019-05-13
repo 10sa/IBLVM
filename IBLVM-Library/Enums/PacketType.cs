@@ -64,6 +64,10 @@ namespace IBLVM_Library.Enums
 
         ServerDrivesRequest,
 
-        ClientDrivesResponse
-	}
+        ClientDrivesResponse,
+
+        ClientDevicesRequest,
+
+        ServerDevicesResponse
+    }
 }
