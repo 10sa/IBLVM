@@ -30,7 +30,7 @@ namespace IBLVM_Server.Handlers
 		{
 			if (header.Type == PacketType.Hello)
 			{
-                Utils.PacketValidation(socket.Status, (int)SocketStatus.Uninitialized, header.GetPayloadSize(), false);
+                Utils.PacketValidation(socket.Status, (int)SocketStatus.Uninitialized, header.GetPayloadSize(), true);
 
                 socket.CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng();
 				IPacket packet = packetFactory.CreateServerKeyResponse(socket.CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());

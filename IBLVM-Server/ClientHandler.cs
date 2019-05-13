@@ -55,8 +55,9 @@ namespace IBLVM_Server
                     }
                     catch (Exception)
                     {
-                        Dispose();
-                        throw;
+						Dispose();
+						if (socket.Connected)
+							throw;
                     }
                 }
             })
