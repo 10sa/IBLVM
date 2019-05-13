@@ -19,7 +19,5 @@ namespace IBLVM_Library.Models
         public string Id { get; private set; }
 
         public string Password { get; private set; }
-
-		public override string ToString() => Id + ',' + Password;
 	}
 }

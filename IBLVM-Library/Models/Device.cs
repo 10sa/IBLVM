@@ -21,7 +21,7 @@ namespace IBLVM_Library.Models
 			Account = account;
 		}
 
-		public override string ToString() => DeviceIP.ToString() + ',' + Account.ToString();
+		public override string ToString() => DeviceIP.ToString();
 
 		public static Device FromString(string str)
 		{
