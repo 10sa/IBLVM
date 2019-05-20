@@ -11,7 +11,7 @@ using IBLVM_Library;
 using IBLVM_Library.Models;
 using IBLVM_Library.Packets;
 
-namespace IBLVM_Client.Handlers
+namespace IBLVM_Library.Packets
 {
     public class ClientDevicesRequest : BasePacket
     {
