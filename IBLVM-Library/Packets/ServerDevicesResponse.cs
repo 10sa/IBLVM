@@ -15,11 +15,14 @@ using System.IO;
 
 namespace IBLVM_Library.Packets
 {
-    public class ServerDevicesResponse : BasePacket, IPayload<Device[]>
+    public class ServerDevicesResponse : BasePacket, IPayload<IDevice[]>
     {
-        public ServerDevicesResponse() : base(PacketType.ServerDevicesResponse) { }
+		public IDevice[] Payload { get; private set; }
 
-		public Device[] Payload { get; private set; }
+		public ServerDevicesResponse(IDevice[] payload) : base(PacketType.ServerDevicesResponse)
+		{
+			Payload = payload;
+		}
 
 		public override int GetPayloadSize() => -1;
 
