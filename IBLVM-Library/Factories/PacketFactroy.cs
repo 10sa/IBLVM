@@ -54,10 +54,14 @@ namespace IBLVM_Library.Factories
 
         public IPayload<DriveInfomation[]> CreateServerDrivesResponse(DriveInfo[] driveInfos) => new ClientDrivesResponse(driveInfos);
 
-        public IPacket ParseHeader(byte[] data)
+		public IPacket CreateClientDevicesRequest() => new ClientDevicesRequest();
+
+		public IPayload<IDevice[]> CreateServerDevicesResponse(IDevice[] devices) => new ServerDevicesResponse(devices);
+
+		public IPacket ParseHeader(byte[] data)
         {
             int offset = 0;
             return new BasePacket(data, ref offset);
         }
-    }
+	}
 }

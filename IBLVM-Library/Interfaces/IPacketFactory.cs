@@ -113,6 +113,10 @@ namespace IBLVM_Library.Interfaces
         /// <returns>생성된 클라이언트 디바이스 드라이브 정보 요청에 대한 응답 패킷입니다.</returns>
         IPayload<DriveInfomation[]> CreateServerDrivesResponse(DriveInfo[] drives);
 
+		IPacket CreateClientDevicesRequest();
+
+		IPayload<IDevice[]> CreateServerDevicesResponse(IDevice[] devices);
+
         /// <summary>
         /// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.
         /// </summary>
