@@ -43,7 +43,7 @@ namespace IBLVM_Library.Packets
 		{
 			base.ParsePayload(payloadSize, stream);
 			string[] devices = Encoding.UTF8.GetString(Utils.ReadFull(stream, payloadSize)).Split(';');
-			List<Device> deviceList = new List<Device>();
+			List<IDevice> deviceList = new List<IDevice>();
 
 			foreach(var device in devices)
 				deviceList.Add(Device.FromString(device));
