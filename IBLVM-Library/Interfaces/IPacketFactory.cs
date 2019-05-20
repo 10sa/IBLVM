@@ -104,14 +104,14 @@ namespace IBLVM_Library.Interfaces
         /// 클라이언트 디바이스에 존재하는 드라이브 정보 요청 패킷을 생성합니다.
         /// </summary>
         /// <returns>생성된 디바이스 드라이브 정보 요청 패킷입니다.</returns>
-        IPacket CreateServerDrivesRequest();
+        IPacket CreateClientDrivesRequest();
 
         /// <summary>
         /// 클라이언트 디바이스 드라이브 정보 요청에 대한 응답 패킷을 생성합니다.
         /// </summary>
         /// <param name="drives">응답으로 전송될 드라이브 정보입니다.</param>
         /// <returns>생성된 클라이언트 디바이스 드라이브 정보 요청에 대한 응답 패킷입니다.</returns>
-        IPayload<DriveInfomation[]> CreateClientDrivesResponse(DriveInfo[] drives);
+        IPayload<DriveInfomation[]> CreateServerDrivesResponse(DriveInfo[] drives);
 
         /// <summary>
         /// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.

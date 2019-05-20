@@ -50,9 +50,9 @@ namespace IBLVM_Library.Factories
 
         public IPayload<BitLockerVolume> CreateBitLockerLockCommand(BitLockerVolume volume) => new BitLockerLockCommand(volume);
 
-        public IPacket CreateServerDrivesRequest() => new ServerDrivesRequest();
+        public IPacket CreateClientDrivesRequest() => new ServerDrivesRequest();
 
-        public IPayload<DriveInfomation[]> CreateClientDrivesResponse(DriveInfo[] driveInfos) => new ClientDrivesResponse(driveInfos);
+        public IPayload<DriveInfomation[]> CreateServerDrivesResponse(DriveInfo[] driveInfos) => new ClientDrivesResponse(driveInfos);
 
         public IPacket ParseHeader(byte[] data)
         {
