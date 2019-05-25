@@ -11,22 +11,23 @@ namespace IBLVM_Library.Models
 {
 	public class Device : IDevice
 	{
-		public IPAddress DeviceIP { get; private set; }
+		public IPEndPoint DeviceIP { get; private set; }
 
 		public IAccount Account { get; private set; }
 
-		public Device(IPAddress deviceIP, IAccount account)
+		public Device(IPEndPoint deviceIP, IAccount account)
 		{
 			DeviceIP = deviceIP;
 			Account = account;
 		}
 
-		public override string ToString() => DeviceIP.ToString();
+		public override string ToString() => DeviceIP.ToString() + Account.ToString();
 
 		public static Device FromString(string str)
 		{
 			string[] data = str.Split(',');
-			return new Device(IPAddress.Parse(data[0]), new Account(data[0], data[1]));
+			string[] ip = data[0].Split(':');
+			return new Device(new IPEndPoint(IPAddress.Parse(ip[0]), int.Parse(ip[1])), new Account(data[0], data[1]));
 		}
 	}
 }

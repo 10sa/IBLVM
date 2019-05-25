@@ -15,6 +15,8 @@ namespace IBLVM_Tests
 	[TestClass]
 	public class ProtocolTests
 	{
+		private static readonly IPAddress AccessIP = IPAddress.Parse("192.168.10.160");
+
 		[TestMethod]
 		public void HandshakeTest()
 		{
@@ -25,7 +27,7 @@ namespace IBLVM_Tests
 			server.Start();
 
 			IBLVMClient client = new IBLVMClient();
-			client.Connect(new IPEndPoint(IPAddress.Loopback, 47857));
+			client.Connect(new IPEndPoint(AccessIP, 47857));
 
 			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.Connected) ;
             client.Dispose();
@@ -42,7 +44,7 @@ namespace IBLVM_Tests
 			server.Start();
 
 			IBLVMClient client = new IBLVMClient();
-			client.Connect(new IPEndPoint(IPAddress.Loopback, 47858));
+			client.Connect(new IPEndPoint(AccessIP, 47858));
 			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.Connected) ;
 
 			client.Login("Test", "Test");
