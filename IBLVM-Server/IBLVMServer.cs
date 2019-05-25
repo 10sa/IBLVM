@@ -19,15 +19,15 @@ namespace IBLVM_Server
 	{
 		public Thread ServerThread { get; private set; }
 
-		public readonly IUserValidate userValidate;
+		public readonly ISession userValidate;
 
 		private readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private readonly List<ClientHandler> clientHandlers = new List<ClientHandler>();
 		private readonly IPacketFactory factory = new PacketFactroy();
 
-		public IBLVMServer(IUserValidate userValidate)
+		public IBLVMServer(ISession session)
 		{
-			this.userValidate = userValidate;
+			this.userValidate = session;
 		}
 
 		public void Bind(EndPoint localEndPoint) => serverSocket.Bind(localEndPoint);

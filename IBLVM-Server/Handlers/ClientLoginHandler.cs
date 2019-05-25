@@ -23,9 +23,9 @@ namespace IBLVM_Server.Handlers
 {
 	class ClientLoginHandler : IPacketHandler
 	{
-		private readonly IUserValidate userValidate;
+		private readonly ISession userValidate;
 
-		public ClientLoginHandler(IUserValidate userValidate)
+		public ClientLoginHandler(ISession userValidate)
 		{
 			this.userValidate = userValidate;
 		}
@@ -39,7 +39,7 @@ namespace IBLVM_Server.Handlers
                 IPayload<IAccount> packet = socket.PacketFactory.CreateClientLoginRequest(null, null, socket.CryptoProvider.CryptoStream);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
-				bool isSuccess = userValidate.Validate(packet.Payload.Id, packet.Payload.Password);
+				bool isSuccess = userValidate.Login(packet.Payload.Id, packet.Payload.Password);
 				IPacket response = socket.PacketFactory.CreateServerLoginResponse(isSuccess);
 				Utils.SendPacket(socket.GetSocketStream(), response);
 

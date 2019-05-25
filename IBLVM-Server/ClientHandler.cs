@@ -31,14 +31,14 @@ namespace IBLVM_Server
 		private byte[] buffer;
 		private readonly Socket socket;
 
-		public ClientHandler(Socket socket, IUserValidate userValidate, IPacketFactory packetFactory)
+		public ClientHandler(Socket socket, ISession session, IPacketFactory packetFactory)
 		{
 			this.socket = socket;
 			this.PacketFactory = packetFactory;
 
 			buffer = new byte[packetFactory.PacketSize * 2];
 			socketStream = new NetworkStream(socket);
-			chain = new ServerHandlerChain(this, userValidate, packetFactory);
+			chain = new ServerHandlerChain(this, session, packetFactory);
 		}
 
 		public void Start()

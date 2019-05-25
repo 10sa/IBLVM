@@ -17,12 +17,12 @@ namespace IBLVM_Server
 	{
 		private readonly PacketHandlerChain chain;
 
-		public ServerHandlerChain(IIBLVMSocket socket, IUserValidate userValidate, IPacketFactory packetFactory)
+		public ServerHandlerChain(IIBLVMSocket socket, ISession session, IPacketFactory packetFactory)
 		{
 			chain = new PacketHandlerChain(socket);
 			chain.AddHandler(new ClientHelloHandler(packetFactory));
 			chain.AddHandler(new ClientKeyResponseHandler());
-			chain.AddHandler(new ClientLoginHandler(userValidate));
+			chain.AddHandler(new ClientLoginHandler(session));
             chain.AddHandler(new IVChangeRequestHandler());
             chain.AddHandler(new IVChangeResponseHandler());
         }
