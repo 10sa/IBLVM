@@ -57,7 +57,7 @@
     <Compile Include="PacketTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtocolTests.cs" />
-    <Compile Include="UserValidate.cs" />
+    <Compile Include="SessionControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -20,7 +20,7 @@ namespace IBLVM_Tests
 		[TestMethod]
 		public void HandshakeTest()
 		{
-			IBLVMServer server = new IBLVMServer(new UserValidate());
+			IBLVMServer server = new IBLVMServer(new SessionControl());
 			server.Bind(new IPEndPoint(IPAddress.Any, 47857));
 			server.Listen(5);
 
@@ -37,7 +37,7 @@ namespace IBLVM_Tests
 		[TestMethod]
 		public void LoginTest()
 		{
-			IBLVMServer server = new IBLVMServer(new UserValidate());
+			IBLVMServer server = new IBLVMServer(new SessionControl());
 			server.Bind(new IPEndPoint(IPAddress.Any, 47858));
 			server.Listen(5);
 

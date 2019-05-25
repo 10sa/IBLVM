@@ -19,7 +19,7 @@ namespace IBLVM_Server
 	{
 		public Thread ServerThread { get; private set; }
 
-		public readonly ISession userValidate;
+		public readonly ISession session;
 
 		private readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private readonly List<ClientHandler> clientHandlers = new List<ClientHandler>();
@@ -27,7 +27,7 @@ namespace IBLVM_Server
 
 		public IBLVMServer(ISession session)
 		{
-			this.userValidate = session;
+			this.session = session;
 		}
 
 		public void Bind(EndPoint localEndPoint) => serverSocket.Bind(localEndPoint);
@@ -43,7 +43,7 @@ namespace IBLVM_Server
                     try
                     {
                         Socket clientSocket = serverSocket.Accept();
-                        ClientHandler clientHandler = new ClientHandler(clientSocket, userValidate, factory);
+                        ClientHandler clientHandler = new ClientHandler(clientSocket, session, factory);
                         clientHandlers.Add(clientHandler);
                         clientHandler.OnHandlerDisposed += OnClientDisconnected;
 
