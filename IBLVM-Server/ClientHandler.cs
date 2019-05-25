@@ -28,8 +28,9 @@ namespace IBLVM_Server
 
 		private readonly NetworkStream socketStream;
 		private readonly ServerHandlerChain chain;
-		private byte[] buffer;
 		private readonly Socket socket;
+		private readonly IDeviceController deviceController = new DeviceController();
+		private byte[] buffer;
 
 		public ClientHandler(Socket socket, ISession session, IPacketFactory packetFactory)
 		{
@@ -38,7 +39,7 @@ namespace IBLVM_Server
 
 			buffer = new byte[packetFactory.PacketSize * 2];
 			socketStream = new NetworkStream(socket);
-			chain = new ServerHandlerChain(this, session, packetFactory);
+			chain = new ServerHandlerChain(this, session, deviceController, packetFactory);
 		}
 
 		public void Start()

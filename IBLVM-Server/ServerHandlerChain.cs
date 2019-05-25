@@ -17,7 +17,7 @@ namespace IBLVM_Server
 	{
 		private readonly PacketHandlerChain chain;
 
-		public ServerHandlerChain(IIBLVMSocket socket, ISession session, IPacketFactory packetFactory)
+		public ServerHandlerChain(IIBLVMSocket socket, ISession session, IDeviceController deviceController, IPacketFactory packetFactory)
 		{
 			chain = new PacketHandlerChain(socket);
 			chain.AddHandler(new ClientHelloHandler(packetFactory));
@@ -25,6 +25,8 @@ namespace IBLVM_Server
 			chain.AddHandler(new ClientLoginHandler(session));
             chain.AddHandler(new IVChangeRequestHandler());
             chain.AddHandler(new IVChangeResponseHandler());
+			chain.AddHandler(new BitLockerCommandResponseHandler());
+			chain.AddHandler(new ClientDevicesRequestHandler(deviceController, session));
         }
 
 		public bool DoHandle(IPacket header) => chain.DoHandle(header);

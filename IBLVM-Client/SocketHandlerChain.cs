@@ -15,6 +15,7 @@ namespace IBLVM_Client
 	class SocketHandlerChain
 	{
 		private readonly PacketHandlerChain chain;
+		public event Action<IDevice[]> OnDevicesReceived = (a) => { };
 
 		public SocketHandlerChain(IIBLVMSocket socket)
 		{
@@ -23,6 +24,12 @@ namespace IBLVM_Client
 			chain.AddHandler(new ServerLoginResponseHandler());
 			chain.AddHandler(new IVChangeRequestHandler());
             chain.AddHandler(new IVChangeResponseHandler());
+			chain.AddHandler(new BitLockerLockCommandHandler());
+			chain.AddHandler(new BitLockerUnLockCommandHandler());
+
+			var deviceListingHandler = new ServerDevicesResponseHandler();
+			deviceListingHandler.OnDevicesReceived += OnDevicesReceived;
+			chain.AddHandler(deviceListingHandler);
 		}
 
 		// Proxy
