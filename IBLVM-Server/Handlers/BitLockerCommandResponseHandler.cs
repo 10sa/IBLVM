@@ -25,7 +25,7 @@ namespace IBLVM_Server.Handlers
             {
                 Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize());
 
-                // TO DO :: Handling message queue //
+                // TODO: Handling message queue
 
                 return true;
             }
