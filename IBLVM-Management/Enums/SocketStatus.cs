@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBLVM_Management
+namespace IBLVM_Management.Enums
 {
-    
+	enum SocketStatus
+	{
+	}
 }
