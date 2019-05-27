@@ -52,5 +52,21 @@ namespace IBLVM_Tests
 			client.Dispose();
 			server.Dispose();
 		}
+
+		public void BitLockerListingTest()
+		{
+			IBLVMServer server = new IBLVMServer(new SessionControl());
+			server.Bind(new IPEndPoint(IPAddress.Any, 47859));
+			server.Listen(5);
+			server.Start();
+
+			IBLVMClient client = new IBLVMClient();
+			client.Connect(new IPEndPoint(AccessIP, 47858));
+			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.Connected) ;
+
+			client.Login("Test", "Test");
+			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.LoggedIn) ;
+			
+		}
 	}
 }

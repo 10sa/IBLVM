@@ -45,15 +45,15 @@ namespace IBLVM_Tests
 			CryptoProvider provider = new CryptoProvider();
 			provider.CryptoStream = new SecureStream.CryptoMemoryStream(cryptoKey);
 
-			ClientLoginRequest packet = new ClientLoginRequest("Testing", "Password", provider.CryptoStream);
+			ClientLoginRequest packet = new ClientLoginRequest("Testing", "Password", ClientType.Device, provider.CryptoStream);
 
 			Stream payload = packet.GetPayloadStream();
 			payload.Position = 0;
 
-			ClientLoginRequest parsedPacket = new ClientLoginRequest(null, null, provider.CryptoStream);
+			ClientLoginRequest parsedPacket = new ClientLoginRequest(null, null, 0, provider.CryptoStream);
 			parsedPacket.ParsePayload(packet.GetPayloadSize(), payload);
 
-			Assert.IsTrue(packet.Payload.Id == parsedPacket.Payload.Id && packet.Payload.Password == parsedPacket.Payload.Password);
+			Assert.IsTrue(packet.Payload.Account.Id == parsedPacket.Payload.Account.Id && packet.Payload.Account.Password == parsedPacket.Payload.Account.Password);
 		}
 	}
 }

@@ -8,6 +8,7 @@ using System.IO;
 using IBLVM_Library.Packets;
 using IBLVM_Library.Models;
 using SecureStream;
+using IBLVM_Library.Enums;
 
 namespace IBLVM_Library.Interfaces
 {
@@ -50,7 +51,7 @@ namespace IBLVM_Library.Interfaces
 		/// <param name="password">로그인에 사용될 사용자의 비밀번호입니다.</param>
 		/// <param name="cryptor">사용자 정보 암호화에 사용될 CryptoMemoryStream 클래스 인스턴스입니다.</param>
 		/// <returns>생성된 로그인 요청 패킷입니다.</returns>
-		IPayload<IAccount> CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor);
+		IPayload<IAuthInfo> CreateClientLoginRequest(string id, string password, ClientType type, CryptoMemoryStream cryptor);
 
         /// <summary>
         /// 서버에서 요청한 BitLocker 볼륨 목록에 대한 응답 패킷을 생성합니다.

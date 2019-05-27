@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using IBLVM_Library.Interfaces;
+using IBLVM_Library.Enums;
 
 namespace IBLVM_Library.Interfaces
 {
@@ -17,5 +18,7 @@ namespace IBLVM_Library.Interfaces
 		/// 디바이스의 원격지 주소입니다.
 		/// </summary>
 		IPEndPoint DeviceIP { get; }
+
+		ClientType Type { get; }
 	}
 }

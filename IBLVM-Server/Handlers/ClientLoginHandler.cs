@@ -36,10 +36,10 @@ namespace IBLVM_Server.Handlers
 			{
                 Utils.PacketValidation(socket.Status, (int)SocketStatus.Connected, header.GetPayloadSize());
 
-                IPayload<IAccount> packet = socket.PacketFactory.CreateClientLoginRequest(null, null, socket.CryptoProvider.CryptoStream);
+                IPayload<IAuthInfo> packet = socket.PacketFactory.CreateClientLoginRequest(null, null, 0, socket.CryptoProvider.CryptoStream);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
-				bool isSuccess = session.Login(packet.Payload.Id, packet.Payload.Password);
+				bool isSuccess = session.Login(new Account(packet.Payload.Account.Id, packet.Payload.Account.Password));
 				IPacket response = socket.PacketFactory.CreateServerLoginResponse(isSuccess);
 				Utils.SendPacket(socket.GetSocketStream(), response);
 

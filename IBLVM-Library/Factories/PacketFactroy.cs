@@ -10,6 +10,7 @@ using IBLVM_Library.Packets;
 using IBLVM_Library.Models;
 
 using SecureStream;
+using IBLVM_Library.Enums;
 
 namespace IBLVM_Library.Factories
 {
@@ -27,7 +28,7 @@ namespace IBLVM_Library.Factories
 
 		public IPayload<bool> CreateServerLoginResponse(bool isSuccess) => new ServerLoginResponse(isSuccess);
 
-		public IPayload<IAccount> CreateClientLoginRequest(string id, string password, CryptoMemoryStream cryptor) => new ClientLoginRequest(id, password, cryptor);
+		public IPayload<IAuthInfo> CreateClientLoginRequest(string id, string password, ClientType type, CryptoMemoryStream cryptor) => new ClientLoginRequest(id, password, type, cryptor);
 
         public IPayload<BitLockerVolume[]> CreateClientBitLockersResponse(BitLocker[] volumes)
         {
