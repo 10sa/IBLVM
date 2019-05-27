@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using IBLVM_Library.Enums;
 using IBLVM_Library.Interfaces;
 using IBLVM_Server.Interfaces;
 
@@ -15,6 +15,9 @@ namespace IBLVM_Server
 
 		public void AddDevice(string id, IDevice device)
 		{
+			if (device.Type != ClientType.Device)
+				throw new ArgumentException("IDevice instansce must be ClientType.Device type.");
+
 			if (!devices.TryGetValue(id, out List<IDevice> list))
 			{
 				list = new List<IDevice>();
