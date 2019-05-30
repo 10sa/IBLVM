@@ -73,7 +73,7 @@ namespace IBLVM_Client
 		public void Login(string id, string password)
 		{
 			if (Status != (int)SocketStatus.Connected)
-				throw new InvalidOperationException("Not logged in!");
+				throw new InvalidOperationException("Not connected!");
 
 			Utils.SendPacket(networkStream, PacketFactory.CreateClientLoginRequest(id, password, 0, CryptoProvider.CryptoStream));
 		}
