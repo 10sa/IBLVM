@@ -27,16 +27,19 @@ namespace IBLVM_Client
 		public Thread Receiver { get; private set; }
 
 		private readonly Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		private readonly RNGCryptoServiceProvider rngProvider = new RNGCryptoServiceProvider();
+		private readonly SocketHandlerChain chain;
+		private readonly byte[] buffer;
+
 		private NetworkStream networkStream;
-		private SocketHandlerChain chain;
-		private byte[] buffer;
 
 		public IBLVMClient()
 		{
-			CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng();
-
-			CryptoProvider.ECDiffieHellman.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
-			CryptoProvider.ECDiffieHellman.HashAlgorithm = CngAlgorithm.Sha256;
+			CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng
+			{
+				KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash,
+				HashAlgorithm = CngAlgorithm.Sha256
+			};
 
 			buffer = new byte[PacketFactory.PacketSize * 2];
 			chain = new SocketHandlerChain(this);
@@ -76,6 +79,14 @@ namespace IBLVM_Client
 				throw new InvalidOperationException("Not connected!");
 
 			Utils.SendPacket(networkStream, PacketFactory.CreateClientLoginRequest(id, password, 0, CryptoProvider.CryptoStream));
+		}
+
+		public void ExchangeIV()
+		{
+			byte[] iv = new byte[CryptoProvider.CryptoStream.IV.Length];
+			rngProvider.GetBytes(iv);
+
+			Utils.SendPacket(networkStream, PacketFactory.CreateIVChangeRequest(iv));
 		}
 		#endregion
 

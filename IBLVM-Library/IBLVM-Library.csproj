@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Args\IVExchangeAcceptEventArgs.cs" />
     <Compile Include="BitLocker.cs" />
     <Compile Include="Enums\BitLockerCommand.cs" />
     <Compile Include="Enums\ClientType.cs" />
