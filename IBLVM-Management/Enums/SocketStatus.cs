@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace IBLVM_Management.Enums
 {
-	enum SocketStatus
+	public enum SocketStatus : int 
 	{
+		Unconnected,
+		Handshaking,
+		Connected,
+		Loggedin
 	}
 }
