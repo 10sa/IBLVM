@@ -19,12 +19,14 @@ namespace IBLVM_Library.Handlers
 		{
 			if (header.Type == PacketType.IVChangeReqeust)
 			{
-                IPayload<byte[]> cryptoPacket = socket.PacketFactory.CreateIVChangeRequest(null);
-                cryptoPacket.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
-                Array.Copy(cryptoPacket.Payload, socket.CryptoProvider.CryptoStream.IV, cryptoPacket.Payload.Length);
+                IPayload<byte[]> packet = socket.PacketFactory.CreateIVChangeRequest(null);
+                packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
+                Array.Copy(packet.Payload, socket.CryptoProvider.CryptoStream.IV, packet.Payload.Length);
 
-                // TO DO:: IV Changing accept event
-                var resultPacket = socket.PacketFactory.CreateIVChangeResposne(true);
+				IVExchangeAcceptEventArgs accept = new IVExchangeAcceptEventArgs();
+				IVExchangeAccpetEvent(accept);
+
+				var resultPacket = socket.PacketFactory.CreateIVChangeResposne(accept.Accpet);
                 Utils.SendPacket(socket.GetSocketStream(), resultPacket);
 
                 return true;
