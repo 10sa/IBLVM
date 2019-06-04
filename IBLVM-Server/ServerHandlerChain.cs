@@ -16,18 +16,26 @@ namespace IBLVM_Server
 	class ServerHandlerChain
 	{
 		private readonly PacketHandlerChain chain;
+		private readonly ClientLoginHandler clientLoginHandler;
 
-		public event Action<IAuthInfo> OnClientLoggedIn;
+		public event Action<IAuthInfo> OnClientLoggedIn
+		{
+			add {
+				clientLoginHandler.OnClientLoggedIn += value;
+			}
+			remove {
+				clientLoginHandler.OnClientLoggedIn -= value;
+			}
+		}
 
-		public ServerHandlerChain(IIBLVMSocket socket, IAuthenticator session, IDeviceController deviceController, IPacketFactory packetFactory)
+		public ServerHandlerChain(IIBLVMSocket socket, ISession session, IDeviceController deviceController, IPacketFactory packetFactory)
 		{
 			chain = new PacketHandlerChain(socket);
 			chain.AddHandler(new ClientHelloHandler(packetFactory));
 			chain.AddHandler(new ClientKeyResponseHandler());
 
-			ClientLoginHandler clientLoginHandler = new ClientLoginHandler(session);
+			clientLoginHandler = new ClientLoginHandler(session);
 			chain.AddHandler(clientLoginHandler);
-			clientLoginHandler.OnClientLoggedIn += OnClientLoggedIn;
 
             chain.AddHandler(new IVChangeRequestHandler());
             chain.AddHandler(new IVChangeResponseHandler());

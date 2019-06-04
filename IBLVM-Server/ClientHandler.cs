@@ -41,7 +41,7 @@ namespace IBLVM_Server
 		private readonly IDeviceController deviceController = new DeviceController();
 		private byte[] buffer;
 
-		public ClientHandler(Socket socket, IAuthenticator session, IPacketFactory packetFactory)
+		public ClientHandler(Socket socket, ISession session, IPacketFactory packetFactory)
 		{
 			this.socket = socket;
 			this.PacketFactory = packetFactory;

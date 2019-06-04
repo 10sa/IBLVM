@@ -19,13 +19,13 @@ namespace IBLVM_Server
 	{
 		public Thread ServerThread { get; private set; }
 
-		public readonly IAuthenticator session;
+		public readonly ISession session;
 
 		private readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private readonly List<ClientHandler> clientHandlers = new List<ClientHandler>();
 		private readonly IPacketFactory factory = new PacketFactroy();
 
-		public IBLVMServer(IAuthenticator session)
+		public IBLVMServer(ISession session)
 		{
 			this.session = session;
 		}
@@ -49,7 +49,7 @@ namespace IBLVM_Server
 
                         clientHandler.Start();
                     }
-                    catch (ThreadAbortException)
+                    catch (Exception)
                     {
 						return;
                     }

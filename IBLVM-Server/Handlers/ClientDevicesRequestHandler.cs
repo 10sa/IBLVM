@@ -17,9 +17,9 @@ namespace IBLVM_Server.Handlers
 	class ClientDevicesRequestHandler : IPacketHandler
 	{
 		private IDeviceController deviceController;
-		private IAuthenticator session;
+		private ISession session;
 
-		public ClientDevicesRequestHandler(IDeviceController deviceController, IAuthenticator session)
+		public ClientDevicesRequestHandler(IDeviceController deviceController, ISession session)
 		{
 			this.deviceController = deviceController;
 			this.session = session;

@@ -23,11 +23,11 @@ namespace IBLVM_Server.Handlers
 {
 	class ClientLoginHandler : IPacketHandler
 	{
-		private readonly IAuthenticator session;
+		private readonly ISession session;
 
 		public event Action<IAuthInfo> OnClientLoggedIn = (a) => { };
 
-		public ClientLoginHandler(IAuthenticator session)
+		public ClientLoginHandler(ISession session)
 		{
 			this.session = session;
 		}
@@ -47,8 +47,8 @@ namespace IBLVM_Server.Handlers
 
 				if (!isSuccess)
 					throw new InvalidAuthorizationDataException();
-				
-				
+
+				OnClientLoggedIn(packet.Payload);
 				socket.Status = (int)SocketStatus.LoggedIn;
 				return true;
 			}

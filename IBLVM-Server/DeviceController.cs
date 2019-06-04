@@ -11,7 +11,7 @@ namespace IBLVM_Server
 {
 	class DeviceController : IDeviceController
 	{
-		private Dictionary<string, List<IDevice>> devices = new Dictionary<string, List<IDevice>>();
+		private readonly Dictionary<string, List<IDevice>> devices = new Dictionary<string, List<IDevice>>();
 
 		public void AddDevice(string id, IDevice device)
 		{
