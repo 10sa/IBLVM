@@ -22,7 +22,7 @@ namespace IBLVM_Library.Handlers
 		{
 			if (header.Type == PacketType.IVChangeReqeust)
 			{
-                IPayload<byte[]> packet = socket.PacketFactory.CreateIVChangeRequest(null);
+                IPayload<byte[]> packet = socket.PacketFactory.CreateIVChangeRequest(null, socket.CryptoProvider.CryptoStream);
                 packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
 				IVExchangeAcceptEventArgs accept = new IVExchangeAcceptEventArgs();

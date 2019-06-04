@@ -11,6 +11,6 @@ namespace IBLVM_Library.Args
 	/// </summary>
 	public class IVExchangeAcceptEventArgs : EventArgs
 	{
-		public bool Accpet { get; set; } = false;
+		public bool Accpet { get; set; } = true;
 	}
 }

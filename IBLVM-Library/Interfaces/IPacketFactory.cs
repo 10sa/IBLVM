@@ -71,7 +71,7 @@ namespace IBLVM_Library.Interfaces
         /// </summary>
         /// <param name="initializeVector">변경할 초기화 벡터입니다.</param>
         /// <returns>생성된 초기화 벡터 변경 요청 패킷입니다.</returns>
-        IPayload<byte[]> CreateIVChangeRequest(byte[] initializeVector);
+        IPayload<byte[]> CreateIVChangeRequest(byte[] initializeVector, CryptoMemoryStream cryptor);
 
         /// <summary>
         /// 암호화 알고리즘에 사용되는 초기화 벡터 변경 요청에 대한 응답 패킷을 생성합니다.

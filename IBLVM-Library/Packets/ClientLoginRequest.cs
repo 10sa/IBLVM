@@ -33,7 +33,8 @@ namespace IBLVM_Library.Packets
 
 			byte[] datas = Encoding.UTF8.GetBytes(Payload.ToString());
 			cryptor.Encrypt(datas, 0, datas.Length);
-			cryptor.WriteTo(buffer);
+			cryptor.Read(datas, 0, datas.Length);
+			buffer.Write(datas, 0, datas.Length);
 
 			return buffer;
 		}

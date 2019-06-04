@@ -85,8 +85,7 @@ namespace IBLVM_Tests
 			while (client.Status != (int)SocketStatus.LoggedIn) ;
 
 			client.ExchangeIV();
-
-
+			while (true) ;
 		}
 	}
 }

@@ -86,7 +86,7 @@ namespace IBLVM_Client
 			byte[] iv = new byte[CryptoProvider.CryptoStream.IV.Length];
 			rngProvider.GetBytes(iv);
 
-			Utils.SendPacket(networkStream, PacketFactory.CreateIVChangeRequest(iv));
+			Utils.ExchangeIV(this, iv);
 		}
 		#endregion
 

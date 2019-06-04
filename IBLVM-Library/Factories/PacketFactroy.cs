@@ -41,7 +41,7 @@ namespace IBLVM_Library.Factories
 
         public IPacket CreateServerBitLockersReqeust() => new ServerBitLockersRequest();
 
-        public IPayload<byte[]> CreateIVChangeRequest(byte[] initializeVector) => new IVChangeRequest(initializeVector);
+        public IPayload<byte[]> CreateIVChangeRequest(byte[] initializeVector, CryptoMemoryStream cryptor) => new IVChangeRequest(initializeVector, cryptor);
 
         public IPayload<bool> CreateIVChangeResposne(bool isSuccess) => new IVChangeResponse(isSuccess);
 

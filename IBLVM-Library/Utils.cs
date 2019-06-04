@@ -77,7 +77,7 @@ namespace IBLVM_Library
 		public static void ExchangeIV(IIBLVMSocket socket, byte[] nextIV)
 		{
 			socket.CryptoProvider.NextIV = nextIV;
-			SendPacket(socket.GetSocketStream(), socket.PacketFactory.CreateIVChangeRequest(nextIV));
+			SendPacket(socket.GetSocketStream(), socket.PacketFactory.CreateIVChangeRequest(nextIV, socket.CryptoProvider.CryptoStream));
 		}
     }
 }

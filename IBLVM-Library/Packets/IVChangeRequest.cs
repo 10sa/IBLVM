@@ -16,9 +16,12 @@ namespace IBLVM_Library.Packets
 	{
         public byte[] Payload { get; private set; }
 
-        public IVChangeRequest(byte[] initializeVector) : base(PacketType.IVChangeReqeust)
+		private CryptoMemoryStream cryptor;
+
+        public IVChangeRequest(byte[] initializeVector, CryptoMemoryStream cryptor) : base(PacketType.IVChangeReqeust)
 		{
             Payload = initializeVector;
+			this.cryptor = cryptor;
 		}
 
         public override int GetPayloadSize() => base.GetPayloadSize() + Payload.Length;
@@ -26,7 +29,10 @@ namespace IBLVM_Library.Packets
         public override Stream GetPayloadStream()
         {
             Stream stream = base.GetPayloadStream();
-            stream.Write(Payload, 0, Payload.Length);
+			cryptor.Encrypt(Payload, 0, Payload.Length);
+
+			byte[] encryptedIV = Utils.ReadFull(cryptor, Payload.Length);
+			stream.Write(encryptedIV, 0, encryptedIV.Length);
 
             return stream;
         }
@@ -35,7 +41,10 @@ namespace IBLVM_Library.Packets
         {
             base.ParsePayload(payloadSize, stream);
 
-            Payload = Utils.ReadFull(stream, payloadSize);
+			Payload = new byte[payloadSize];
+            byte[] encryptedIV = Utils.ReadFull(stream, payloadSize);
+			cryptor.Write(encryptedIV, 0, encryptedIV.Length);
+			cryptor.Decrypt(Payload, 0, Payload.Length);
         }
 	}
 }
