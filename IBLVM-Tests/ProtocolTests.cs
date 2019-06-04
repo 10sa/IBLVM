@@ -9,6 +9,7 @@ using System.Net;
 
 using IBLVM_Server;
 using IBLVM_Client;
+using IBLVM_Client.Enums;
 
 namespace IBLVM_Tests
 {
@@ -29,7 +30,7 @@ namespace IBLVM_Tests
 			IBLVMClient client = new IBLVMClient();
 			client.Connect(new IPEndPoint(AccessIP, 47857));
 
-			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.Connected) ;
+			while (client.Status != (int)SocketStatus.Connected) ;
             client.Dispose();
 			server.Dispose();
         }
@@ -45,10 +46,10 @@ namespace IBLVM_Tests
 
 			IBLVMClient client = new IBLVMClient();
 			client.Connect(new IPEndPoint(AccessIP, 47858));
-			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.Connected) ;
+			while (client.Status != (int)SocketStatus.Connected) ;
 
 			client.Login("Test", "Test");
-			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.LoggedIn) ;
+			while (client.Status != (int)SocketStatus.LoggedIn) ;
 			client.Dispose();
 			server.Dispose();
 		}
@@ -62,11 +63,30 @@ namespace IBLVM_Tests
 
 			IBLVMClient client = new IBLVMClient();
 			client.Connect(new IPEndPoint(AccessIP, 47858));
-			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.Connected) ;
+			while (client.Status != (int)SocketStatus.Connected) ;
 
 			client.Login("Test", "Test");
-			while (client.Status != (int)IBLVM_Client.Enums.SocketStatus.LoggedIn) ;
-			
+			while (client.Status != (int)SocketStatus.LoggedIn) ;
+		}
+
+		[TestMethod]
+		public void IVExchangeTest()
+		{
+			IBLVMServer server = new IBLVMServer(new SessionControl());
+			server.Bind(new IPEndPoint(IPAddress.Any, 47860));
+			server.Listen(5);
+			server.Start();
+
+			IBLVMClient client = new IBLVMClient();
+			client.Connect(new IPEndPoint(AccessIP, 47860));
+			while (client.Status != (int)SocketStatus.Connected) ;
+
+			client.Login("Test", "Test");
+			while (client.Status != (int)SocketStatus.LoggedIn) ;
+
+			client.ExchangeIV();
+
+
 		}
 	}
 }

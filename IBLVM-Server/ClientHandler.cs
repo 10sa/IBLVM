@@ -20,9 +20,17 @@ namespace IBLVM_Server
 	/// </summary>
 	class ClientHandler : IIBLVMSocket, IDisposable
 	{
-		public Thread Thread { get; private set; }
+		#region IIBLVMSocket Implements
+		public int Status { get; set; } = (int)SocketStatus.Uninitialized;
+
+		public CryptoProvider CryptoProvider { get; set; } = new CryptoProvider();
 
 		public IPacketFactory PacketFactory { get; private set; }
+
+		public NetworkStream GetSocketStream() => socketStream;
+		#endregion
+
+		public Thread Thread { get; private set; }
 
 		public event Action<ClientHandler> OnHandlerDisposed = (a) => { };
 
@@ -75,14 +83,6 @@ namespace IBLVM_Server
             IPacket packet = PacketFactory.CreateServerBitLockersReqeust();
             Utils.SendPacket(socketStream, packet);
         }
-
-		#region IIBLVMSocket Implements
-		public int Status { get; set; } = (int)SocketStatus.Uninitialized;
-
-		public CryptoProvider CryptoProvider { get; set; } = new CryptoProvider();
-
-		public NetworkStream GetSocketStream() => socketStream;
-		#endregion
 
 		#region IDisposable Implements
 		public void Dispose()

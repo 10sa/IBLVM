@@ -19,6 +19,9 @@ namespace IBLVM_Library.Interfaces
 		/// </summary>
 		IPEndPoint DeviceIP { get; }
 
+		/// <summary>
+		/// 디바이스의 접속 타입입니다.
+		/// </summary>
 		ClientType Type { get; }
 	}
 }

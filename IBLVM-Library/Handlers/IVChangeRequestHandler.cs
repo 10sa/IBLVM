@@ -11,6 +11,9 @@ using SecureStream;
 
 namespace IBLVM_Library.Handlers
 {
+	/// <summary>
+	/// 초기화 벡터 (Initialize Vector) 교환 요청 처리자 클래스입니다.
+	/// </summary>
 	public class IVChangeRequestHandler : IPacketHandler
 	{
 		public event Action<IVExchangeAcceptEventArgs> IVExchangeAccpetEvent = (a) => { };

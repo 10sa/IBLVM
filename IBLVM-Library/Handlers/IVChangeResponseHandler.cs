@@ -10,7 +10,10 @@ using IBLVM_Library.Args;
 
 namespace IBLVM_Library.Handlers
 {
-    public class IVChangeResponseHandler : IPacketHandler
+	/// <summary>
+	/// 초기화 벡터 (Initialize Vector) 교환 응답 처리자 클래스입니다.
+	/// </summary>
+	public class IVChangeResponseHandler : IPacketHandler
     {
 		public bool Handle(IPacket header, IIBLVMSocket socket)
         {
