@@ -25,6 +25,11 @@ namespace IBLVM_Library.Models
 			Type = type;
 		}
 
+		public Device(IPEndPoint deviceIP, IAuthInfo authInfo) : this(deviceIP, authInfo.Account, authInfo.Type)
+		{
+
+		}
+
 		public override string ToString() => DeviceIP.ToString() + "," + Account.ToString() + "," + Type.ToString();
 
 		public static Device FromString(string str)

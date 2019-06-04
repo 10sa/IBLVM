@@ -8,11 +8,9 @@ using IBLVM_Server.Interfaces;
 
 namespace IBLVM_Tests
 {
-	class SessionControl : ISession
+	class SessionControl : IAuthenticator
 	{
-		public IAccount Account { get; private set; }
-
-		public bool Login(IAccount account)
+		public bool Auth(IAccount account)
 		{
 			Account = account;
 			return true;

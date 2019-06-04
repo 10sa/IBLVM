@@ -23,9 +23,11 @@ namespace IBLVM_Server.Handlers
 {
 	class ClientLoginHandler : IPacketHandler
 	{
-		private readonly ISession session;
+		private readonly IAuthenticator session;
 
-		public ClientLoginHandler(ISession session)
+		public event Action<IAuthInfo> OnClientLoggedIn = (a) => { };
+
+		public ClientLoginHandler(IAuthenticator session)
 		{
 			this.session = session;
 		}
@@ -39,12 +41,13 @@ namespace IBLVM_Server.Handlers
                 IPayload<IAuthInfo> packet = socket.PacketFactory.CreateClientLoginRequest(null, null, 0, socket.CryptoProvider.CryptoStream);
 				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
 
-				bool isSuccess = session.Login(new Account(packet.Payload.Account.Id, packet.Payload.Account.Password));
+				bool isSuccess = session.Auth(new Account(packet.Payload.Account.Id, packet.Payload.Account.Password));
 				IPacket response = socket.PacketFactory.CreateServerLoginResponse(isSuccess);
 				Utils.SendPacket(socket.GetSocketStream(), response);
 
 				if (!isSuccess)
 					throw new InvalidAuthorizationDataException();
+				
 				
 				socket.Status = (int)SocketStatus.LoggedIn;
 				return true;

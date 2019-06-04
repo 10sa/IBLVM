@@ -17,12 +17,18 @@ namespace IBLVM_Server
 	{
 		private readonly PacketHandlerChain chain;
 
-		public ServerHandlerChain(IIBLVMSocket socket, ISession session, IDeviceController deviceController, IPacketFactory packetFactory)
+		public event Action<IAuthInfo> OnClientLoggedIn;
+
+		public ServerHandlerChain(IIBLVMSocket socket, IAuthenticator session, IDeviceController deviceController, IPacketFactory packetFactory)
 		{
 			chain = new PacketHandlerChain(socket);
 			chain.AddHandler(new ClientHelloHandler(packetFactory));
 			chain.AddHandler(new ClientKeyResponseHandler());
-			chain.AddHandler(new ClientLoginHandler(session));
+
+			ClientLoginHandler clientLoginHandler = new ClientLoginHandler(session);
+			chain.AddHandler(clientLoginHandler);
+			clientLoginHandler.OnClientLoggedIn += OnClientLoggedIn;
+
             chain.AddHandler(new IVChangeRequestHandler());
             chain.AddHandler(new IVChangeResponseHandler());
 			chain.AddHandler(new BitLockerCommandResponseHandler());

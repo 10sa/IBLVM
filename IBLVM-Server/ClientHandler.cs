@@ -12,6 +12,7 @@ using IBLVM_Library.Models;
 
 using IBLVM_Server.Interfaces;
 using IBLVM_Server.Enums;
+using System.Net;
 
 namespace IBLVM_Server
 {
@@ -40,7 +41,7 @@ namespace IBLVM_Server
 		private readonly IDeviceController deviceController = new DeviceController();
 		private byte[] buffer;
 
-		public ClientHandler(Socket socket, ISession session, IPacketFactory packetFactory)
+		public ClientHandler(Socket socket, IAuthenticator session, IPacketFactory packetFactory)
 		{
 			this.socket = socket;
 			this.PacketFactory = packetFactory;
@@ -48,6 +49,7 @@ namespace IBLVM_Server
 			buffer = new byte[packetFactory.PacketSize * 2];
 			socketStream = new NetworkStream(socket);
 			chain = new ServerHandlerChain(this, session, deviceController, packetFactory);
+			chain.OnClientLoggedIn += OnClientLoggedIn;
 		}
 
 		public void Start()
@@ -83,6 +85,14 @@ namespace IBLVM_Server
             IPacket packet = PacketFactory.CreateServerBitLockersReqeust();
             Utils.SendPacket(socketStream, packet);
         }
+
+		#region Handler event hooks
+		private void OnClientLoggedIn(IAuthInfo authInfo)
+		{
+			if (authInfo.Type == IBLVM_Library.Enums.ClientType.Device)
+				deviceController.AddDevice(authInfo.Account.Id, new Device((IPEndPoint)socket.RemoteEndPoint, authInfo));
+		}
+		#endregion
 
 		#region IDisposable Implements
 		public void Dispose()
