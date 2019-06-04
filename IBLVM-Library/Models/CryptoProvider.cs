@@ -20,6 +20,8 @@ namespace IBLVM_Library.Models
 
 		public byte[] SharedKey { get; set; }
 
+		public byte[] NextIV { get; set; }
+
 		public void Dispose()
 		{
 			if (CryptoStream != null)

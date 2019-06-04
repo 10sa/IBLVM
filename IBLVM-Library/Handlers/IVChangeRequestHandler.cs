@@ -21,15 +21,15 @@ namespace IBLVM_Library.Handlers
 			{
                 IPayload<byte[]> packet = socket.PacketFactory.CreateIVChangeRequest(null);
                 packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
-                Array.Copy(packet.Payload, socket.CryptoProvider.CryptoStream.IV, packet.Payload.Length);
 
 				IVExchangeAcceptEventArgs accept = new IVExchangeAcceptEventArgs();
 				IVExchangeAccpetEvent(accept);
 
-				var resultPacket = socket.PacketFactory.CreateIVChangeResposne(accept.Accpet);
-                Utils.SendPacket(socket.GetSocketStream(), resultPacket);
+				if (accept.Accpet)
+					Array.Copy(packet.Payload, socket.CryptoProvider.CryptoStream.IV, packet.Payload.Length);
 
-                return true;
+				Utils.SendPacket(socket.GetSocketStream(), socket.PacketFactory.CreateIVChangeResposne(accept.Accpet));
+				return true;
 			}
 
 			return false;

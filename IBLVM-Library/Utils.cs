@@ -73,5 +73,11 @@ namespace IBLVM_Library
         {
             PacketValidation(socketStatus, reqStatus, payloadSize, false);
         }
+
+		public static void ExchangeIV(IIBLVMSocket socket, byte[] nextIV)
+		{
+			socket.CryptoProvider.NextIV = nextIV;
+			SendPacket(socket.GetSocketStream(), socket.PacketFactory.CreateIVChangeRequest(nextIV));
+		}
     }
 }

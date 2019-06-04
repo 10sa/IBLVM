@@ -22,6 +22,11 @@ namespace IBLVM_Library.Handlers
                 if (!result.Payload)
                     throw new InvalidOperationException("IV Change request isn't accepted.");
 
+				byte[] nextIV = socket.CryptoProvider.NextIV;
+				if (nextIV != null)
+					Array.Copy(nextIV, socket.CryptoProvider.CryptoStream.IV, nextIV.Length);
+
+				socket.CryptoProvider.NextIV = null;
 				return true;
             }
 
