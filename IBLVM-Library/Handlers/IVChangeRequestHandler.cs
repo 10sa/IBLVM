@@ -29,7 +29,7 @@ namespace IBLVM_Library.Handlers
 				IVExchangeAccpetEvent(accept);
 
 				if (accept.Accpet)
-					Array.Copy(packet.Payload, socket.CryptoProvider.CryptoStream.IV, packet.Payload.Length);
+					socket.CryptoProvider.CryptoStream.IV = packet.Payload;
 
 				Utils.SendPacket(socket.GetSocketStream(), socket.PacketFactory.CreateIVChangeResposne(accept.Accpet));
 				return true;

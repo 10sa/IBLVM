@@ -67,6 +67,9 @@ namespace IBLVM_Tests
 
 			client.Login("Test", "Test");
 			while (client.Status != (int)SocketStatus.LoggedIn) ;
+
+			client.Dispose();
+			server.Dispose();
 		}
 
 		[TestMethod]
@@ -85,7 +88,11 @@ namespace IBLVM_Tests
 			while (client.Status != (int)SocketStatus.LoggedIn) ;
 
 			client.ExchangeIV();
-			while (true) ;
+			byte[] nextIV = client.CryptoProvider.NextIV;
+
+			while (!nextIV.SequenceEqual(client.CryptoProvider.CryptoStream.IV)) ;
+			client.Dispose();
+			server.Dispose();
 		}
 	}
 }

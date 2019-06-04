@@ -27,7 +27,7 @@ namespace IBLVM_Library.Handlers
 
 				byte[] nextIV = socket.CryptoProvider.NextIV;
 				if (nextIV != null)
-					Array.Copy(nextIV, socket.CryptoProvider.CryptoStream.IV, nextIV.Length);
+					socket.CryptoProvider.CryptoStream.IV = nextIV;
 
 				socket.CryptoProvider.NextIV = null;
 				return true;
