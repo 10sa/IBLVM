@@ -9,7 +9,6 @@ using System.Net;
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Enums;
 using IBLVM_Library;
-using IBLVM_Client.Enums;
 using IBLVM_Library.Models;
 
 namespace IBLVM_Client.Handlers
@@ -20,7 +19,7 @@ namespace IBLVM_Client.Handlers
         {
             if (header.Type == PacketType.ServerBitLockerLockCommand)
             {
-                Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize());
+				Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.LoggedIn, header.GetPayloadSize());
 
                 IPayload<BitLockerVolume> packet = socket.PacketFactory.CreateBitLockerLockCommand(null);
                 packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());

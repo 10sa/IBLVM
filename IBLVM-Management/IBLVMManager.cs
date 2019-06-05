@@ -4,32 +4,70 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Net;
 
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Models;
 using IBLVM_Library.Factories;
-using System.Net;
-using IBLVM_Management.Enums;
+using IBLVM_Library.Enums;
+using IBLVM_Library;
 
 namespace IBLVM_Management
 {
-	public class IBLVMManager : IIBLVMSocket
+	public class IBLVMManager : IIBLVMSocket, IDisposable
 	{
-		public int Status { get; set; } = (int)SocketStatus.Unconnected;
+		public int Status { get; set; } = (int)ClientSocketStatus.Disconnected;
 
 		public CryptoProvider CryptoProvider { get; set; } = new CryptoProvider();
 
 		public IPacketFactory PacketFactory { get; private set; } = new PacketFactroy();
 
+		public Thread Receiver { get; private set; }
+
 		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
 		private NetworkStream networkStream;
+		private ManagerHandlerChain chain;
+		private readonly byte[] buffer;
+
+		public IBLVMManager()
+		{
+			buffer = new byte[PacketFactory.PacketSize * 2];
+			chain = new ManagerHandlerChain(this);
+		}
 
 		public void Conncet(IPEndPoint endPoint)
 		{
 			socket.Connect(endPoint);
 			networkStream = new NetworkStream(socket);
+			Receiver = new Thread(() =>
+			{
+				try
+				{
+					while (true)
+					{
+						Utils.ReadFull(networkStream, buffer, PacketFactory.PacketSize);
+						IPacket header = PacketFactory.ParseHeader(buffer);
+						chain.DoHandle(header);
+					}
+				}
+				catch (Exception)
+				{
+					Dispose();
+				}
+
+			});
+			Receiver.Start();
+
+			Status = (int)SocketStatus.Handshaking;
+			socket.Send(PacketFactory.CreateClientHello().GetPacketBytes());
 		}
 
 		public NetworkStream GetSocketStream() => networkStream;
+
+		public void Dispose()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

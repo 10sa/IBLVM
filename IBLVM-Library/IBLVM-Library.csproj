@@ -52,10 +52,13 @@
     <Compile Include="Enums\ClientType.cs" />
     <Compile Include="Enums\ProtectionStatus.cs" />
     <Compile Include="Enums\PacketType.cs" />
+    <Compile Include="Enums\SocketStatus.cs" />
     <Compile Include="Exceptions\InvalidAuthorizationDataException.cs" />
     <Compile Include="Factories\PacketFactroy.cs" />
     <Compile Include="Handlers\IVChangeRequestHandler.cs" />
     <Compile Include="Handlers\IVChangeResponseHandler.cs" />
+    <Compile Include="Handlers\ServerKeyResponseHandler.cs" />
+    <Compile Include="Handlers\ServerLoginResponseHandler.cs" />
     <Compile Include="Interfaces\IAccount.cs" />
     <Compile Include="Interfaces\IAuthInfo.cs" />
     <Compile Include="Interfaces\IIBLVMSocket.cs" />

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBLVM_Client.Enums
+namespace IBLVM_Library.Enums
 {
-	public enum SocketStatus : int
+	public enum ClientSocketStatus : int
 	{
 		Disconnected,
 		Handshaking,

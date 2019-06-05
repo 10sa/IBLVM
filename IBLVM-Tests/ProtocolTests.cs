@@ -10,6 +10,7 @@ using System.Net;
 using IBLVM_Server;
 using IBLVM_Client;
 using IBLVM_Client.Enums;
+using IBLVM_Management;
 
 namespace IBLVM_Tests
 {
@@ -30,7 +31,7 @@ namespace IBLVM_Tests
 			IBLVMClient client = new IBLVMClient();
 			client.Connect(new IPEndPoint(AccessIP, 47857));
 
-			while (client.Status != (int)SocketStatus.Connected) ;
+			while (client.Status != (int)ClientSocketStatus.Connected) ;
             client.Dispose();
 			server.Dispose();
         }
@@ -46,10 +47,10 @@ namespace IBLVM_Tests
 
 			IBLVMClient client = new IBLVMClient();
 			client.Connect(new IPEndPoint(AccessIP, 47858));
-			while (client.Status != (int)SocketStatus.Connected) ;
+			while (client.Status != (int)ClientSocketStatus.Connected) ;
 
 			client.Login("Test", "Test");
-			while (client.Status != (int)SocketStatus.LoggedIn) ;
+			while (client.Status != (int)ClientSocketStatus.LoggedIn) ;
 			client.Dispose();
 			server.Dispose();
 		}
@@ -62,12 +63,14 @@ namespace IBLVM_Tests
 			server.Start();
 
 			IBLVMClient client = new IBLVMClient();
-			client.Connect(new IPEndPoint(AccessIP, 47858));
-			while (client.Status != (int)SocketStatus.Connected) ;
+			client.Connect(new IPEndPoint(AccessIP, 47859));
+			while (client.Status != (int)ClientSocketStatus.Connected) ;
 
 			client.Login("Test", "Test");
-			while (client.Status != (int)SocketStatus.LoggedIn) ;
+			while (client.Status != (int)ClientSocketStatus.LoggedIn) ;
 
+			IBLVMManager manager = new IBLVMManager();
+			manager.Conncet(new IPEndPoint(IPAddress.Loopback, 47859));
 			client.Dispose();
 			server.Dispose();
 		}
@@ -82,10 +85,10 @@ namespace IBLVM_Tests
 
 			IBLVMClient client = new IBLVMClient();
 			client.Connect(new IPEndPoint(AccessIP, 47860));
-			while (client.Status != (int)SocketStatus.Connected) ;
+			while (client.Status != (int)ClientSocketStatus.Connected) ;
 
 			client.Login("Test", "Test");
-			while (client.Status != (int)SocketStatus.LoggedIn) ;
+			while (client.Status != (int)ClientSocketStatus.LoggedIn) ;
 
 			client.ExchangeIV();
 			byte[] nextIV = client.CryptoProvider.NextIV;

@@ -8,13 +8,13 @@ using IBLVM_Library.Interfaces;
 using IBLVM_Library.Handlers;
 using IBLVM_Library;
 
-namespace IBLVM_Server
+namespace IBLVM_Management
 {
-	class ServerHandlerChain
+	class ManagerHandlerChain
 	{
 		private readonly PacketHandlerChain chain;
 
-		public ServerHandlerChain(IIBLVMSocket socket)
+		public ManagerHandlerChain(IIBLVMSocket socket)
 		{
 			chain = new PacketHandlerChain(socket);
 			chain.AddHandler(new IVChangeRequestHandler());

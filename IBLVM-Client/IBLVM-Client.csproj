@@ -44,13 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\SocketStatus.cs" />
     <Compile Include="Handlers\BitLockerLockCommandHandler.cs" />
     <Compile Include="Handlers\BitLockerUnLockCommandHandler.cs" />
     <Compile Include="Handlers\ServerBitLockerRequestHandler.cs" />
-    <Compile Include="Handlers\ServerDevicesResponseHandler.cs" />
-    <Compile Include="Handlers\ServerKeyResponseHandler.cs" />
-    <Compile Include="Handlers\ServerLoginResponseHandler.cs" />
     <Compile Include="IBLVMClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SocketHandlerChain.cs" />

@@ -8,22 +8,20 @@ using System.Net;
 
 using SecureStream;
 
-using IBLVM_Client.Enums;
-
 using IBLVM_Library;
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Enums;
 using IBLVM_Library.Models;
 
-namespace IBLVM_Client.Handlers
+namespace IBLVM_Library.Handlers
 {
-	class ServerKeyResponseHandler : IPacketHandler
+	public class ServerKeyResponseHandler : IPacketHandler
 	{
 		public bool Handle(IPacket header, IIBLVMSocket socket)
 		{
 			if (header.Type == PacketType.ServerKeyResponse)
 			{
-                Utils.PacketValidation(socket.Status, (int)SocketStatus.Handshaking, header.GetPayloadSize());
+                Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.Handshaking, header.GetPayloadSize());
 
                 CryptoProvider cryptoProvider = socket.CryptoProvider;
 				IPayload<byte[]> packet = socket.PacketFactory.CreateServerKeyResponse(null);
@@ -38,7 +36,7 @@ namespace IBLVM_Client.Handlers
 				IPacket responsePacket = socket.PacketFactory.CreateClientKeyResponse(cryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
 				Utils.SendPacket(socket.GetSocketStream(), responsePacket);
 
-				socket.Status = (int)SocketStatus.Connected;
+				socket.Status = (int)ClientSocketStatus.Connected;
 				return true;
 			}
 

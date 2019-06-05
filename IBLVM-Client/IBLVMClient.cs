@@ -12,11 +12,8 @@ using System.Threading;
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Factories;
 using IBLVM_Library;
+using IBLVM_Library.Enums;
 using IBLVM_Library.Models;
-
-using IBLVM_Client.Enums;
-
-using SecureStream;
 
 namespace IBLVM_Client
 {
@@ -69,13 +66,13 @@ namespace IBLVM_Client
 			});
 			Receiver.Start();
 
-			Status = (int)SocketStatus.Handshaking;
+			Status = (int)ClientSocketStatus.Handshaking;
 			socket.Send(PacketFactory.CreateClientHello().GetPacketBytes());
 		}
 
 		public void Login(string id, string password)
 		{
-			if (Status != (int)SocketStatus.Connected)
+			if (Status != (int)ClientSocketStatus.Connected)
 				throw new InvalidOperationException("Not connected!");
 
 			Utils.SendPacket(networkStream, PacketFactory.CreateClientLoginRequest(id, password, 0, CryptoProvider.CryptoStream));
@@ -101,7 +98,7 @@ namespace IBLVM_Client
 		#endregion
 
 		#region IIBLVMSocket implements
-		public int Status { get; set; } = (int)SocketStatus.Disconnected;
+		public int Status { get; set; } = (int)ClientSocketStatus.Disconnected;
 
 		public CryptoProvider CryptoProvider { get; set; } = new CryptoProvider();
 
