@@ -67,7 +67,10 @@ namespace IBLVM_Management
 
 		public void Dispose()
 		{
-			throw new NotImplementedException();
+			CryptoProvider.Dispose();
+			networkStream.Dispose();
+			socket.Dispose();
+			GC.SuppressFinalize(this);
 		}
 	}
 }
