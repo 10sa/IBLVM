@@ -59,8 +59,8 @@ namespace IBLVM_Management
 			});
 			Receiver.Start();
 
-			Status = (int)SocketStatus.Handshaking;
-			socket.Send(PacketFactory.CreateClientHello().GetPacketBytes());
+			Status = (int)ClientSocketStatus.Handshaking;
+			Utils.SendPacket(networkStream, PacketFactory.CreateClientHello());
 		}
 
 		public NetworkStream GetSocketStream() => networkStream;
