@@ -29,7 +29,7 @@ namespace IBLVM_Server.Handlers
 
                 CryptoProvider provider = socket.CryptoProvider;
 				IPayload<byte[]> packet = socket.PacketFactory.CreateClientKeyResponse(null);
-				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
+				packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
 				provider.SharedKey = provider.ECDiffieHellman.DeriveKeyMaterial(CngKey.Import(packet.Payload, CngKeyBlobFormat.EccPublicBlob));
 				provider.CryptoStream = new CryptoMemoryStream(provider.SharedKey);

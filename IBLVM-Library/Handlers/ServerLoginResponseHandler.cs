@@ -21,7 +21,7 @@ namespace IBLVM_Library.Handlers
                 Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.Connected, header.GetPayloadSize());
 
                 IPayload<bool> packet = socket.PacketFactory.CreateServerLoginResponse(false);
-				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
+				packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
 				if (!packet.Payload)
 					throw new InvalidAuthorizationDataException();

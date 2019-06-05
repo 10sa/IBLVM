@@ -22,7 +22,7 @@ namespace IBLVM_Client.Handlers
 				Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.LoggedIn, header.GetPayloadSize());
 
                 IPayload<BitLockerVolume> packet = socket.PacketFactory.CreateBitLockerLockCommand(null);
-                packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
+                packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
                 BitLocker bitLocker = BitLocker.GetVolume(packet.Payload.DriveLetter, packet.Payload.DeviceID);
                 bool isSuccess = true;
@@ -35,7 +35,7 @@ namespace IBLVM_Client.Handlers
                 }
 
                 IPayload<bool> result = socket.PacketFactory.CreateClientBitLockerCommandResponse(isSuccess);
-                Utils.SendPacket(socket.GetSocketStream(), result);
+                Utils.SendPacket(socket.SocketStream, result);
 
                 return true;
             }

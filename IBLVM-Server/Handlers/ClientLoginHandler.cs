@@ -39,11 +39,11 @@ namespace IBLVM_Server.Handlers
                 Utils.PacketValidation(socket.Status, (int)SocketStatus.Connected, header.GetPayloadSize());
 
                 IPayload<IAuthInfo> packet = socket.PacketFactory.CreateClientLoginRequest(null, null, 0, socket.CryptoProvider.CryptoStream);
-				packet.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
+				packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
 				bool isSuccess = session.Auth(new Account(packet.Payload.Account.Id, packet.Payload.Account.Password));
 				IPacket response = socket.PacketFactory.CreateServerLoginResponse(isSuccess);
-				Utils.SendPacket(socket.GetSocketStream(), response);
+				Utils.SendPacket(socket.SocketStream, response);
 
 				if (!isSuccess)
 					throw new InvalidAuthorizationDataException();

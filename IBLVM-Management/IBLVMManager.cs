@@ -63,7 +63,7 @@ namespace IBLVM_Management
 			Utils.SendPacket(networkStream, PacketFactory.CreateClientHello());
 		}
 
-		public NetworkStream GetSocketStream() => networkStream;
+		public NetworkStream SocketStream => networkStream;
 
 		public void Dispose()
 		{

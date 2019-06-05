@@ -20,7 +20,7 @@ namespace IBLVM_Library.Handlers
             if (header.Type == PacketType.IVChangeResponse)
             {
                 IPayload<bool> result = socket.PacketFactory.CreateIVChangeResposne(false);
-                result.ParsePayload(header.GetPayloadSize(), socket.GetSocketStream());
+                result.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
                 if (!result.Payload)
                     throw new InvalidOperationException("IV Change request isn't accepted.");

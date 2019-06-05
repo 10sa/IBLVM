@@ -21,7 +21,7 @@ namespace IBLVM_Client.Handlers
 				Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.LoggedIn, header.GetPayloadSize(), true);
 
                 IPacket bitlockers = socket.PacketFactory.CreateClientBitLockersResponse(BitLocker.GetVolumes());
-                Utils.SendPacket(socket.GetSocketStream(), bitlockers);
+                Utils.SendPacket(socket.SocketStream, bitlockers);
 
                 return true;
             }

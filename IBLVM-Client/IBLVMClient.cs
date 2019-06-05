@@ -102,7 +102,7 @@ namespace IBLVM_Client
 
 		public CryptoProvider CryptoProvider { get; set; } = new CryptoProvider();
 
-		public NetworkStream GetSocketStream() => networkStream;
+		public NetworkStream SocketStream => networkStream;
 		#endregion
 	}
 }

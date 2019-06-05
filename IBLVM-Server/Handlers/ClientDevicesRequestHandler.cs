@@ -32,7 +32,7 @@ namespace IBLVM_Server.Handlers
 				Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize());
 				IPayload<IDevice[]> packet = socket.PacketFactory.CreateServerDevicesResponse(deviceController.GetUserDevices(session.Account.Id));
 
-				Utils.SendPacket(socket.GetSocketStream(), packet);
+				Utils.SendPacket(socket.SocketStream, packet);
 				return true;
 			}
 

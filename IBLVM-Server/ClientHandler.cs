@@ -28,7 +28,7 @@ namespace IBLVM_Server
 
 		public IPacketFactory PacketFactory { get; private set; }
 
-		public NetworkStream GetSocketStream() => socketStream;
+		public NetworkStream SocketStream => socketStream;
 		#endregion
 
 		public Thread Thread { get; private set; }

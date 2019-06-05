@@ -26,7 +26,7 @@ namespace IBLVM_Library.Interfaces
 		/// 네트워크 통신에 사용되는 소켓의 NetworkStream 클래스 인스턴스를 가져옵니다.
 		/// </summary>
 		/// <returns>네트워크 통신에 사용되는 스트림입니다.</returns>
-		NetworkStream GetSocketStream();
+		NetworkStream SocketStream { get; }
 
 		/// <summary>
 		/// 소켓에서 사용중인 CryptoProvider 클래스 인스턴스입니다..
