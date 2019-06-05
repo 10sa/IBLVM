@@ -54,9 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitLockerTest.cs" />
+    <Compile Include="ManagerProtocolTests.cs" />
     <Compile Include="PacketTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProtocolTests.cs" />
+    <Compile Include="DeviceProtocolTests.cs" />
     <Compile Include="SessionControl.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +71,10 @@
     <ProjectReference Include="..\IBLVM-Library\IBLVM-Library.csproj">
       <Project>{1f042069-73bc-4cac-a331-181c190ced10}</Project>
       <Name>IBLVM-Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IBLVM-Management\IBLVM-Management.csproj">
+      <Project>{887d0a01-a7b9-4995-bf9f-23e4ac8f5878}</Project>
+      <Name>IBLVM-Management</Name>
     </ProjectReference>
     <ProjectReference Include="..\IBLVM-Server\IBLVM-Server.csproj">
       <Project>{09c7c586-aa7c-4dce-8469-2f014d289306}</Project>

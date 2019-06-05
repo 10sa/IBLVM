@@ -12,6 +12,7 @@ using IBLVM_Library.Models;
 using IBLVM_Library.Factories;
 using IBLVM_Library.Enums;
 using IBLVM_Library;
+using System.Security.Cryptography;
 
 namespace IBLVM_Management
 {
@@ -32,6 +33,12 @@ namespace IBLVM_Management
 
 		public IBLVMManager()
 		{
+			CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng
+			{
+				KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash,
+				HashAlgorithm = CngAlgorithm.Sha256
+			};
+
 			buffer = new byte[PacketFactory.PacketSize * 2];
 			chain = new ManagerHandlerChain(this);
 		}
@@ -53,6 +60,9 @@ namespace IBLVM_Management
 				}
 				catch (Exception)
 				{
+					if (socket.Connected)
+						throw;
+
 					Dispose();
 				}
 
@@ -61,6 +71,14 @@ namespace IBLVM_Management
 
 			Status = (int)ClientSocketStatus.Handshaking;
 			Utils.SendPacket(networkStream, PacketFactory.CreateClientHello());
+		}
+
+		public void Login(string id, string password)
+		{
+			if (Status != (int)ClientSocketStatus.Connected)
+				throw new InvalidOperationException("Not connected!");
+
+			Utils.SendPacket(networkStream, PacketFactory.CreateClientLoginRequest(id, password, ClientType.Manager, CryptoProvider.CryptoStream));
 		}
 
 		public NetworkStream SocketStream => networkStream;
