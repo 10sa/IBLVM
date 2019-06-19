@@ -13,8 +13,8 @@ using IBLVM_Library.Packets;
 
 namespace IBLVM_Library.Packets
 {
-    public class ClientDevicesRequest : BasePacket
+    public class ManagerDevicesRequest : BasePacket
     {
-        public ClientDevicesRequest() : base(PacketType.ClientDevicesRequest) { }
+        public ManagerDevicesRequest() : base(PacketType.ClientDevicesRequest) { }
     }
 }
