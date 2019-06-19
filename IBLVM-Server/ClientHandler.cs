@@ -28,26 +28,26 @@ namespace IBLVM_Server
 
 		public IPacketFactory PacketFactory { get; private set; }
 
-		public NetworkStream SocketStream => socketStream;
+		public NetworkStream SocketStream { get; private set; }
 		#endregion
 
 		public Thread Thread { get; private set; }
 
 		public event Action<ClientHandler> OnHandlerDisposed = (a) => { };
 
-		private readonly NetworkStream socketStream;
 		private readonly ServerHandlerChain chain;
 		private readonly Socket socket;
 		private readonly IDeviceController deviceController = new DeviceController();
 		private byte[] buffer;
 
-		public ClientHandler(Socket socket, ISession session, IPacketFactory packetFactory)
+		public ClientHandler(Socket socket, ISession session, IPacketFactory packetFactory, IDeviceController deviceController)
 		{
 			this.socket = socket;
-			this.PacketFactory = packetFactory;
+			PacketFactory = packetFactory;
+			this.deviceController = deviceController;
 
 			buffer = new byte[packetFactory.PacketSize * 2];
-			socketStream = new NetworkStream(socket);
+			SocketStream = new NetworkStream(socket);
 			chain = new ServerHandlerChain(this, session, deviceController, packetFactory);
 			chain.OnClientLoggedIn += OnClientLoggedIn;
 		}
@@ -60,7 +60,7 @@ namespace IBLVM_Server
                 {
                     try
                     {
-                        Utils.ReadFull(socketStream, buffer, PacketFactory.PacketSize);
+                        Utils.ReadFull(SocketStream, buffer, PacketFactory.PacketSize);
                         IPacket header = PacketFactory.ParseHeader(buffer);
                         chain.DoHandle(header);
                     }
@@ -83,7 +83,7 @@ namespace IBLVM_Server
         public void GetBitLockerVolumes()
         {
             IPacket packet = PacketFactory.CreateServerBitLockersReqeust();
-            Utils.SendPacket(socketStream, packet);
+            Utils.SendPacket(SocketStream, packet);
         }
 
 		#region Handler event hooks
@@ -102,7 +102,7 @@ namespace IBLVM_Server
 				socket.Disconnect(false);
 				socket.Dispose();
 
-				socketStream.Close();
+				SocketStream.Close();
 			}
 			
 			CryptoProvider.Dispose();

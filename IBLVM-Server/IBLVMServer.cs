@@ -23,6 +23,7 @@ namespace IBLVM_Server
 
 		private readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private readonly List<ClientHandler> clientHandlers = new List<ClientHandler>();
+		private readonly IDeviceController deviceController = new DeviceController();
 		private readonly IPacketFactory factory = new PacketFactroy();
 
 		public IBLVMServer(ISession session)
@@ -43,7 +44,7 @@ namespace IBLVM_Server
                     try
                     {
                         Socket clientSocket = serverSocket.Accept();
-                        ClientHandler clientHandler = new ClientHandler(clientSocket, session, factory);
+                        ClientHandler clientHandler = new ClientHandler(clientSocket, session, factory, deviceController);
                         clientHandlers.Add(clientHandler);
                         clientHandler.OnHandlerDisposed += OnClientDisconnected;
 
