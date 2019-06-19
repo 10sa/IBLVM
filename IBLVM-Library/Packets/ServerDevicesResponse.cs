@@ -30,23 +30,30 @@ namespace IBLVM_Library.Packets
 		{
 			Stream stream = base.GetPayloadStream();
 
-			foreach(var payload in Payload)
+			if (Payload != null)
 			{
-				byte[] datas = Encoding.UTF8.GetBytes(payload.ToString() + ';');
-				stream.Write(datas, 0, datas.Length);
+				foreach (var payload in Payload)
+				{
+					byte[] datas = Encoding.UTF8.GetBytes(payload.ToString() + ';');
+					stream.Write(datas, 0, datas.Length);
+				}
 			}
-
+			
 			return stream;
 		}
 
 		public override void ParsePayload(int payloadSize, Stream stream)
 		{
 			base.ParsePayload(payloadSize, stream);
-			string[] devices = Encoding.UTF8.GetString(Utils.ReadFull(stream, payloadSize)).Split(';');
 			List<IDevice> deviceList = new List<IDevice>();
 
-			foreach(var device in devices)
-				deviceList.Add(Device.FromString(device));
+			if (payloadSize > 0)
+			{
+				string[] devices = Encoding.UTF8.GetString(Utils.ReadFull(stream, payloadSize)).Split(';');
+
+				foreach (var device in devices)
+					deviceList.Add(Device.FromString(device));
+			}
 
 			Payload = deviceList.ToArray();
 		}

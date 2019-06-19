@@ -19,7 +19,7 @@ namespace IBLVM_Tests
 		private static readonly IPAddress AccessIP = IPAddress.Parse("192.168.10.160");
 
 		[TestMethod]
-		public void HandshakeTest()
+		public void ConnectionTest()
 		{
 			IBLVMServer server = new IBLVMServer(new SessionControl());
 			server.Bind(new IPEndPoint(IPAddress.Any, 40001));
@@ -30,6 +30,48 @@ namespace IBLVM_Tests
 			manager.Conncet(new IPEndPoint(AccessIP, 40001));
 
 			while (manager.Status != (int)ClientSocketStatus.Connected) ;
+			manager.Login("1234", "1234");
+
+			while (manager.Status != (int)ClientSocketStatus.LoggedIn) ;
+			server.Dispose();
+			manager.Dispose();
+		}
+
+		[TestMethod]
+		public void DeviceListingTest()
+		{
+			bool isEndable = false;
+			IBLVMServer server = new IBLVMServer(new SessionControl());
+			server.Bind(new IPEndPoint(IPAddress.Any, 40001));
+			server.Listen(5);
+			server.Start();
+
+			IBLVMClient client = new IBLVMClient();
+			client.Connect(new IPEndPoint(AccessIP, 40001));
+			while (client.Status != (int)ClientSocketStatus.Connected) ;
+
+			client.Login("1234", "1234");
+			while (client.Status != (int)ClientSocketStatus.LoggedIn) ;
+
+
+			IBLVMManager manager = new IBLVMManager();
+			manager.Conncet(new IPEndPoint(AccessIP, 40001));
+
+			while (manager.Status != (int)ClientSocketStatus.Connected) ;
+			manager.Login("1234", "1234");
+
+			while (manager.Status != (int)ClientSocketStatus.LoggedIn) ;
+			manager.OnDevicesReceived += (a) =>
+			{
+				foreach (var device in a)
+					Console.WriteLine(device.ToString());
+
+				isEndable = true;
+			};
+
+			manager.GetDeviceList();
+
+			while (manager.Status != (int)ClientSocketStatus.LoggedIn || !isEndable) ;
 			server.Dispose();
 			manager.Dispose();
 		}

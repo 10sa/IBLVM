@@ -24,11 +24,24 @@ namespace IBLVM_Management
 
 		public IPacketFactory PacketFactory { get; private set; } = new PacketFactroy();
 
+		public NetworkStream SocketStream { get; private set; }
+
 		public Thread Receiver { get; private set; }
 
+		public event Action<IDevice[]> OnDevicesReceived
+		{
+			add
+			{
+				chain.OnDevicesReceived += value;
+			}
+			remove
+			{
+				chain.OnDevicesReceived -= value;
+			}
+		}
+
 		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
-		private NetworkStream networkStream;
-		private ManagerHandlerChain chain;
+		private readonly ManagerHandlerChain chain;
 		private readonly byte[] buffer;
 
 		public IBLVMManager()
@@ -46,14 +59,14 @@ namespace IBLVM_Management
 		public void Conncet(IPEndPoint endPoint)
 		{
 			socket.Connect(endPoint);
-			networkStream = new NetworkStream(socket);
+			SocketStream = new NetworkStream(socket);
 			Receiver = new Thread(() =>
 			{
 				try
 				{
 					while (true)
 					{
-						Utils.ReadFull(networkStream, buffer, PacketFactory.PacketSize);
+						Utils.ReadFull(SocketStream, buffer, PacketFactory.PacketSize);
 						IPacket header = PacketFactory.ParseHeader(buffer);
 						chain.DoHandle(header);
 					}
@@ -70,7 +83,7 @@ namespace IBLVM_Management
 			Receiver.Start();
 
 			Status = (int)ClientSocketStatus.Handshaking;
-			Utils.SendPacket(networkStream, PacketFactory.CreateClientHello());
+			Utils.SendPacket(SocketStream, PacketFactory.CreateClientHello());
 		}
 
 		public void Login(string id, string password)
@@ -78,15 +91,21 @@ namespace IBLVM_Management
 			if (Status != (int)ClientSocketStatus.Connected)
 				throw new InvalidOperationException("Not connected!");
 
-			Utils.SendPacket(networkStream, PacketFactory.CreateClientLoginRequest(id, password, ClientType.Manager, CryptoProvider.CryptoStream));
+			Utils.SendPacket(SocketStream, PacketFactory.CreateClientLoginRequest(id, password, ClientType.Manager, CryptoProvider.CryptoStream));
 		}
 
-		public NetworkStream SocketStream => networkStream;
+		public void GetDeviceList()
+		{
+			if (Status != (int)ClientSocketStatus.LoggedIn)
+				throw new InvalidOperationException("Not logged in!");
+
+			Utils.SendPacket(SocketStream, PacketFactory.CreateClientDevicesRequest());
+		}
 
 		public void Dispose()
 		{
 			CryptoProvider.Dispose();
-			networkStream.Dispose();
+			SocketStream.Dispose();
 			socket.Dispose();
 			GC.SuppressFinalize(this);
 		}
