@@ -83,7 +83,7 @@
     <Compile Include="Packets\ClientKeyResponse.cs" />
     <Compile Include="Packets\ClientLoginRequest.cs" />
     <Compile Include="Models\CryptoProvider.cs" />
-    <Compile Include="Packets\DriveInfomation.cs" />
+    <Compile Include="Models\DriveInfomation.cs" />
     <Compile Include="Packets\IVChangeRequest.cs" />
     <Compile Include="Packets\IVChangeResponse.cs" />
     <Compile Include="Packets\ManagerDrivesRequest.cs" />
