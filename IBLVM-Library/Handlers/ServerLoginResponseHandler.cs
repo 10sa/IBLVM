@@ -18,7 +18,7 @@ namespace IBLVM_Library.Handlers
 		{
 			if (header.Type == PacketType.ServerLoginResponse)
 			{
-                Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.Connected, header.GetPayloadSize());
+                Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.Connected, header.GetPayloadSize(), false);
 
                 IPayload<bool> packet = socket.PacketFactory.CreateServerLoginResponse(false);
 				packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);

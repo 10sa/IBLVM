@@ -36,7 +36,7 @@ namespace IBLVM_Server.Handlers
 		{
 			if (header.Type == PacketType.ClientLoginRequest)
 			{
-                Utils.PacketValidation(socket.Status, (int)SocketStatus.Connected, header.GetPayloadSize());
+                Utils.PacketValidation(socket.Status, (int)SocketStatus.Connected, header.GetPayloadSize(), false);
 
                 IPayload<IAuthInfo> packet = socket.PacketFactory.CreateClientLoginRequest(null, null, 0, socket.CryptoProvider.CryptoStream);
 				packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);

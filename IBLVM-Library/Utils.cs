@@ -60,10 +60,9 @@ namespace IBLVM_Library
 
         public static void PacketValidation(int socketStatus, int reqStatus, int payloadSize, bool isEmpty)
         {
-            if (socketStatus != reqStatus)
-                throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
+			PacketValidation(socketStatus, reqStatus);
 
-            if (isEmpty)
+			if (isEmpty)
             {
                 if (payloadSize > 0)
                     throw new ProtocolViolationException("Protocol violation by unreasonable payload.");
@@ -72,10 +71,11 @@ namespace IBLVM_Library
                 throw new ProtocolViolationException("Protocol violation by empty payload.");
         }
 
-        public static void PacketValidation(int socketStatus, int reqStatus, int payloadSize)
+        public static void PacketValidation(int socketStatus, int reqStatus)
         {
-            PacketValidation(socketStatus, reqStatus, payloadSize, false);
-        }
+			if (socketStatus != reqStatus)
+				throw new ProtocolViolationException("Protocol violation by invalid packet sequence.");
+		}
 
 		public static void ExchangeIV(IIBLVMSocket socket, byte[] nextIV)
 		{

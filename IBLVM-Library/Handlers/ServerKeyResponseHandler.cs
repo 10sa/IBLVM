@@ -21,7 +21,7 @@ namespace IBLVM_Library.Handlers
 		{
 			if (header.Type == PacketType.ServerKeyResponse)
 			{
-                Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.Handshaking, header.GetPayloadSize());
+                Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.Handshaking, header.GetPayloadSize(), false);
 
                 CryptoProvider cryptoProvider = socket.CryptoProvider;
 				IPayload<byte[]> packet = socket.PacketFactory.CreateServerKeyResponse(null);

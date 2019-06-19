@@ -29,7 +29,7 @@ namespace IBLVM_Server.Handlers
 		{
 			if (header.Type == PacketType.ClientDevicesRequest)
 			{
-				Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize());
+				Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize(), true);
 				IPayload<IDevice[]> packet = socket.PacketFactory.CreateServerDevicesResponse(deviceController.GetUserDevices(session.Account.Id));
 
 				Utils.SendPacket(socket.SocketStream, packet);

@@ -19,7 +19,7 @@ namespace IBLVM_Client.Handlers
         {
             if (header.Type == PacketType.ServerBitLockerUnlockCommand)
             {
-				Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.LoggedIn, header.GetPayloadSize());
+				Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.LoggedIn, header.GetPayloadSize(), false);
 
                 IPayload<BitLockerUnlock> packet = socket.PacketFactory.CreateBitLockerUnlockCommand(null, socket.CryptoProvider.CryptoStream);
                 packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);

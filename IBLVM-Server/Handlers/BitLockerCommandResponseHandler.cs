@@ -23,7 +23,7 @@ namespace IBLVM_Server.Handlers
         {
             if (header.Type == PacketType.ClientBitLockerCommandResponse)
             {
-                Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize());
+                Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize(), false);
 
                 // TODO: Handling message queue
 
