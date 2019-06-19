@@ -40,7 +40,7 @@ namespace IBLVM_Server
             chain.AddHandler(new IVChangeRequestHandler());
             chain.AddHandler(new IVChangeResponseHandler());
 			chain.AddHandler(new BitLockerCommandResponseHandler());
-			chain.AddHandler(new ClientDevicesRequestHandler(deviceController, session));
+			chain.AddHandler(new ManagerDevicesRequestHandler(deviceController, session));
         }
 
 		public bool DoHandle(IPacket header) => chain.DoHandle(header);

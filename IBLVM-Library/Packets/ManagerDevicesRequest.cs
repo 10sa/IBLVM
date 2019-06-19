@@ -15,6 +15,6 @@ namespace IBLVM_Library.Packets
 {
     public class ManagerDevicesRequest : BasePacket
     {
-        public ManagerDevicesRequest() : base(PacketType.ClientDevicesRequest) { }
+        public ManagerDevicesRequest() : base(PacketType.ManagerDevicesRequest) { }
     }
 }

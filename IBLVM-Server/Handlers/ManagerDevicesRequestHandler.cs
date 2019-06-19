@@ -14,12 +14,12 @@ using IBLVM_Server.Interfaces;
 
 namespace IBLVM_Server.Handlers
 {
-	class ClientDevicesRequestHandler : IPacketHandler
+	class ManagerDevicesRequestHandler : IPacketHandler
 	{
 		private IDeviceController deviceController;
 		private ISession session;
 
-		public ClientDevicesRequestHandler(IDeviceController deviceController, ISession session)
+		public ManagerDevicesRequestHandler(IDeviceController deviceController, ISession session)
 		{
 			this.deviceController = deviceController;
 			this.session = session;
@@ -27,7 +27,7 @@ namespace IBLVM_Server.Handlers
 
 		public bool Handle(IPacket header, IIBLVMSocket socket)
 		{
-			if (header.Type == PacketType.ClientDevicesRequest)
+			if (header.Type == PacketType.ManagerDevicesRequest)
 			{
 				Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize(), true);
 				IPayload<IDevice[]> packet = socket.PacketFactory.CreateServerDevicesResponse(deviceController.GetUserDevices(session.Account.Id));

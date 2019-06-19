@@ -99,7 +99,15 @@ namespace IBLVM_Management
 			if (Status != (int)ClientSocketStatus.LoggedIn)
 				throw new InvalidOperationException("Not logged in!");
 
-			Utils.SendPacket(SocketStream, PacketFactory.CreateClientDevicesRequest());
+			Utils.SendPacket(SocketStream, PacketFactory.CreateManagerDevicesRequest());
+		}
+
+		public void GetBitLockerDrives(IDevice device)
+		{
+			if (Status != (int)ClientSocketStatus.LoggedIn)
+				throw new InvalidOperationException("Not logged in!");
+
+			Utils.SendPacket(SocketStream)
 		}
 
 		public void Dispose()
