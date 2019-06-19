@@ -52,6 +52,7 @@
     <Compile Include="Handlers\ClientHelloHandler.cs" />
     <Compile Include="Handlers\ClientKeyResponseHandler.cs" />
     <Compile Include="Handlers\ClientLoginHandler.cs" />
+    <Compile Include="Handlers\ManagerDrivesRequestHandler.cs" />
     <Compile Include="IBLVMServer.cs" />
     <Compile Include="Interfaces\IDeviceController.cs" />
     <Compile Include="Interfaces\ISession.cs" />

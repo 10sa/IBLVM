@@ -107,7 +107,7 @@ namespace IBLVM_Management
 			if (Status != (int)ClientSocketStatus.LoggedIn)
 				throw new InvalidOperationException("Not logged in!");
 
-			Utils.SendPacket(SocketStream)
+			Utils.SendPacket(SocketStream, PacketFactory.CreateManagerDrivesRequest(device));
 		}
 
 		public void Dispose()
