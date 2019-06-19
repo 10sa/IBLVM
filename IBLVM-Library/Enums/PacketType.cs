@@ -24,7 +24,7 @@ namespace IBLVM_Library.Enums
 		/// <summary>
 		/// 핸드셰이크 시작을 나타냅니다.
 		/// </summary>
-		ClientHello
+		ClientHello,
 
 		/// <summary>
 		/// 핸드셰이크 과정에서 클라이언트에서 서버에게 보내는 키 응답입니다.
