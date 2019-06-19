@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using System.IO;
 
-namespace IBLVM_Library.Packets
+namespace IBLVM_Library.Models
 {
     public class DriveInformation
     {
