@@ -53,7 +53,7 @@ namespace IBLVM_Library.Factories
 
         public IPacket CreateServerDrivesRequest() => new ServerDrivesRequest();
 
-        public IPayload<DriveInfomation[]> CreateClientDrivesResponse(DriveInfo[] driveInfos) => new ClientDrivesResponse(driveInfos);
+        public IPayload<DriveInformation[]> CreateClientDrivesResponse(DriveInfo[] driveInfos) => new ClientDrivesResponse(driveInfos);
 
 		public IPacket CreateManagerDevicesRequest() => new ManagerDevicesRequest();
 
@@ -64,5 +64,7 @@ namespace IBLVM_Library.Factories
             int offset = 0;
             return new BasePacket(data, ref offset);
         }
+
+		public IPayload<IDevice> CreateManagerDrivesRequest(IDevice device) => new ManagerDrivesRequest(device);
 	}
 }
