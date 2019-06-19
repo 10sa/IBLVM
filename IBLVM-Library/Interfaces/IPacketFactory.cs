@@ -114,7 +114,7 @@ namespace IBLVM_Library.Interfaces
         /// <returns>생성된 클라이언트 디바이스 드라이브 정보 요청에 대한 응답 패킷입니다.</returns>
         IPayload<DriveInfomation[]> CreateServerDrivesResponse(DriveInfo[] drives);
 
-		IPacket CreateClientDevicesRequest();
+		IPacket CreateManagerDevicesRequest();
 
 		IPayload<IDevice[]> CreateServerDevicesResponse(IDevice[] devices);
 
