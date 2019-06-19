@@ -17,6 +17,7 @@ namespace IBLVM_Library.Packets
         public static readonly byte[] MagicBytes = new byte[] { 0xDA, 0xAB, 0xBC, 0xCD };
 
         private int payloadSize = 0;
+		private bool isOverridedPayloadSize = false;
 
 		private BasePacket() { }
 
@@ -41,7 +42,10 @@ namespace IBLVM_Library.Packets
 		protected void CreateBytes(Stream buffer)
 		{
 			WriteToStream(buffer, MagicBytes);
-			WriteToStream(buffer, BitConverter.GetBytes(GetPayloadSize()));
+			if (isOverridedPayloadSize)
+				WriteToStream(buffer, BitConverter.GetBytes(payloadSize));
+			else
+				WriteToStream(buffer, BitConverter.GetBytes(GetPayloadSize()));
 			WriteToStream(buffer, BitConverter.GetBytes((short)Type));
 		}
 
@@ -61,7 +65,11 @@ namespace IBLVM_Library.Packets
 
 		public virtual int GetPayloadSize() => payloadSize;
 
-		public void OverridePayloadSize(int size) => payloadSize = size;
+		public void OverridePayloadSize(int size)
+		{
+			isOverridedPayloadSize = true;
+			payloadSize = size;
+		}
 
 		public static int GetHeaderSize() => MagicBytes.Length + sizeof(int) + sizeof(PacketType);
 
