@@ -55,7 +55,7 @@ namespace IBLVM_Library.Factories
 
         public IPayload<DriveInfomation[]> CreateServerDrivesResponse(DriveInfo[] driveInfos) => new ClientDrivesResponse(driveInfos);
 
-		public IPacket CreateClientDevicesRequest() => new ClientDevicesRequest();
+		public IPacket CreateClientDevicesRequest() => new ManagerDevicesRequest();
 
 		public IPayload<IDevice[]> CreateServerDevicesResponse(IDevice[] devices) => new ServerDevicesResponse(devices);
 
