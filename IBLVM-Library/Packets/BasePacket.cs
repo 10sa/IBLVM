@@ -61,6 +61,8 @@ namespace IBLVM_Library.Packets
 
 		public virtual int GetPayloadSize() => payloadSize;
 
+		public void OverridePayloadSize(int size) => payloadSize = size;
+
 		public static int GetHeaderSize() => MagicBytes.Length + sizeof(int) + sizeof(PacketType);
 
 		public virtual Stream GetPayloadStream() => new MemoryStream(256);

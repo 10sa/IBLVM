@@ -21,6 +21,12 @@ namespace IBLVM_Library.Interfaces
 		int GetPayloadSize();
 
 		/// <summary>
+		/// 패킷의 페이로드가 가변 길이일 때 바이트화된 페이로드의 길이로 페이로드 길이를 재정의 할때 사용됩니다.
+		/// </summary>
+		/// <param name="size">재정의할 페이로드의 길이입니다.</param>
+		void OverridePayloadSize(int size);
+
+		/// <summary>
 		/// 패킷의 바이트화된 데이터를 반환합니다.
 		/// </summary>
 		/// <returns>패킷이 데이터화된 바이트입니다.</returns>
