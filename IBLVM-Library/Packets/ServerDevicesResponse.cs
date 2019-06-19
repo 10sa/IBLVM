@@ -49,7 +49,7 @@ namespace IBLVM_Library.Packets
 
 			if (payloadSize > 0)
 			{
-				string[] devices = Encoding.UTF8.GetString(Utils.ReadFull(stream, payloadSize)).Split(';');
+				string[] devices = Encoding.UTF8.GetString(Utils.ReadFull(stream, payloadSize)).Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
 				foreach (var device in devices)
 					deviceList.Add(Device.FromString(device));

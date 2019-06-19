@@ -30,13 +30,13 @@ namespace IBLVM_Library.Models
 
 		}
 
-		public override string ToString() => DeviceIP.ToString() + "," + Account.ToString() + "," + Type.ToString();
+		public override string ToString() => DeviceIP.ToString() + "," + Account.ToString() + "," + ((byte)Type).ToString();
 
 		public static Device FromString(string str)
 		{
 			string[] data = str.Split(',');
 			string[] ip = data[0].Split(':');
-			return new Device(new IPEndPoint(IPAddress.Parse(ip[0]), int.Parse(ip[1])), new Account(data[0], data[1]), (ClientType)byte.Parse(data[2]));
+			return new Device(new IPEndPoint(IPAddress.Parse(ip[0]), int.Parse(ip[1])), new Account(data[1], data[2]), (ClientType)byte.Parse(data[3]));
 		}
 	}
 }

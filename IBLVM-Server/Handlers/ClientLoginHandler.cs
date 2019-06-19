@@ -43,12 +43,12 @@ namespace IBLVM_Server.Handlers
 
 				bool isSuccess = session.Auth(new Account(packet.Payload.Account.Id, packet.Payload.Account.Password));
 				IPacket response = socket.PacketFactory.CreateServerLoginResponse(isSuccess);
+
+				if (isSuccess)
+					OnClientLoggedIn(packet.Payload);
+
 				Utils.SendPacket(socket.SocketStream, response);
 
-				if (!isSuccess)
-					throw new InvalidAuthorizationDataException();
-
-				OnClientLoggedIn(packet.Payload);
 				socket.Status = (int)SocketStatus.LoggedIn;
 				return true;
 			}
