@@ -30,17 +30,6 @@ namespace IBLVM_Library.Factories
 
 		public IPayload<IAuthInfo> CreateClientLoginRequest(string id, string password, ClientType type, CryptoMemoryStream cryptor) => new ClientLoginRequest(id, password, type, cryptor);
 
-        public IPayload<BitLockerVolume[]> CreateClientBitLockersResponse(BitLocker[] volumes)
-        {
-            List<BitLockerVolume> bitLockers = new List<BitLockerVolume>();
-            foreach (BitLocker locker in volumes)
-                bitLockers.Add(new BitLockerVolume(locker.DeviceID, locker.DriveLetter));
-
-            return new ClientBitLockersResponse(bitLockers.ToArray());
-        }
-
-        public IPacket CreateServerBitLockersReqeust() => new ServerBitLockersRequest();
-
         public IPayload<byte[]> CreateIVChangeRequest(byte[] initializeVector, CryptoMemoryStream cryptor) => new IVChangeRequest(initializeVector, cryptor);
 
         public IPayload<bool> CreateIVChangeResposne(bool isSuccess) => new IVChangeResponse(isSuccess);
@@ -66,5 +55,7 @@ namespace IBLVM_Library.Factories
         }
 
 		public IPayload<IDevice> CreateManagerDrivesRequest(IDevice device) => new ManagerDrivesRequest(device);
+
+		public IPayload<DriveInformation[]> CreateServerDrivesResponse(DriveInformation[] drives) => new ServerDrivesResponse(drives);
 	}
 }

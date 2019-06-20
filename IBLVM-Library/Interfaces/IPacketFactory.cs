@@ -54,19 +54,6 @@ namespace IBLVM_Library.Interfaces
 		IPayload<IAuthInfo> CreateClientLoginRequest(string id, string password, ClientType type, CryptoMemoryStream cryptor);
 
         /// <summary>
-        /// 서버에서 요청한 BitLocker 볼륨 목록에 대한 응답 패킷을 생성합니다.
-        /// </summary>
-        /// <param name="volumes">서버에 응답할 BitLocker 볼륨들입니다.</param>
-        /// <returns>생성된 볼륨 목록 패킷입니다.</returns>
-        IPayload<BitLockerVolume[]> CreateClientBitLockersResponse(BitLocker[] volumes);
-
-        /// <summary>
-        /// 서버에서 클라이언트에게 BitLocker 볼륨 목록 요청 패킷을 생성합니다.
-        /// </summary>
-        /// <returns>생성된 볼륨 요청 패킷입니다.</returns>
-		IPacket CreateServerBitLockersReqeust();
-
-        /// <summary>
         /// 암호화 알고리즘에 사용되는 초기화 벡터의 변경 요청 패킷을 생성합니다.
         /// </summary>
         /// <param name="initializeVector">변경할 초기화 벡터입니다.</param>
@@ -119,6 +106,8 @@ namespace IBLVM_Library.Interfaces
 		IPayload<IDevice> CreateManagerDrivesRequest(IDevice device);
 
 		IPayload<IDevice[]> CreateServerDevicesResponse(IDevice[] devices);
+
+		IPayload<DriveInformation[]> CreateServerDrivesResponse(DriveInformation[] drive);
 
         /// <summary>
         /// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.
