@@ -75,7 +75,6 @@
     <Compile Include="Packets\BitLockerCommandLock.cs" />
     <Compile Include="Packets\BitLockerCommandUnlock.cs" />
     <Compile Include="Packets\ClientBitLockerCommandResponse.cs" />
-    <Compile Include="Packets\ClientBitLockersResponse.cs" />
     <Compile Include="Models\BitLockerVolume.cs" />
     <Compile Include="Packets\ManagerDevicesRequest.cs" />
     <Compile Include="Packets\ClientDrivesResponse.cs" />
@@ -87,9 +86,9 @@
     <Compile Include="Packets\IVChangeRequest.cs" />
     <Compile Include="Packets\IVChangeResponse.cs" />
     <Compile Include="Packets\ManagerDrivesRequest.cs" />
-    <Compile Include="Packets\ServerBitLockersRequest.cs" />
     <Compile Include="Packets\ServerDevicesResponse.cs" />
     <Compile Include="Packets\ServerDrivesRequest.cs" />
+    <Compile Include="Packets\ServerDrivesResponse.cs" />
     <Compile Include="Packets\ServerKeyResponse.cs" />
     <Compile Include="Packets\ServerLoginResponse.cs" />
     <Compile Include="PacketHandlerChain.cs" />
