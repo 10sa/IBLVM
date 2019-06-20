@@ -29,7 +29,15 @@ namespace IBLVM_Library.Models
             DriveType = driveType;
         }
 
-        public static explicit operator DriveInformation(DriveInfo param)
+		public override string ToString() => $"{Name},{VolumeLabel},{TotalSize},{TotalFreeSpace},{(byte)DriveType}";
+
+		public static DriveInformation FromString(string str)
+		{
+			string[] data = str.Split(',');
+			return new DriveInformation(data[0], data[1], long.Parse(data[2]), long.Parse(data[3]), (DriveType)byte.Parse(data[4]));
+		}
+
+		public static explicit operator DriveInformation(DriveInfo param)
         {
             return new DriveInformation(param.Name, param.VolumeLabel, param.TotalSize, param.TotalFreeSpace, param.DriveType);
         }
