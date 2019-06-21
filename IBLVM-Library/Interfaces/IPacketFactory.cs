@@ -107,7 +107,7 @@ namespace IBLVM_Library.Interfaces
 
 		IPayload<IDevice[]> CreateServerDevicesResponse(IDevice[] devices);
 
-		IPayload<DriveInformation[]> CreateServerDrivesResponse(DriveInformation[] drive);
+		IPayload<ClientDrive[]> CreateServerDrivesResponse(ClientDrive[] drive);
 
         /// <summary>
         /// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.

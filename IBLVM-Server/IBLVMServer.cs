@@ -12,23 +12,29 @@ using IBLVM_Server.Interfaces;
 
 using System.Net.Sockets;
 using System.Net;
+using IBLVM_Server.Models;
+using IBLVM_Server.Args;
+using IBLVM_Library.Models;
 
 namespace IBLVM_Server
 {
-	public sealed class IBLVMServer : IDisposable
+	public sealed class IBLVMServer : IDisposable, IServer
 	{
 		public Thread ServerThread { get; private set; }
 
-		public readonly ISession session;
+		public ISession Session { get; private set; }
+
+		public IDeviceController DeviceController { get; private set; } = new DeviceController();
+
+		public IPacketFactory PacketFactory { get; private set; } = new PacketFactroy();
 
 		private readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private readonly List<ClientHandler> clientHandlers = new List<ClientHandler>();
-		private readonly IDeviceController deviceController = new DeviceController();
-		private readonly IPacketFactory factory = new PacketFactroy();
+		private readonly Broadcast broadcast = new Broadcast();
 
 		public IBLVMServer(ISession session)
 		{
-			this.session = session;
+			this.Session = session;
 		}
 
 		public void Bind(EndPoint localEndPoint) => serverSocket.Bind(localEndPoint);
@@ -44,7 +50,7 @@ namespace IBLVM_Server
                     try
                     {
                         Socket clientSocket = serverSocket.Accept();
-                        ClientHandler clientHandler = new ClientHandler(clientSocket, session, factory, deviceController);
+                        ClientHandler clientHandler = new ClientHandler(clientSocket, this, broadcast);
                         clientHandlers.Add(clientHandler);
                         clientHandler.OnHandlerDisposed += OnClientDisconnected;
 
@@ -76,5 +82,18 @@ namespace IBLVM_Server
 			ServerThread.Abort();
             GC.SuppressFinalize(this);
         }
-    }
+
+		private class Broadcast : IBroadcaster
+		{
+			public event Action<DrivesRequestEventArgs> BroadcastDrivesRequest;
+
+			public ClientDrive[] RequestDrives(IDevice device)
+			{
+				DrivesRequestEventArgs args = new DrivesRequestEventArgs(device);
+				BroadcastDrivesRequest(args);
+
+				return args.Drives.ToArray();
+			}
+		}
+	}
 }

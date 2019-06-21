@@ -10,7 +10,7 @@ namespace IBLVM_Library.Packets
 {
 	public sealed class ClientHello : BasePacket
 	{
-		public ClientHello() : base(Enums.PacketType.Hello) { }
+		public ClientHello() : base(Enums.PacketType.ClientHello) { }
 
 		public ClientHello(byte[] data, ref int offset) : base(data, ref offset) { }
 	}

@@ -14,15 +14,15 @@ namespace IBLVM_Management.Handlers
 {
 	class ServerDrivesResponseHandler : IPacketHandler
 	{
-		public event Action<DriveInformation[]> OnDrivesReceived = (a) => {};
+		public event Action<ClientDrive[]> OnDrivesReceived = (a) => {};
 
 		public bool Handle(IPacket header, IIBLVMSocket socket)
 		{
-			if (header.Type == PacketType.ManagerDrivesRequest)
+			if (header.Type == PacketType.ServerDrivesResponse)
 			{
 				Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.LoggedIn);
 
-				IPayload<DriveInformation[]> packet = socket.PacketFactory.CreateClientDrivesResponse(null);
+				IPayload<ClientDrive[]> packet = socket.PacketFactory.CreateServerDrivesResponse(null);
 				packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
 				OnDrivesReceived(packet.Payload);

@@ -25,6 +25,7 @@ namespace IBLVM_Client
             chain.AddHandler(new IVChangeResponseHandler());
 			chain.AddHandler(new BitLockerLockCommandHandler());
 			chain.AddHandler(new BitLockerUnLockCommandHandler());
+			chain.AddHandler(new ServerDrivesRequestHandler());
 		}
 
 		// Proxy

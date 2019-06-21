@@ -19,21 +19,14 @@ namespace IBLVM_Server.Handlers
 {
 	class ClientHelloHandler : IPacketHandler
 	{
-		private readonly IPacketFactory packetFactory;
-
-		public ClientHelloHandler(IPacketFactory packetFactory)
-		{
-			this.packetFactory = packetFactory;
-		}
-
 		public bool Handle(IPacket header, IIBLVMSocket socket)
 		{
-			if (header.Type == PacketType.Hello)
+			if (header.Type == PacketType.ClientHello)
 			{
                 Utils.PacketValidation(socket.Status, (int)SocketStatus.Uninitialized, header.GetPayloadSize(), true);
 
                 socket.CryptoProvider.ECDiffieHellman = new ECDiffieHellmanCng();
-				IPacket packet = packetFactory.CreateServerKeyResponse(socket.CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
+				IPacket packet = socket.PacketFactory.CreateServerKeyResponse(socket.CryptoProvider.ECDiffieHellman.PublicKey.ToByteArray());
 				Utils.SendPacket(socket.SocketStream, packet);
 
 				socket.Status = (int)SocketStatus.ServerKeyResponsed;

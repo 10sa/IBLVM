@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace IBLVM_Library.Packets
 {
-	public class ServerDrivesResponse : BasePacket, IPayload<DriveInformation[]>
+	public class ServerDrivesResponse : BasePacket, IPayload<ClientDrive[]>
 	{
-		public DriveInformation[] Payload { get; private set; }
+		public ClientDrive[] Payload { get; private set; }
 
-		public ServerDrivesResponse(DriveInformation[] payload) : base(PacketType.ServerDrivesResponse)
+		public ServerDrivesResponse(ClientDrive[] payload) : base(PacketType.ServerDrivesResponse)
 		{
 			Payload = payload;
 		}
@@ -25,7 +25,7 @@ namespace IBLVM_Library.Packets
 		{
 			Stream buffer = base.GetPayloadStream();
 
-			byte[] data = Encoding.UTF8.GetBytes(string.Join(";", (IEnumerable<DriveInformation>)Payload));
+			byte[] data = Encoding.UTF8.GetBytes(string.Join(";", (IEnumerable<ClientDrive>)Payload));
 			buffer.Write(data, 0, data.Length);
 
 			return buffer;
@@ -36,9 +36,9 @@ namespace IBLVM_Library.Packets
 			base.ParsePayload(payloadSize, stream);
 			string[] data = Encoding.UTF8.GetString(Utils.ReadFull(stream, payloadSize)).Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
-			List<DriveInformation> driveInfo = new List<DriveInformation>();
+			List<ClientDrive> driveInfo = new List<ClientDrive>();
 			foreach (var str in data)
-				driveInfo.Add(DriveInformation.FromString(str));
+				driveInfo.Add(ClientDrive.FromString(str));
 
 			Payload = driveInfo.ToArray();
 		}

@@ -11,7 +11,7 @@ using IBLVM_Library.Enums;
 using IBLVM_Library;
 using IBLVM_Library.Models;
 
-namespace IBLVM_Client.Handlers
+namespace IBLVM_Library.Handlers
 {
 	class ServerDevicesResponseHandler : IPacketHandler
 	{

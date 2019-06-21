@@ -67,7 +67,7 @@ namespace IBLVM_Client
 			Receiver.Start();
 
 			Status = (int)ClientSocketStatus.Handshaking;
-			socket.Send(PacketFactory.CreateClientHello().GetPacketBytes());
+			Utils.SendPacket(SocketStream, PacketFactory.CreateClientHello());
 		}
 
 		public void Login(string id, string password)

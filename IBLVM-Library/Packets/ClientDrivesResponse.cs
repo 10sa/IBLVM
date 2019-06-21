@@ -15,31 +15,19 @@ namespace IBLVM_Library.Packets
     {
         public ClientDrivesResponse(DriveInfo[] driveInfos) : base(PacketType.ClientDrivesResponse)
         {
-            Payload = Array.ConvertAll(driveInfos, input => (DriveInformation)input);
+			if (driveInfos != null)
+				Payload = Array.ConvertAll(driveInfos, input => (DriveInformation)input);
         }
 
         public DriveInformation[] Payload { get; private set; }
 
-        public override int GetPayloadSize()
-        {
-            return base.GetPayloadSize();
-        }
+		public override int GetPayloadSize() => -1;
 
-        public override Stream GetPayloadStream()
+		public override Stream GetPayloadStream()
         {
             Stream buffer = base.GetPayloadStream();
-            StringBuilder builder = new StringBuilder();
-            foreach (var drive in Payload)
-            {
-                builder.Append(drive.Name + ",");
-                builder.Append(string.Format("\"{0}\",", drive.VolumeLabel));
-                builder.Append(drive.TotalSize + ",");
-                builder.Append(drive.TotalFreeSpace + ",");
-                builder.Append(drive.DriveType + ";");
-
-                WriteToStream(buffer, Encoding.UTF8.GetBytes(builder.ToString()));
-                builder.Clear();
-            }
+			byte[] data = Encoding.UTF8.GetBytes(string.Join(";", (IEnumerable<DriveInformation>)Payload));
+			buffer.Write(data, 0, data.Length);
 
             return buffer;
         }
@@ -51,7 +39,7 @@ namespace IBLVM_Library.Packets
 
             List<DriveInformation> driveInfos = new List<DriveInformation>();
 
-            foreach(var driveInfo in serializedDrives.Split(';'))
+            foreach(var driveInfo in serializedDrives.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 string[] infos = driveInfo.Split(',');
                 driveInfos.Add(new DriveInformation(infos[0], infos[1], long.Parse(infos[2]), long.Parse(infos[3]), (DriveType)int.Parse(infos[4])));

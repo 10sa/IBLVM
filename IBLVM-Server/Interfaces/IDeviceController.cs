@@ -9,7 +9,7 @@ using IBLVM_Server.Interfaces;
 
 namespace IBLVM_Server.Interfaces
 {
-	interface IDeviceController
+	public interface IDeviceController
 	{
 		IDevice[] GetUserDevices(string id);
 

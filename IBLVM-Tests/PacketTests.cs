@@ -25,7 +25,7 @@ namespace IBLVM_Tests
 			byte[] bytes = packetFactroy.CreateClientHello().GetPacketBytes();
 			IPacket packet = packetFactroy.ParseHeader(bytes);
 
-			Assert.IsTrue(packet.Type == PacketType.Hello);
+			Assert.IsTrue(packet.Type == PacketType.ClientHello);
 		}
 
 		[TestMethod]

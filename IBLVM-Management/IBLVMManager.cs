@@ -40,6 +40,18 @@ namespace IBLVM_Management
 			}
 		}
 
+		public event Action<ClientDrive[]> OnDrivesReceived
+		{
+			add
+			{
+				chain.OnDrivesReceived += value;
+			}
+			remove
+			{
+				chain.OnDrivesReceived -= value;
+			}
+		}
+
 		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
 		private readonly ManagerHandlerChain chain;
 		private readonly byte[] buffer;
@@ -78,7 +90,6 @@ namespace IBLVM_Management
 
 					Dispose();
 				}
-
 			});
 			Receiver.Start();
 
@@ -102,7 +113,7 @@ namespace IBLVM_Management
 			Utils.SendPacket(SocketStream, PacketFactory.CreateManagerDevicesRequest());
 		}
 
-		public void GetBitLockerDrives(IDevice device)
+		public void GetDeviceDrives(IDevice device)
 		{
 			if (Status != (int)ClientSocketStatus.LoggedIn)
 				throw new InvalidOperationException("Not logged in!");

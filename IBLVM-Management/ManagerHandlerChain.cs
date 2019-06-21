@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using IBLVM_Library.Interfaces;
 using IBLVM_Library.Handlers;
 using IBLVM_Library;
-using IBLVM_Client.Handlers;
+using IBLVM_Management.Handlers;
+using IBLVM_Library.Models;
 
 namespace IBLVM_Management
 {
@@ -15,6 +16,7 @@ namespace IBLVM_Management
 	{
 		private readonly PacketHandlerChain chain;
 		private readonly ServerDevicesResponseHandler devicesResponseHandler;
+		private readonly ServerDrivesResponseHandler drivesResponseHandler;
 
 		public event Action<IDevice[]> OnDevicesReceived
 		{
@@ -29,6 +31,19 @@ namespace IBLVM_Management
 			}
 		}
 
+		public event Action<ClientDrive[]> OnDrivesReceived
+		{
+			add
+			{
+				drivesResponseHandler.OnDrivesReceived += value;
+			}
+
+			remove
+			{
+				drivesResponseHandler.OnDrivesReceived -= value;
+			}
+		}
+
 		public ManagerHandlerChain(IIBLVMSocket socket)
 		{
 			chain = new PacketHandlerChain(socket);
@@ -38,7 +53,11 @@ namespace IBLVM_Management
 			chain.AddHandler(new ServerLoginResponseHandler());
 			devicesResponseHandler = new ServerDevicesResponseHandler();
 			chain.AddHandler(devicesResponseHandler);
-        }
+
+			drivesResponseHandler = new ServerDrivesResponseHandler();
+			chain.AddHandler(drivesResponseHandler);
+
+		}
 
 		public bool DoHandle(IPacket header) => chain.DoHandle(header);
 	}

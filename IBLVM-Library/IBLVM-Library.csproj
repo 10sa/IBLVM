@@ -70,6 +70,7 @@
     <Compile Include="Models\AuthInfo.cs" />
     <Compile Include="Models\BitLockerUnlock.cs" />
     <Compile Include="Interfaces\IDevice.cs" />
+    <Compile Include="Models\ClientDrive.cs" />
     <Compile Include="Packets\BaseActionResultPacket.cs" />
     <Compile Include="Packets\BasePacket.cs" />
     <Compile Include="Packets\BitLockerCommandLock.cs" />

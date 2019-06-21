@@ -13,6 +13,9 @@ using IBLVM_Library.Models;
 using IBLVM_Server.Interfaces;
 using IBLVM_Server.Enums;
 using System.Net;
+using IBLVM_Server.Args;
+using IBLVM_Server.Models;
+using IBLVM_Library.Enums;
 
 namespace IBLVM_Server
 {
@@ -35,21 +38,26 @@ namespace IBLVM_Server
 
 		public event Action<ClientHandler> OnHandlerDisposed = (a) => { };
 
+		private MessageQueue messageQueue = new MessageQueue();
 		private readonly ServerHandlerChain chain;
+		private readonly IBroadcaster broadcaster;
 		private readonly Socket socket;
-		private readonly IDeviceController deviceController = new DeviceController();
+		private readonly IServer server;
+		private IDevice device;
 		private byte[] buffer;
 
-		public ClientHandler(Socket socket, ISession session, IPacketFactory packetFactory, IDeviceController deviceController)
+		public ClientHandler(Socket socket, IServer server, IBroadcaster broadcaster)
 		{
+			this.broadcaster = broadcaster;
+			broadcaster.BroadcastDrivesRequest += Broadcaster_BroadcastDrivesRequest;
 			this.socket = socket;
-			PacketFactory = packetFactory;
-			this.deviceController = deviceController;
+			this.server = server;
 
-			buffer = new byte[packetFactory.PacketSize * 2];
+			buffer = new byte[server.PacketFactory.PacketSize * 2];
 			SocketStream = new NetworkStream(socket);
-			chain = new ServerHandlerChain(this, session, deviceController, packetFactory);
+			chain = new ServerHandlerChain(this, messageQueue, server, broadcaster);
 			chain.OnClientLoggedIn += OnClientLoggedIn;
+			PacketFactory = server.PacketFactory;
 		}
 
 		public void Start()
@@ -58,7 +66,7 @@ namespace IBLVM_Server
             {
                 while (true)
                 {
-                    try
+					try
                     {
                         Utils.ReadFull(SocketStream, buffer, PacketFactory.PacketSize);
                         IPacket header = PacketFactory.ParseHeader(buffer);
@@ -66,11 +74,13 @@ namespace IBLVM_Server
                     }
                     catch (Exception)
                     {
-						Dispose();
 						if (socket.Connected)
+						{
+							Dispose();
 							throw;
-
-						return;
+						}
+						else
+							return;
                     }
                 }
             })
@@ -80,17 +90,27 @@ namespace IBLVM_Server
             Thread.Start();
 		}
 
-        public void GetBitLockerVolumes()
-        {
-            IPacket packet = PacketFactory.CreateServerBitLockersReqeust();
-            Utils.SendPacket(SocketStream, packet);
-        }
+		private void Broadcaster_BroadcastDrivesRequest(DrivesRequestEventArgs args)
+		{
+			if (Status == (int)SocketStatus.LoggedIn && device.Type == ClientType.Device && args.Device.Account.Id == device.Account.Id)
+			{
+				IPacket packet = PacketFactory.CreateServerDrivesRequest();
+				Utils.SendPacket(SocketStream, packet);
+
+				messageQueue.Wait(PacketType.ClientDrivesResponse);
+				ClientMessage message = messageQueue.Dequeue();
+				foreach (var drive in (DriveInformation[])message.Payload)
+					args.Drives.Add(new ClientDrive((IPEndPoint)socket.RemoteEndPoint, drive));
+			}
+		}
 
 		#region Handler event hooks
 		private void OnClientLoggedIn(IAuthInfo authInfo)
 		{
-			if (authInfo.Type == IBLVM_Library.Enums.ClientType.Device)
-				deviceController.AddDevice(authInfo.Account.Id, new Device((IPEndPoint)socket.RemoteEndPoint, authInfo));
+			device = new Device((IPEndPoint)socket.RemoteEndPoint, authInfo);
+
+			if (authInfo.Type == ClientType.Device)
+				server.DeviceController.AddDevice(authInfo.Account.Id, device);
 		}
 		#endregion
 
