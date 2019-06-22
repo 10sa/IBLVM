@@ -19,7 +19,7 @@ namespace IBLVM_Library.Packets
 			Payload = device;
 		}
 
-		public override int GetPayloadSize() => Payload.ToString().Length;
+		public override int GetPayloadSize() => -1;
 
 		public override Stream GetPayloadStream()
 		{

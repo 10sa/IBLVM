@@ -21,7 +21,7 @@ namespace IBLVM_Client.Handlers
             {
 				Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.LoggedIn, header.GetPayloadSize(), false);
 
-                IPayload<BitLockerUnlock> packet = socket.PacketFactory.CreateBitLockerUnlockCommand(null, socket.CryptoProvider.CryptoStream);
+				IPayload<BitLockerUnlock> packet = null;
                 packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
 				DriveInformation volume = packet.Payload.Volume;

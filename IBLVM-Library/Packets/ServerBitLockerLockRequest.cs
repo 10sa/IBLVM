@@ -16,7 +16,7 @@ namespace IBLVM_Library.Packets
     {
         public DriveInformation Payload { get; private set; }
 
-        public ServerBitLockerLockRequest(DriveInformation drive) : base(PacketType.ServerBitLockerLockCommand)
+        public ServerBitLockerLockRequest(DriveInformation drive) : base(PacketType.ServerBitLockerLockRequest)
         {
             Payload = drive;
         }

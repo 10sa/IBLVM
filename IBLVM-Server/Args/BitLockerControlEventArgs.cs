@@ -16,6 +16,8 @@ namespace IBLVM_Server.Args
 
 		public bool Lock { get; private set; }
 
+		public byte[] Password { get; private set; }
+
 		public bool IsSuccess { get; set; } = false;
 
 		public BitLockerControlEventArgs(IDevice device, DriveInformation drive, bool @lock)

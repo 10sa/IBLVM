@@ -52,6 +52,15 @@ namespace IBLVM_Management
 			}
 		}
 
+		public event Action<bool> OnBitLockerCommandResponseReceived {
+			add {
+				chain.OnBitLockerCommandResponseReceived += value;
+			}
+			remove {
+				chain.OnBitLockerCommandResponseReceived -= value;
+			}
+		}
+
 		private readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
 		private readonly ManagerHandlerChain chain;
 		private readonly byte[] buffer;
@@ -119,6 +128,14 @@ namespace IBLVM_Management
 				throw new InvalidOperationException("Not logged in!");
 
 			Utils.SendPacket(SocketStream, PacketFactory.CreateManagerDrivesRequest(device));
+		}
+
+		public void LockBitLockerDrive(IDevice device, DriveInformation drive)
+		{
+			if (Status != (int)ClientSocketStatus.LoggedIn)
+				throw new InvalidOperationException("Not logged in!");
+
+			Utils.SendPacket(SocketStream, PacketFactory.CreateManagerBitLockerLockRequest(new ClientDrive(device.DeviceIP, drive)));
 		}
 
 		public void Dispose()

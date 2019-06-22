@@ -17,6 +17,7 @@ namespace IBLVM_Management
 		private readonly PacketHandlerChain chain;
 		private readonly ServerDevicesResponseHandler devicesResponseHandler;
 		private readonly ServerDrivesResponseHandler drivesResponseHandler;
+		private readonly ServerBitLockerCommandResponseHandler bitLockerCommandResponseHandler;
 
 		public event Action<IDevice[]> OnDevicesReceived
 		{
@@ -44,6 +45,16 @@ namespace IBLVM_Management
 			}
 		}
 
+		public event Action<bool> OnBitLockerCommandResponseReceived {
+			add {
+				bitLockerCommandResponseHandler.OnBitLockerCommandResponseReceived += value;
+			}
+
+			remove {
+				bitLockerCommandResponseHandler.OnBitLockerCommandResponseReceived -= value;
+			}
+		}
+
 		public ManagerHandlerChain(IIBLVMSocket socket)
 		{
 			chain = new PacketHandlerChain(socket);
@@ -57,6 +68,8 @@ namespace IBLVM_Management
 			drivesResponseHandler = new ServerDrivesResponseHandler();
 			chain.AddHandler(drivesResponseHandler);
 
+			bitLockerCommandResponseHandler = new ServerBitLockerCommandResponseHandler();
+			chain.AddHandler(bitLockerCommandResponseHandler);
 		}
 
 		public bool DoHandle(IPacket header) => chain.DoHandle(header);

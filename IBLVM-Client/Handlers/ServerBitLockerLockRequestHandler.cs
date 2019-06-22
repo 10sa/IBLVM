@@ -13,15 +13,15 @@ using IBLVM_Library.Models;
 
 namespace IBLVM_Client.Handlers
 {
-    class BitLockerLockCommandHandler : IPacketHandler
+    class ServerBitLockerLockRequestHandler : IPacketHandler
     {
         public bool Handle(IPacket header, IIBLVMSocket socket)
         {
-            if (header.Type == PacketType.ServerBitLockerLockCommand)
+            if (header.Type == PacketType.ServerBitLockerLockRequest)
             {
 				Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.LoggedIn, header.GetPayloadSize(), false);
 
-                IPayload<DriveInformation> packet = socket.PacketFactory.CreateBitLockerLockCommand(null);
+                IPayload<DriveInformation> packet = socket.PacketFactory.CreateServerBitLockerLockRequest(null);
                 packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
                 BitLocker bitLocker = BitLocker.GetVolume(packet.Payload.Name);

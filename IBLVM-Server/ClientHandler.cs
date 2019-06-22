@@ -102,7 +102,7 @@ namespace IBLVM_Server
 
 		private void Broadcaster_BroadcastDrivesRequest(DrivesRequestEventArgs args)
 		{
-			if (Status == (int)SocketStatus.LoggedIn && device.Type == ClientType.Device && args.Device.Account.Id == device.Account.Id)
+			if (Status == (int)SocketStatus.LoggedIn && device.Type == ClientType.Device && args.Device.Account.Id == device.Account.Id && args.Device.DeviceIP.Equals(socket.RemoteEndPoint))
 			{
 				IPacket packet = PacketFactory.CreateServerDrivesRequest();
 				Utils.SendPacket(SocketStream, packet);
@@ -118,7 +118,12 @@ namespace IBLVM_Server
 		{
 			if (Status == (int)SocketStatus.LoggedIn && device.Type == ClientType.Device && args.Device.Account.Id == device.Account.Id)
 			{
-				IPacket packet = PacketFactory.createserver
+				IPacket packet = PacketFactory.CreateServerBitLockerLockRequest(args.Drive);
+				Utils.SendPacket(SocketStream, packet);
+
+				messageQueue.Wait(PacketType.ClientBitLockerCommandResponse);
+				ClientMessage message = messageQueue.Dequeue();
+				args.IsSuccess = (bool)message.Payload;
 			}
 		}
 

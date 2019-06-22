@@ -14,19 +14,28 @@ using IBLVM_Server.Enums;
 
 using IBLVM_Library;
 using IBLVM_Library.Enums;
+using IBLVM_Server.Models;
 
 namespace IBLVM_Server.Handlers
 {
     class BitLockerCommandResponseHandler : IPacketHandler
     {
-        public bool Handle(IPacket header, IIBLVMSocket socket)
+		private MessageQueue messageQueue;
+
+		public BitLockerCommandResponseHandler(MessageQueue messageQueue)
+		{
+			this.messageQueue = messageQueue;
+		}
+
+		public bool Handle(IPacket header, IIBLVMSocket socket)
         {
             if (header.Type == PacketType.ClientBitLockerCommandResponse)
             {
                 Utils.PacketValidation(socket.Status, (int)SocketStatus.LoggedIn, header.GetPayloadSize(), false);
+				IPayload<bool> packet = socket.PacketFactory.CreateClientBitLockerCommandResponse(false);
+				packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
-                // TODO: Handling message queue
-
+				messageQueue.Enqueue(packet.Type, packet.Payload);
                 return true;
             }
 

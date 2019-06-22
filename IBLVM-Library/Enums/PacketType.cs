@@ -64,7 +64,7 @@ namespace IBLVM_Library.Enums
 		/// <summary>
 		/// 서버에서 클라이언트의 BitLocker 볼륨의 잠금 명령을 나타냅니다.
 		/// </summary>
-		ServerBitLockerLockCommand,
+		ServerBitLockerLockRequest,
 
 		/// <summary>
 		/// 서버에서 클라이언트의 드라이브 목록 요청을 나타냅니다.

@@ -41,10 +41,11 @@ namespace IBLVM_Server
 
             chain.AddHandler(new IVChangeRequestHandler());
             chain.AddHandler(new IVChangeResponseHandler());
-			chain.AddHandler(new BitLockerCommandResponseHandler());
+			chain.AddHandler(new BitLockerCommandResponseHandler(messageQueue));
+			chain.AddHandler(new ClientDrivesResponseHandler(messageQueue));
 			chain.AddHandler(new ManagerDevicesRequestHandler(server.DeviceController, server.Session));
 			chain.AddHandler(new ManagerDrivesRequestHandler(broadcaster));
-			chain.AddHandler(new ClientDrivesResponseHandler(messageQueue));
+			chain.AddHandler(new ManagerBitLockerLockHandler(server.DeviceController, server.Session, broadcaster));
         }
 
 		public bool DoHandle(IPacket header) => chain.DoHandle(header);

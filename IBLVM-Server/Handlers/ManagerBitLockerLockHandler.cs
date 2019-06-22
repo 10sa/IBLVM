@@ -33,7 +33,7 @@ namespace IBLVM_Server.Handlers
 				IPayload<ClientDrive> packet = socket.PacketFactory.CreateManagerBitLockerLockRequest(null);
 				packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
-				IDevice receiver = (from device in deviceController.GetUserDevices(session.Account.Id) where device.DeviceIP == packet.Payload.IP select device).FirstOrDefault();
+				IDevice receiver = (from device in deviceController.GetUserDevices(session.Account.Id) where device.DeviceIP.Equals(packet.Payload.IP) select device).FirstOrDefault();
 				if (receiver != null)
 					Utils.SendPacket(socket.SocketStream, socket.PacketFactory.CreateServerBitLockerCommandResponse(broadcaster.RequestBitLockerLock(receiver, packet.Payload.Drive)));
 				else
