@@ -58,7 +58,8 @@ namespace IBLVM_Server
                     }
                     catch (Exception)
                     {
-						return;
+						Dispose();
+						throw;
                     }
                 }
             })

@@ -72,16 +72,19 @@ namespace IBLVM_Server
                         IPacket header = PacketFactory.ParseHeader(buffer);
                         chain.DoHandle(header);
                     }
-                    catch (Exception)
-                    {
+					catch (ThreadAbortException)
+					{
+						
+					}
+					catch (SocketException)
+					{
 						if (socket.Connected)
-						{
-							Dispose();
 							throw;
-						}
-						else
-							return;
-                    }
+					}
+					finally
+					{
+						Dispose();
+					}
                 }
             })
             {
@@ -118,13 +121,10 @@ namespace IBLVM_Server
 		public void Dispose()
 		{
 			if (socket.Connected)
-			{
 				socket.Disconnect(false);
-				socket.Dispose();
 
-				SocketStream.Close();
-			}
-			
+			socket.Dispose();
+			SocketStream.Close();
 			CryptoProvider.Dispose();
 			buffer = null;
 

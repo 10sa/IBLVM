@@ -58,12 +58,18 @@ namespace IBLVM_Client
                         chain.DoHandle(header);
                     }
                 }
-                catch (Exception)
-                {
-                    Dispose();
-                }
+				catch (SocketException)
+				{
+					if (socket.Connected)
+						throw;
+				}
+                finally
+				{
+					Dispose();
+				}
                 
 			});
+			Receiver.Name = "IBLVM Client Receiver";
 			Receiver.Start();
 
 			Status = (int)ClientSocketStatus.Handshaking;
