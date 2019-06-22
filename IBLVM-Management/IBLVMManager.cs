@@ -141,6 +141,14 @@ namespace IBLVM_Management
 			Utils.SendPacket(SocketStream, PacketFactory.CreateManagerBitLockerLockRequest(new ClientDrive(device.DeviceIP, drive)));
 		}
 
+		public void UnlockBirLockerDrive(IDevice device, DriveInformation drive, string password)
+		{
+			if (Status != (int)ClientSocketStatus.LoggedIn)
+				throw new InvalidOperationException("Not logged in!");
+
+			Utils.SendPacket(SocketStream, PacketFactory.CreateManagerBitLockerUnlockRequest(new ClientDrive(device.DeviceIP, drive), password, CryptoProvider));
+		}
+
 		public void Dispose()
 		{
 			CryptoProvider.Dispose();

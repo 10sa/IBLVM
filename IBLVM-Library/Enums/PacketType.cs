@@ -59,7 +59,7 @@ namespace IBLVM_Library.Enums
 		/// <summary>
 		/// 서버에서 클라이언트의 BitLocker 볼륨의 잠금 해제 명렁을 나타냅니다.
 		/// </summary>
-		ServerBitLockerUnlockCommand,
+		ServerBitLockerUnlockRequest,
 
 		/// <summary>
 		/// 서버에서 클라이언트의 BitLocker 볼륨의 잠금 명령을 나타냅니다.

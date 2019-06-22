@@ -10,21 +10,22 @@ using IBLVM_Library.Interfaces;
 using IBLVM_Library.Enums;
 using IBLVM_Library;
 using IBLVM_Library.Models;
+using IBLVM_Library.Packets;
 
 namespace IBLVM_Client.Handlers
 {
-    class BitLockerUnLockCommandHandler : IPacketHandler
+    class ServerBitLockerUnlockRequestHandler : IPacketHandler
     {
         public bool Handle(IPacket header, IIBLVMSocket socket)
         {
-            if (header.Type == PacketType.ServerBitLockerUnlockCommand)
+            if (header.Type == PacketType.ServerBitLockerUnlockRequest)
             {
 				Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.LoggedIn, header.GetPayloadSize(), false);
 
-				IPayload<BitLockerUnlock> packet = null;
+				IPayload<ServerBitLockerUnlock> packet = socket.PacketFactory.CreateServerBitLockerUnlockRequest(null, null, socket.CryptoProvider);
                 packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
-				DriveInformation volume = packet.Payload.Volume;
+				DriveInformation volume = packet.Payload.Drive;
 
                 BitLocker bitLocker = BitLocker.GetVolume(volume.Name);
                 bool isSuccess = true;

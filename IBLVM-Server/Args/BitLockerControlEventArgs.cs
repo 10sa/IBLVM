@@ -16,7 +16,7 @@ namespace IBLVM_Server.Args
 
 		public bool Lock { get; private set; }
 
-		public byte[] Password { get; private set; }
+		public string Password { get; private set; }
 
 		public bool IsSuccess { get; set; } = false;
 
@@ -25,6 +25,11 @@ namespace IBLVM_Server.Args
 			Device = device;
 			Drive = drive;
 			Lock = @lock;
+		}
+
+		public BitLockerControlEventArgs(IDevice device, DriveInformation drive, bool @lock, string password) : this(device, drive, @lock)
+		{
+			Password = password;
 		}
 	}
 }

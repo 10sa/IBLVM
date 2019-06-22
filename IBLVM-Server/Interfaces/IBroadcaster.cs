@@ -19,5 +19,7 @@ namespace IBLVM_Server.Interfaces
 		ClientDrive[] RequestDrives(IDevice device);
 
 		bool RequestBitLockerLock(IDevice device, DriveInformation drive);
+
+		bool RequestBitLockerUnlock(IDevice device, DriveInformation drive, string password);
 	}
 }

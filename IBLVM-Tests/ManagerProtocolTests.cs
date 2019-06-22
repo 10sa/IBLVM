@@ -160,6 +160,58 @@ namespace IBLVM_Tests
 			manager.Dispose();
 		}
 
+		[TestMethod]
+		public void BitLockerUnlockTest()
+		{
+			bool isEndable = false;
+			IBLVMServer server = new IBLVMServer(new SessionControl());
+			server.Bind(new IPEndPoint(IPAddress.Any, 40001));
+			server.Listen(5);
+			server.Start();
+
+			ConnectClient(new IPEndPoint(AccessIP, 40001));
+
+			IBLVMManager manager = new IBLVMManager();
+			manager.Conncet(new IPEndPoint(AccessIP, 40001));
+
+			while (manager.Status != (int)ClientSocketStatus.Connected) ;
+			manager.Login("1234", "1234");
+
+			while (manager.Status != (int)ClientSocketStatus.LoggedIn) ;
+
+			int ctl = 0;
+			manager.OnDevicesReceived += (devices) =>
+			{
+				manager.OnDrivesReceived += (drives) =>
+				{
+					manager.OnBitLockerCommandResponseReceived += (isSuccess) =>
+					{
+						Console.WriteLine(isSuccess);
+						ctl++;
+						if (ctl == 2)
+							isEndable = true;
+					};
+
+					foreach (var drive in drives)
+					{
+						Console.WriteLine(drive);
+						if (drive.Drive.Name.Contains("E"))
+						{
+							manager.LockBitLockerDrive(devices[0], drive.Drive);
+							manager.UnlockBirLockerDrive(devices[0], drive.Drive, "123Yh3507");
+						}
+					}
+				};
+
+				manager.GetDeviceDrives(devices[0]);
+			};
+
+			manager.GetDeviceList();
+			while (manager.Status != (int)ClientSocketStatus.LoggedIn || !isEndable) ;
+			server.Dispose();
+			manager.Dispose();
+		}
+
 		void ConnectClient(IPEndPoint address)
 		{
 			IBLVMClient client = new IBLVMClient();

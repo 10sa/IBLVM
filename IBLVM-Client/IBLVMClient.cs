@@ -65,7 +65,7 @@ namespace IBLVM_Client
 				}
 				catch (IOException e)
 				{
-					if (e.InnerException.GetType() != typeof(SocketException) && !socket.Connected)
+					if (e.InnerException != null && e.InnerException.GetType() != typeof(SocketException) && !socket.Connected)
 						return;
 				}
                 finally

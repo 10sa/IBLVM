@@ -59,5 +59,9 @@ namespace IBLVM_Library.Factories
 		public IPayload<ClientDrive> CreateManagerBitLockerLockRequest(ClientDrive drive) => new ManagerBitLockerLockRequest(drive);
 
 		public IPayload<DriveInformation> CreateServerBitLockerLockRequest(DriveInformation drive) => new ServerBitLockerLockRequest(drive);
+
+		public IPayload<ServerBitLockerUnlock> CreateServerBitLockerUnlockRequest(DriveInformation drive, string password, CryptoProvider cryptor) => new ServerBitLockerUnlockRequest(drive, password, cryptor);
+
+		public IPayload<ManagerBitLockerUnlock> CreateManagerBitLockerUnlockRequest(ClientDrive drive, string password, CryptoProvider cryptor) => new ManagerBitLockerUnlockRequest(drive, password, cryptor);
 	}
 }

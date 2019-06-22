@@ -118,12 +118,13 @@ namespace IBLVM_Server
 		{
 			if (Status == (int)SocketStatus.LoggedIn && device.Type == ClientType.Device && args.Device.Account.Id == device.Account.Id)
 			{
-				IPacket packet = PacketFactory.CreateServerBitLockerLockRequest(args.Drive);
-				Utils.SendPacket(SocketStream, packet);
+				if (args.Lock)
+					Utils.SendPacket(SocketStream, PacketFactory.CreateServerBitLockerLockRequest(args.Drive));
+				else
+					Utils.SendPacket(SocketStream, PacketFactory.CreateServerBitLockerUnlockRequest(args.Drive, args.Password, CryptoProvider));
 
 				messageQueue.Wait(PacketType.ClientBitLockerCommandResponse);
-				ClientMessage message = messageQueue.Dequeue();
-				args.IsSuccess = (bool)message.Payload;
+				args.IsSuccess = (bool)messageQueue.Dequeue().Payload;
 			}
 		}
 

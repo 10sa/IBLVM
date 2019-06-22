@@ -97,6 +97,14 @@ namespace IBLVM_Server
 				return args.IsSuccess;
 			}
 
+			public bool RequestBitLockerUnlock(IDevice device, DriveInformation drive, string password)
+			{
+				BitLockerControlEventArgs args = new BitLockerControlEventArgs(device, drive, false, password);
+				BroadcastBitLockerControl(args);
+
+				return args.IsSuccess;
+			}
+
 			public ClientDrive[] RequestDrives(IDevice device)
 			{
 				DrivesRequestEventArgs args = new DrivesRequestEventArgs(device);

@@ -24,7 +24,7 @@ namespace IBLVM_Client
 			chain.AddHandler(new IVChangeRequestHandler());
             chain.AddHandler(new IVChangeResponseHandler());
 			chain.AddHandler(new ServerBitLockerLockRequestHandler());
-			chain.AddHandler(new BitLockerUnLockCommandHandler());
+			chain.AddHandler(new ServerBitLockerUnlockRequestHandler());
 			chain.AddHandler(new ServerDrivesRequestHandler());
 		}
 

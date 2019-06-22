@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Handlers\ServerBitLockerLockRequestHandler.cs" />
-    <Compile Include="Handlers\BitLockerUnLockCommandHandler.cs" />
+    <Compile Include="Handlers\ServerBitLockerUnlockRequestHandler.cs" />
     <Compile Include="Handlers\ServerDrivesRequestHandler.cs" />
     <Compile Include="IBLVMClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

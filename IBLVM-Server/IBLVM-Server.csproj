@@ -52,6 +52,7 @@
     <Compile Include="Handlers\BitLockerCommandResponseHandler.cs" />
     <Compile Include="Handlers\ClientDrivesResponseHandler.cs" />
     <Compile Include="Handlers\ManagerBitLockerLockHandler.cs" />
+    <Compile Include="Handlers\ManagerBitLockerUnlockHandler.cs" />
     <Compile Include="Handlers\ManagerDevicesRequestHandler.cs" />
     <Compile Include="Handlers\ClientHelloHandler.cs" />
     <Compile Include="Handlers\ClientKeyResponseHandler.cs" />

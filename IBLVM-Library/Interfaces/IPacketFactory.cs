@@ -91,6 +91,8 @@ namespace IBLVM_Library.Interfaces
 
 		IPayload<ClientDrive> CreateManagerBitLockerLockRequest(ClientDrive drive);
 
+		IPayload<ManagerBitLockerUnlock> CreateManagerBitLockerUnlockRequest(ClientDrive drive, string password, CryptoProvider cryptor);
+
 		IPayload<IDevice> CreateManagerDrivesRequest(IDevice device);
 
 		IPayload<IDevice[]> CreateServerDevicesResponse(IDevice[] devices);
@@ -98,6 +100,8 @@ namespace IBLVM_Library.Interfaces
 		IPayload<ClientDrive[]> CreateServerDrivesResponse(ClientDrive[] drive);
 
 		IPayload<DriveInformation> CreateServerBitLockerLockRequest(DriveInformation drive);
+
+		IPayload<ServerBitLockerUnlock> CreateServerBitLockerUnlockRequest(DriveInformation drive, string password, CryptoProvider cryptor);
 
 		IPayload<bool> CreateServerBitLockerCommandResponse(bool isSuccess);
 

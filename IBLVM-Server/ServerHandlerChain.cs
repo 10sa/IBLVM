@@ -46,6 +46,7 @@ namespace IBLVM_Server
 			chain.AddHandler(new ManagerDevicesRequestHandler(server.DeviceController, server.Session));
 			chain.AddHandler(new ManagerDrivesRequestHandler(broadcaster));
 			chain.AddHandler(new ManagerBitLockerLockHandler(server.DeviceController, server.Session, broadcaster));
+			chain.AddHandler(new ManagerBitLockerUnlockHandler(broadcaster, server.DeviceController, server.Session, socket.CryptoProvider));
         }
 
 		public bool DoHandle(IPacket header) => chain.DoHandle(header);
