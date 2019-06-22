@@ -57,5 +57,7 @@ namespace IBLVM_Library.Factories
 		public IPayload<IDevice> CreateManagerDrivesRequest(IDevice device) => new ManagerDrivesRequest(device);
 
 		public IPayload<ClientDrive[]> CreateServerDrivesResponse(ClientDrive[] drives) => new ServerDrivesResponse(drives);
+
+		public IPayload<bool> CreateServerBitLockerCommandResponse(bool isSuccess) => new ServerBitLockerCommandResponse(isSuccess);
 	}
 }

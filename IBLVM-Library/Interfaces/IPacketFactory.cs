@@ -109,6 +109,8 @@ namespace IBLVM_Library.Interfaces
 
 		IPayload<ClientDrive[]> CreateServerDrivesResponse(ClientDrive[] drive);
 
+		IPayload<bool> CreateServerBitLockerCommandResponse(bool isSuccess);
+
         /// <summary>
         /// 바이트 배열에서 패킷의 헤더 부분만 파싱합니다.
         /// </summary>

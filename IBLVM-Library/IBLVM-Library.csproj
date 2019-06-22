@@ -86,6 +86,7 @@
     <Compile Include="Packets\IVChangeRequest.cs" />
     <Compile Include="Packets\IVChangeResponse.cs" />
     <Compile Include="Packets\ManagerDrivesRequest.cs" />
+    <Compile Include="Packets\ServerBitLockerCommandResponse.cs" />
     <Compile Include="Packets\ServerDevicesResponse.cs" />
     <Compile Include="Packets\ServerDrivesRequest.cs" />
     <Compile Include="Packets\ServerDrivesResponse.cs" />

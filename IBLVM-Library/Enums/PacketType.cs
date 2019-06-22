@@ -81,6 +81,8 @@ namespace IBLVM_Library.Enums
 		/// </summary>
 		ServerDrivesResponse,
 
+		ServerBitLockerCommandResponse,
+
 		/// <summary>
 		/// 메니저에서 서버에 디바이스 목록 요청을 나타냅니다.
 		/// </summary>
