@@ -135,6 +135,9 @@ namespace IBLVM_Management
 			if (Status != (int)ClientSocketStatus.LoggedIn)
 				throw new InvalidOperationException("Not logged in!");
 
+			if (!drive.IsBitLocker || drive.IsProtected)
+				throw new InvalidOperationException("Cannot BitLocker drive lock!");
+
 			Utils.SendPacket(SocketStream, PacketFactory.CreateManagerBitLockerLockRequest(new ClientDrive(device.DeviceIP, drive)));
 		}
 
