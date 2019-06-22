@@ -63,6 +63,11 @@ namespace IBLVM_Client
 					if (socket.Connected)
 						throw;
 				}
+				catch (IOException e)
+				{
+					if (e.InnerException.GetType() != typeof(SocketException) && !socket.Connected)
+						return;
+				}
                 finally
 				{
 					Dispose();

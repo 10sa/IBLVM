@@ -16,6 +16,7 @@ using System.Net;
 using IBLVM_Server.Args;
 using IBLVM_Server.Models;
 using IBLVM_Library.Enums;
+using System.IO;
 
 namespace IBLVM_Server
 {
@@ -64,28 +65,32 @@ namespace IBLVM_Server
 		{
             Thread = new Thread(() =>
             {
-                while (true)
-                {
-					try
-                    {
-                        Utils.ReadFull(SocketStream, buffer, PacketFactory.PacketSize);
-                        IPacket header = PacketFactory.ParseHeader(buffer);
-                        chain.DoHandle(header);
-                    }
-					catch (ThreadAbortException)
+				try
+				{
+					while (true)
 					{
-						
+						Utils.ReadFull(SocketStream, buffer, PacketFactory.PacketSize);
+						IPacket header = PacketFactory.ParseHeader(buffer);
+						chain.DoHandle(header);
 					}
-					catch (SocketException)
-					{
-						if (socket.Connected)
-							throw;
-					}
-					finally
-					{
-						Dispose();
-					}
-                }
+				}
+				catch (ThreadAbortException) { }
+				catch (ObjectDisposedException) { }
+				catch (SocketException)
+				{
+					if (socket.Connected)
+						throw;
+				}
+				catch (IOException e)
+				{
+					if (e.InnerException.GetType() != typeof(SocketException) && !socket.Connected)
+						return;
+				}
+				finally
+				{
+					Dispose();
+				}
+				
             })
             {
                 Name = string.Format("IBLVM Client handler [{0}]", socket.RemoteEndPoint.ToString())
