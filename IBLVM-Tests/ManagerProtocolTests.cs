@@ -85,13 +85,9 @@ namespace IBLVM_Tests
 			server.Listen(5);
 			server.Start();
 
-			IBLVMClient client = new IBLVMClient();
-			client.Connect(new IPEndPoint(AccessIP, 40001));
-			while (client.Status != (int)ClientSocketStatus.Connected) ;
-
-			client.Login("1234", "1234");
-			while (client.Status != (int)ClientSocketStatus.LoggedIn) ;
-
+			ConnectClient(new IPEndPoint(AccessIP, 40001));
+			ConnectClient(new IPEndPoint(AccessIP, 40001));
+			ConnectClient(new IPEndPoint(AccessIP, 40001));
 
 			IBLVMManager manager = new IBLVMManager();
 			manager.Conncet(new IPEndPoint(AccessIP, 40001));
@@ -116,8 +112,17 @@ namespace IBLVM_Tests
 			manager.GetDeviceList();
 			while (manager.Status != (int)ClientSocketStatus.LoggedIn || !isEndable) ;
 			server.Dispose();
-			// manager.Dispose();
-			// client.Dispose();
+			manager.Dispose();
+		}
+
+		void ConnectClient(IPEndPoint address)
+		{
+			IBLVMClient client = new IBLVMClient();
+			client.Connect(address);
+			while (client.Status != (int)ClientSocketStatus.Connected) ;
+
+			client.Login("1234", "1234");
+			while (client.Status != (int)ClientSocketStatus.LoggedIn) ;
 		}
 	}
 }

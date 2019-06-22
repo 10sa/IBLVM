@@ -76,7 +76,6 @@
     <Compile Include="Packets\BitLockerCommandLock.cs" />
     <Compile Include="Packets\BitLockerCommandUnlock.cs" />
     <Compile Include="Packets\ClientBitLockerCommandResponse.cs" />
-    <Compile Include="Models\BitLockerVolume.cs" />
     <Compile Include="Packets\ManagerDevicesRequest.cs" />
     <Compile Include="Packets\ClientDrivesResponse.cs" />
     <Compile Include="Packets\ClientHello.cs" />
