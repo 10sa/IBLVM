@@ -72,15 +72,14 @@ namespace IBLVM_Library
 		/// <summary>
 		/// 주어진 드라이브 문자와 디바이스 ID를 이용하여 BitLocker 볼륨을 반환합니다.
 		/// </summary>
-		/// <param name="deviceLetter">볼륨의 드라이브 문자입니다.</param>
-		/// <param name="deviceID">볼륨의 디바이스 ID 입니다.</param>
+		/// <param name="driveLetter">볼륨의 드라이브 문자입니다.</param>
 		/// <returns>주어진 값으로 BitLocker를 찾은 경우 볼륨 인스턴스, 아닌 경우 null 입니다.</returns>
-		public static BitLocker GetVolume(string deviceLetter, string deviceID)
+		public static BitLocker GetVolume(string driveLetter)
 		{
 			foreach (ManagementObject volume in new ManagementClass(new ManagementScope(path), path, new ObjectGetOptions()).GetInstances())
 			{
 				BitLocker bitlocker = new BitLocker(volume);
-				if (bitlocker.DriveLetter == deviceLetter && bitlocker.DeviceID == deviceID)
+				if (bitlocker.GetProtectionStatus() != ProtectionStatus.Unprotected && driveLetter.Contains(bitlocker.DriveLetter))
 					return bitlocker;
 			}
 
@@ -105,7 +104,6 @@ namespace IBLVM_Library
 		{
 			ManagementBaseObject result = InvokeMethod("GetProtectionStatus", null);
 
-			Console.WriteLine(result["ProtectionStatus"]);
 			return (ProtectionStatus)result["ProtectionStatus"];
 		}
 
