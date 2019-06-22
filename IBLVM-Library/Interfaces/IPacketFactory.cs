@@ -68,20 +68,6 @@ namespace IBLVM_Library.Interfaces
         IPayload<bool> CreateIVChangeResposne(bool isSuccess);
 
         /// <summary>
-        /// BitLocker 볼륨의 잠금을 해제하는 명령 패킷을 생성합니다.
-        /// </summary>
-        /// <param name="bitlockerUnlock">잠금 해제에 사용될 비밀번호입니다.</param>
-        /// <param name="cryptor">비밀번호 암호화에 사용될 CryptoMemoryStream 클래스 인스턴스입니다.</param>
-        /// <returns>생성된 BitLocker 볼륨 잠금 해제 명령 패킷입니다.</returns>
-        IPayload<BitLockerUnlock> CreateBitLockerUnlockCommand(BitLockerUnlock bitlockerUnlock, CryptoMemoryStream cryptor);
-
-        /// <summary>
-        /// BitLocker 볼륨의 잠금 명령 패킷을 생성합니다.
-        /// </summary>
-        /// <returns>생성된 BItLocker 볼륨 잠금 명령 패킷입니다.</returns>
-        IPayload<DriveInformation> CreateBitLockerLockCommand(DriveInformation volume);
-
-        /// <summary>
         /// BitLocker 볼륨 제어 명령에 대한 응답 패킷을 생성합니다.
         /// </summary>
         /// <param name="isSuccess">명령 실행에 대한 성공 여부입니다.</param>
@@ -103,11 +89,15 @@ namespace IBLVM_Library.Interfaces
 
 		IPacket CreateManagerDevicesRequest();
 
+		IPayload<ClientDrive> CreateManagerBitLockerLockRequest(ClientDrive drive);
+
 		IPayload<IDevice> CreateManagerDrivesRequest(IDevice device);
 
 		IPayload<IDevice[]> CreateServerDevicesResponse(IDevice[] devices);
 
 		IPayload<ClientDrive[]> CreateServerDrivesResponse(ClientDrive[] drive);
+
+		IPayload<DriveInformation> CreateServerBitLockerLockRequest(DriveInformation drive);
 
 		IPayload<bool> CreateServerBitLockerCommandResponse(bool isSuccess);
 

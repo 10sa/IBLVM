@@ -87,6 +87,15 @@ namespace IBLVM_Server
 		private class Broadcast : IBroadcaster
 		{
 			public event Action<DrivesRequestEventArgs> BroadcastDrivesRequest;
+			public event Action<BitLockerControlEventArgs> BroadcastBitLockerControl;
+
+			public bool RequestBitLockerLock(IDevice device, DriveInformation drive)
+			{
+				BitLockerControlEventArgs args = new BitLockerControlEventArgs(device, drive, true);
+				BroadcastBitLockerControl(args);
+
+				return args.IsSuccess;
+			}
 
 			public ClientDrive[] RequestDrives(IDevice device)
 			{

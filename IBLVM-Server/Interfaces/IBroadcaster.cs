@@ -14,6 +14,10 @@ namespace IBLVM_Server.Interfaces
 	{
 		event Action<DrivesRequestEventArgs> BroadcastDrivesRequest;
 
+		event Action<BitLockerControlEventArgs> BroadcastBitLockerControl;
+
 		ClientDrive[] RequestDrives(IDevice device);
+
+		bool RequestBitLockerLock(IDevice device, DriveInformation drive);
 	}
 }

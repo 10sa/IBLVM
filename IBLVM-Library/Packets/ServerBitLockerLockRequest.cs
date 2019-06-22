@@ -12,13 +12,13 @@ using System.IO;
 
 namespace IBLVM_Library.Packets
 {
-    public class BitLockerLockCommand : BasePacket, IPayload<DriveInformation>
+    public class ServerBitLockerLockRequest : BasePacket, IPayload<DriveInformation>
     {
         public DriveInformation Payload { get; private set; }
 
-        public BitLockerLockCommand(DriveInformation volume) : base(PacketType.ServerBitLockerLockCommand)
+        public ServerBitLockerLockRequest(DriveInformation drive) : base(PacketType.ServerBitLockerLockCommand)
         {
-            Payload = volume;
+            Payload = drive;
         }
 
         public override int GetPayloadSize() => Encoding.UTF8.GetByteCount(Payload.ToString());

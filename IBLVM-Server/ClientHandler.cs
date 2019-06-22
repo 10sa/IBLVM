@@ -50,15 +50,17 @@ namespace IBLVM_Server
 		public ClientHandler(Socket socket, IServer server, IBroadcaster broadcaster)
 		{
 			this.broadcaster = broadcaster;
-			broadcaster.BroadcastDrivesRequest += Broadcaster_BroadcastDrivesRequest;
 			this.socket = socket;
 			this.server = server;
 
 			buffer = new byte[server.PacketFactory.PacketSize * 2];
 			SocketStream = new NetworkStream(socket);
 			chain = new ServerHandlerChain(this, messageQueue, server, broadcaster);
-			chain.OnClientLoggedIn += OnClientLoggedIn;
 			PacketFactory = server.PacketFactory;
+
+			broadcaster.BroadcastDrivesRequest += Broadcaster_BroadcastDrivesRequest;
+			broadcaster.BroadcastBitLockerControl += Broadcaster_BroadcastBitLockerControl;
+			chain.OnClientLoggedIn += OnClientLoggedIn;
 		}
 
 		public void Start()
@@ -109,6 +111,14 @@ namespace IBLVM_Server
 				ClientMessage message = messageQueue.Dequeue();
 				foreach (var drive in (DriveInformation[])message.Payload)
 					args.Drives.Add(new ClientDrive((IPEndPoint)socket.RemoteEndPoint, drive));
+			}
+		}
+
+		private void Broadcaster_BroadcastBitLockerControl(BitLockerControlEventArgs args)
+		{
+			if (Status == (int)SocketStatus.LoggedIn && device.Type == ClientType.Device && args.Device.Account.Id == device.Account.Id)
+			{
+				IPacket packet = PacketFactory.createserver
 			}
 		}
 

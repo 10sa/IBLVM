@@ -91,6 +91,10 @@ namespace IBLVM_Library.Enums
 		/// <summary>
 		/// 메니저에서 클라이언트의 드라이브 목록 요청을 나타납니다.
 		/// </summary>
-		ManagerDrivesRequest
+		ManagerDrivesRequest,
+
+		ManagerBitLockerLock,
+
+		ManagerBitLockerUnlock
 	}
 }

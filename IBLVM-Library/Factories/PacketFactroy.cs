@@ -36,10 +36,6 @@ namespace IBLVM_Library.Factories
 
         public IPayload<bool> CreateClientBitLockerCommandResponse(bool isSuccess) => new ClientBitLockerCommandResponse(isSuccess);
 
-        public IPayload<BitLockerUnlock> CreateBitLockerUnlockCommand(BitLockerUnlock bitlockerUnlock, CryptoMemoryStream cryptor) => new BitLockerUnlockCommand(bitlockerUnlock, cryptor);
-
-        public IPayload<DriveInformation> CreateBitLockerLockCommand(DriveInformation volume) => new BitLockerLockCommand(volume);
-
         public IPacket CreateServerDrivesRequest() => new ServerDrivesRequest();
 
         public IPayload<DriveInformation[]> CreateClientDrivesResponse(DriveInfo[] driveInfos) => new ClientDrivesResponse(driveInfos);
@@ -59,5 +55,9 @@ namespace IBLVM_Library.Factories
 		public IPayload<ClientDrive[]> CreateServerDrivesResponse(ClientDrive[] drives) => new ServerDrivesResponse(drives);
 
 		public IPayload<bool> CreateServerBitLockerCommandResponse(bool isSuccess) => new ServerBitLockerCommandResponse(isSuccess);
+
+		public IPayload<ClientDrive> CreateManagerBitLockerLockRequest(ClientDrive drive) => new ManagerBitLockerLockRequest(drive);
+
+		public IPayload<DriveInformation> CreateServerBitLockerLockRequest(DriveInformation drive) => new ServerBitLockerLockRequest(drive);
 	}
 }
