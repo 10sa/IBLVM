@@ -24,9 +24,9 @@ namespace IBLVM_Client.Handlers
                 IPayload<BitLockerUnlock> packet = socket.PacketFactory.CreateBitLockerUnlockCommand(null, socket.CryptoProvider.CryptoStream);
                 packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
-                BitLockerVolume volume = packet.Payload.Volume;
+				DriveInformation volume = packet.Payload.Volume;
 
-                BitLocker bitLocker = BitLocker.GetVolume(volume.DriveLetter, volume.DeviceID);
+                BitLocker bitLocker = BitLocker.GetVolume(volume.Name);
                 bool isSuccess = true;
                 try
                 {

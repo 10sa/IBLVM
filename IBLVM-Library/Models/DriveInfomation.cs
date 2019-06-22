@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.IO;
+using IBLVM_Library.Enums;
 
 namespace IBLVM_Library.Models
 {
@@ -20,6 +21,10 @@ namespace IBLVM_Library.Models
 
         public DriveType DriveType { get; private set;}
 
+		public bool IsBitLocker { get; private set; }
+
+		public bool IsProtected { get; private set; }
+
         public DriveInformation(string name, string volumeLabel, long totalSize, long totalFreeSpace, DriveType driveType)
         {
             Name = name;
@@ -27,9 +32,16 @@ namespace IBLVM_Library.Models
             TotalSize = totalSize;
             TotalFreeSpace = totalFreeSpace;
             DriveType = driveType;
-        }
 
-		public override string ToString() => $"{Name},{VolumeLabel},{TotalSize},{TotalFreeSpace},{(byte)DriveType}";
+			BitLocker bitlocker = BitLocker.GetVolume(Name);
+			if (bitlocker != null)
+			{
+				IsBitLocker = true;
+				IsProtected = bitlocker.GetProtectionStatus() == ProtectionStatus.Unknown;
+			}
+		}
+
+		public override string ToString() => $"{Name},{VolumeLabel},{TotalSize},{TotalFreeSpace},{(byte)DriveType},{IsBitLocker},{IsProtected}";
 
 		public static DriveInformation FromString(string str)
 		{

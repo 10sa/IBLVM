@@ -79,7 +79,7 @@ namespace IBLVM_Library.Interfaces
         /// BitLocker 볼륨의 잠금 명령 패킷을 생성합니다.
         /// </summary>
         /// <returns>생성된 BItLocker 볼륨 잠금 명령 패킷입니다.</returns>
-        IPayload<BitLockerVolume> CreateBitLockerLockCommand(BitLockerVolume volume);
+        IPayload<DriveInformation> CreateBitLockerLockCommand(DriveInformation volume);
 
         /// <summary>
         /// BitLocker 볼륨 제어 명령에 대한 응답 패킷을 생성합니다.

@@ -12,11 +12,11 @@ using System.IO;
 
 namespace IBLVM_Library.Packets
 {
-    public class BitLockerLockCommand : BasePacket, IPayload<BitLockerVolume>
+    public class BitLockerLockCommand : BasePacket, IPayload<DriveInformation>
     {
-        public BitLockerVolume Payload { get; private set; }
+        public DriveInformation Payload { get; private set; }
 
-        public BitLockerLockCommand(BitLockerVolume volume) : base(PacketType.ServerBitLockerLockCommand)
+        public BitLockerLockCommand(DriveInformation volume) : base(PacketType.ServerBitLockerLockCommand)
         {
             Payload = volume;
         }
@@ -35,8 +35,8 @@ namespace IBLVM_Library.Packets
         public override void ParsePayload(int payloadSize, Stream stream)
         {
             base.ParsePayload(payloadSize, stream);
-            string[] datas = Encoding.UTF8.GetString(Utils.ReadFull(stream, payloadSize)).Split(';');
-            Payload = new BitLockerVolume(datas[0], datas[1]);
-        }
+			Payload = DriveInformation.FromString(Encoding.UTF8.GetString(Utils.ReadFull(stream, payloadSize)));
+
+		}
     }
 }

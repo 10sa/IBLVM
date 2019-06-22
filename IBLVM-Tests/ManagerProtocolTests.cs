@@ -116,8 +116,8 @@ namespace IBLVM_Tests
 			manager.GetDeviceList();
 			while (manager.Status != (int)ClientSocketStatus.LoggedIn || !isEndable) ;
 			server.Dispose();
-			manager.Dispose();
-			client.Dispose();
+			// manager.Dispose();
+			// client.Dispose();
 		}
 	}
 }

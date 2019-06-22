@@ -21,10 +21,10 @@ namespace IBLVM_Client.Handlers
             {
 				Utils.PacketValidation(socket.Status, (int)ClientSocketStatus.LoggedIn, header.GetPayloadSize(), false);
 
-                IPayload<BitLockerVolume> packet = socket.PacketFactory.CreateBitLockerLockCommand(null);
+                IPayload<DriveInformation> packet = socket.PacketFactory.CreateBitLockerLockCommand(null);
                 packet.ParsePayload(header.GetPayloadSize(), socket.SocketStream);
 
-                BitLocker bitLocker = BitLocker.GetVolume(packet.Payload.DriveLetter, packet.Payload.DeviceID);
+                BitLocker bitLocker = BitLocker.GetVolume(packet.Payload.Name);
                 bool isSuccess = true;
                 try {
                     bitLocker.Lock(true);
