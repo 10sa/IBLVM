@@ -23,7 +23,8 @@ namespace IBLVM_Device
 					while (client.Status != (int)ClientSocketStatus.Connected) ;
 
 					Login(client);
-					while (client.Status != (int)ClientSocketStatus.LoggedIn) ;
+					Console.WriteLine("Successfully logged in!");
+					client.Receiver.Join();
 				}
 				catch (Exception)
 				{

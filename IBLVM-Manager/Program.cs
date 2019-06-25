@@ -1,8 +1,11 @@
 ﻿using IBLVM_Library.Enums;
+using IBLVM_Library.Interfaces;
+using IBLVM_Library.Models;
 using IBLVM_Management;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +17,12 @@ namespace IBLVM_Manager
 		static void Main(string[] args)
 		{
 			Manager manager = new Manager(new IBLVMManager());
+
+			Console.WriteLine("Please enter server address.");
+			manager.BaseManager.Conncet(new IPEndPoint(IPAddress.Parse(Console.ReadLine()), 54541));
+			while (manager.BaseManager.Status != (int)ClientSocketStatus.Connected) ;
+
+			Console.WriteLine("Connected!");
 			manager.Login();
 
 			while (true)
@@ -24,10 +33,13 @@ namespace IBLVM_Manager
 				string input = Console.ReadLine();
 				lock (manager.Lock)
 				{
-					if (input.Trim() == "1")
+					if (input[0] == '1')
 						manager.BaseManager.GetDeviceList();
-					else if (input.Trim() == "2")
-						manager.BaseManager.GetDeviceList();
+					else if (input[0] == '2')
+					{
+						string[] arguments = input.Split(' ');
+						manager.BaseManager.GetDeviceDrives(manager.Devices[int.Parse(arguments[1])]);
+					}
 
 					Monitor.Wait(manager.Lock);
 				}
@@ -36,7 +48,12 @@ namespace IBLVM_Manager
 		private class Manager
 		{
 			public IBLVMManager BaseManager { get; private set; }
-			public object Lock { get; private set } = new object();
+
+			public object Lock { get; private set; } = new object();
+
+			private bool ignoreDisplay = false;
+
+			public IDevice[] Devices { get; private set; }
 
 			public Manager(IBLVMManager manager)
 			{
@@ -48,30 +65,57 @@ namespace IBLVM_Manager
 
 			private void Manager_OnBitLockerCommandResponseReceived(bool obj)
 			{
-				if (obj)
-					Console.WriteLine("Successfully executed!");
-				else
-					Console.WriteLine("Error! execute failure!");
+				lock (Lock)
+				{
+					if (obj)
+						Console.WriteLine("Successfully executed!");
+					else
+						Console.WriteLine("Error! execute failure!");
 
-				Monitor.PulseAll(Lock);
-		}
+					Monitor.PulseAll(Lock);
+				}
+			}
 
 			private void Manager_OnDrivesReceived(IBLVM_Library.Models.ClientDrive[] obj)
 			{
-				Console.WriteLine("Drives received!");
-				foreach (var drive in obj)
-					string.Join("\t", drive.Drive.ToString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+				lock (Lock)
+				{
+					Console.WriteLine("Drives received!");
 
-				Monitor.PulseAll(Lock);
+					int cnt = 0;
+					foreach (var drive in obj)
+					{
+						Console.WriteLine(string.Format("{0}. {1}", cnt, string.Join("\t", drive.Drive.ToString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))));
+						cnt++;
+					}
+
+					Monitor.PulseAll(Lock);
+				}
 			}
 
 			private void Manager_OnDevicesReceived(IBLVM_Library.Interfaces.IDevice[] obj)
 			{
-				Console.WriteLine("Device list received.");
-				foreach (var device in obj)
-					Console.WriteLine(device.DeviceIP);
+				lock (Lock)
+				{
+					if (!ignoreDisplay)
+					{
+						Console.WriteLine("Device list received.");
+						Console.WriteLine("-----------------------------");
+						int cnt = 0;
+						foreach (var device in obj)
+						{
+							Console.WriteLine(string.Format("{0}.\t{1}", cnt, device.DeviceIP));
+							cnt++;
+						}
 
-				Monitor.PulseAll(Lock);
+						Console.WriteLine("-----------END-----------");
+					}
+					else
+						ignoreDisplay = false;
+
+					Devices = obj;
+					Monitor.PulseAll(Lock);
+				}
 			}
 
 			public void Login()
@@ -82,7 +126,6 @@ namespace IBLVM_Manager
 				string id = Console.ReadLine();
 				Console.Write("Password : ");
 				string password = Console.ReadLine();
-
 
 				BaseManager.Login(id, password);
 				while (BaseManager.Status != (int)ClientSocketStatus.LoggedIn) ;

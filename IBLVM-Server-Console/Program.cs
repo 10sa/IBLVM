@@ -12,11 +12,13 @@ namespace IBLVM_Server_Console
 	{
 		static void Main(string[] args)
 		{
+			Console.WriteLine("Initialize server...");
 			IBLVMServer server = new IBLVMServer(new SessionValidateor());
 			server.Bind(new IPEndPoint(IPAddress.Any, 54541));
 			server.Listen(5);
 			server.Start();
 
+			Console.WriteLine("OK!");
 			server.ServerThread.Join();
 		}
 	}
