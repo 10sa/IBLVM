@@ -47,7 +47,7 @@ namespace IBLVM_Library.Models
 			IsProtected = isProtected;
 		}
 
-		public override string ToString() => $"{Name},{VolumeLabel},{TotalSize},{TotalFreeSpace},{(byte)DriveType},{BitConverter.GetBytes(IsBitLocker)},{BitConverter.GetBytes(IsProtected)}";
+		public override string ToString() => $"{Name},{VolumeLabel},{TotalSize},{TotalFreeSpace},{(byte)DriveType},{Convert.ToByte(IsBitLocker)},{Convert.ToByte(IsProtected)}";
 
 		public static DriveInformation FromString(string str)
 		{
